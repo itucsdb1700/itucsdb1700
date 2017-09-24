@@ -10,3 +10,7 @@ site = Blueprint('site', __name__)
 def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
+
+@site.route('/lost_properties')
+def PropertyPage():
+    return render_template('lost_properties.html')
