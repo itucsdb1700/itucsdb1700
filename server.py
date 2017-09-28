@@ -13,8 +13,13 @@ def CreateApp():
 
 def main():
     app = CreateApp()
-    debug = app.config['DEBUG']
-    port = app.config.get('PORT', 5000)
+    VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
+    if VCAP_APP_PORT is not None:
+      port = int(VCAP_APP_PORT)
+      debug = False
+    else:
+      port = app.config.get('PORT', 5000)
+      debug = app.config['DEBUG']
     app.run(host='0.0.0.0', port=port, debug=debug) #PORT no is changed to 5000 from 8080 since windows gives an error message
 
 if __name__ == '__main__':
@@ -22,15 +27,3 @@ if __name__ == '__main__':
 
 
 
-
-
-
-##We may need the code below
-
-#if __name__ == '__main__':
-#   VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
-#    if VCAP_APP_PORT is not None:
-#        port, debug = int(VCAP_APP_PORT), False
-#    else:
-#        port, debug = 5000, True
-#    app.run(host='0.0.0.0', port=port, debug=debug)
