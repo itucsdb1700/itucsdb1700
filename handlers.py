@@ -11,6 +11,10 @@ def HomePage():
     now = datetime.now()
     return render_template('index.html', current_time=now.ctime())
 
+@site.route('/house_announcement')
+def PropertyPage():
+    return render_template('house_announcement.html')   
+
 @site.route('/lost_properties')
 def PropertyPage():
     return render_template('lost_properties.html')
