@@ -12,7 +12,7 @@ def HomePage():
     return render_template('index.html', current_time=now.ctime())
 
 @site.route('/house_announcement')
-def PropertyPage():
+def HousePage():
     return render_template('house_announcement.html')   
 
 @site.route('/lost_properties')
