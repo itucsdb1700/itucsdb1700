@@ -74,3 +74,5 @@ target/
 \.idea/vcs\.xml
 
 \.idea/workspace\.xml
+
+\.idea/
