@@ -47,6 +47,26 @@ def initialize_database():
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
         cursor.execute(query)
 
+        #creating table for lost stuff
+        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE LOSTSTUFF (N INTEGER)"""
+        cursor.execute(query)
+
+        query = """INSERT INTO LOSTSTUFF (N) VALUES (0)"""
+        cursor.execute(query)
+
+        #creating table for found stuff
+        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE FOUNDSTUFF (N INTEGER)"""
+        cursor.execute(query)
+
+        query = """INSERT INTO FOUNDSTUFF (N) VALUES (0)"""
+        cursor.execute(query)
+
         connection.commit()
 
   return redirect(url_for('site.HomePage'))
