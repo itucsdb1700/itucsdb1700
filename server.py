@@ -3,13 +3,25 @@ import json
 import re
 
 from flask import Flask, render_template
-from handlers import site #Blueprint "site" is included for routing
+from flask_login import LoginManager #imported for login page
 
+from handlers import site #Blueprint "site" is included for routing
+from user import get_user #imported for login page
+
+lm = LoginManager()
+
+@lm.user_loader
+def load_user( user_id ):
+  return get_user()
 
 def CreateApp():
     app = Flask(__name__)
     app.config.from_object('settings')
     app.register_blueprint(site) #registering blueprint in the app is needed before they can be used
+
+    lm.init_app(app)
+    lm.login_view = 'site.login_page'
+
     return app
 
 

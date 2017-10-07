@@ -8,10 +8,14 @@ from flask import current_app
 from flask import redirect
 from flask.helpers import url_for
 
+from flask_login import login_required
+from flask_login import current_user
+
 import psycopg2 as dbapi2
 
 
 site = Blueprint('site', __name__)
+
 
 @site.route('/count')
 def counter_page():
@@ -27,9 +31,10 @@ def counter_page():
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
-
+@login_required
 @site.route('/initdb')
 def initialize_database():
+  if current_user.is_authenticated:
     with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
 
@@ -44,7 +49,7 @@ def initialize_database():
 
         connection.commit()
 
-        return redirect(url_for('site.HomePage'))
+  return redirect(url_for('site.HomePage'))
 
 @site.route('/')
 def HomePage():
