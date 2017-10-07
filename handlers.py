@@ -3,6 +3,7 @@
 
 from flask import render_template, Blueprint
 from datetime import datetime
+import psycopg2
 
 site = Blueprint('site', __name__)
 
@@ -18,3 +19,4 @@ def HousePage():
 @site.route('/lost_properties')
 def PropertyPage():
     return render_template('lost_properties.html')
+
