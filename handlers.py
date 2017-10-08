@@ -72,6 +72,11 @@ def initialize_database():
   return redirect(url_for('site.HomePage'))
 
 @site.route('/')
+def LoginPage():
+    now = datetime.now()
+    return render_template('login.html', current_time=now.ctime())
+
+@site.route('/home')
 def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
