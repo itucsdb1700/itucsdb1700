@@ -2,16 +2,20 @@
 #instead of the app, blueprint is used for routing now
 
 from flask import render_template, Blueprint
-from datetime import datetime
 from flask import current_app
+from datetime import datetime
 
 from flask import redirect
 from flask.helpers import url_for
 
 from flask_login import login_required
 from flask_login import current_user
+from flask_login import LoginManager
+from flask import request
+
 
 import psycopg2 as dbapi2
+import user
 
 
 site = Blueprint('site', __name__)
@@ -38,6 +42,8 @@ def initialize_database():
     with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
 
+
+        #example counter table
         query = """DROP TABLE IF EXISTS COUNTER"""
         cursor.execute(query)
 
@@ -46,6 +52,8 @@ def initialize_database():
 
         query = """INSERT INTO COUNTER (N) VALUES (0)"""
         cursor.execute(query)
+
+
 
         #creating table for lost stuff
         query = """DROP TABLE IF EXISTS LOSTSTUFF"""
@@ -57,6 +65,8 @@ def initialize_database():
         query = """INSERT INTO LOSTSTUFF (N) VALUES (0)"""
         cursor.execute(query)
 
+
+
         #creating table for found stuff
         query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
         cursor.execute(query)
@@ -65,6 +75,19 @@ def initialize_database():
         cursor.execute(query)
 
         query = """INSERT INTO FOUNDSTUFF (N) VALUES (0)"""
+        cursor.execute(query)
+
+
+        #create table for users
+        query = """
+              CREATE TABLE USERS (
+              USERNAME VARCHAR(30) NOT NULL
+              PASSWORD VARCHAR(30) NOT NULL 
+              ID INT PRIMARY KEY NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO USERS(USERNAME, PASSWORD) VALUES ('hakansander', '123456' )"""
         cursor.execute(query)
 
         connection.commit()

@@ -20,7 +20,7 @@ def CreateApp():
     app.register_blueprint(site) #registering blueprint in the app is needed before they can be used
 
     lm.init_app(app)
-    lm.login_view = 'site.login_page'
+    lm.login_view = 'site.login'
 
     return app
 
