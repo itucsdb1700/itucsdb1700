@@ -38,8 +38,8 @@ def counter_page():
 @login_required
 @site.route('/initdb')
 def initialize_database():
-  if current_user.is_authenticated:
-    with dbapi2.connect(current_app.config['dsn']) as connection:
+  #if current_user.is_authenticated: This statement will stay as a comment until the admin user is created
+  with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
 
 
