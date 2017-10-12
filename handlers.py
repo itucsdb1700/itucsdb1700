@@ -13,13 +13,9 @@ from flask_login import current_user
 from flask_login import LoginManager
 from flask import request
 
-
 import psycopg2 as dbapi2
-import user
-
 
 site = Blueprint('site', __name__)
-
 
 @site.route('/count')
 def counter_page():
@@ -41,7 +37,6 @@ def initialize_database():
   #if current_user.is_authenticated: This statement will stay as a comment until the admin user is created
   with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
-
 
         #example counter table
         query = """DROP TABLE IF EXISTS COUNTER"""
@@ -109,7 +104,37 @@ def HomePage():
 
 @site.route('/house_announcement')
 def HousePage():
-    return render_template('house_announcement.html')   
+    return render_template('house_announcement.html')
+
+@site.route('/sign_up', methods=['GET', 'POST'])
+def SignUpPage():
+  if request.method == 'POST':
+    username = request.form['firstName']
+    password = request.form[ 'password']
+    id = 1
+    #username = request.form['inputUsername']
+    #email = request.form['inputEmail']
+    #password = request.form['inputPassword']
+
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+      cursor = connection.cursor()
+
+      query = """
+        INSERT INTO USERS (ID, USERNAME, PASSWORD) 
+        VALUES (%d, '%s', '%s')""" % (
+          6, username, password
+        )
+
+      cursor.execute(query)
+
+      connection.commit()
+    return render_template('home.html')
+
+  else:
+    return render_template('sign_up.html')
+
+
+
 
 @site.route('/lost_properties')
 def PropertyPage():
