@@ -79,15 +79,18 @@ def initialize_database():
 
 
         #create table for users
+        query = """DROP TABLE IF EXISTS USERS"""  # DROP TABLE COMMANDS
+        cursor.execute(query)
+
         query = """
               CREATE TABLE USERS (
-              USERNAME VARCHAR(30) NOT NULL
-              PASSWORD VARCHAR(30) NOT NULL 
-              ID INT PRIMARY KEY NOT NULL
+              ID INT PRIMARY KEY NOT NULL,
+              USERNAME VARCHAR(30) NOT NULL,
+              PASSWORD VARCHAR(30) NOT NULL
         )"""
         cursor.execute(query)
 
-        query = """INSERT INTO USERS(USERNAME, PASSWORD) VALUES ('hakansander', '123456' )"""
+        query = """INSERT INTO USERS(ID, USERNAME, PASSWORD) VALUES (1, 'hakansander', '123456' )"""
         cursor.execute(query)
 
         connection.commit()
