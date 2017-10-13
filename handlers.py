@@ -89,6 +89,43 @@ def initialize_database():
         query = """INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES ('hakansander', '123456', 'sander@hotmail.com' )"""
         cursor.execute(query)
 
+        # create table for lost properties
+        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE LOSTSTUFF (
+              ID SERIAL PRIMARY KEY NOT NULL,
+              STUFFDESC VARCHAR(300) NOT NULL, 
+              POSSIBLELOC VARCHAR(50) NOT NULL,
+              POSSIBLEDATE SMALLDATETIME NOT NULL,
+              OWNERNAME VARCHAR(50) NOT NULL,
+              OWNERMAIL VARCHAR(50) NOT NULL,
+              OWNERPHONE VARCHAR(15) NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        cursor.execute(query)
+
+        # create table for found properties
+        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
+        cursor.execute(query)
+
+        query = """
+                      CREATE TABLE FOUNDSTUFF (
+                      ID SERIAL PRIMARY KEY NOT NULL,
+                      STUFFDESC VARCHAR(300) NOT NULL, 
+                      CURRENTLOC VARCHAR(50) NOT NULL,
+                      FINDINGDATE SMALLDATETIME NOT NULL,
+                      FOUNDERNAME VARCHAR(50) NOT NULL,
+                      FOUNDERMAIL VARCHAR(50) NOT NULL,
+                      FOUNDERPHONE VARCHAR(15) NOT NULL
+                )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        cursor.execute(query)
 
         # creating table for game friends
         query = """DROP TABLE IF EXISTS GAMEFRIEND"""
@@ -168,11 +205,11 @@ def GameFriendPage():
 
 
 
-@site.route('/lost_properties', methods=['GET', 'POST'])
+@site.route('/lost_found', methods=['GET', 'POST'])
 def PropertyPage():
     if request.method is 'POST':
 
         return render_template('home.html')
     else:
-        return render_template('lost_properties.html')
+        return render_template('lost_found.html')
 
