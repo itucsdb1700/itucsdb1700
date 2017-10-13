@@ -79,13 +79,14 @@ def initialize_database():
 
         query = """
               CREATE TABLE USERS (
-              ID INT PRIMARY KEY NOT NULL,
+              ID SERIAL PRIMARY KEY NOT NULL,
               USERNAME VARCHAR(30) NOT NULL,
-              PASSWORD VARCHAR(30) NOT NULL
+              PASSWORD VARCHAR(30) NOT NULL,
+              EMAIL VARCHAR(30) NOT NULL
         )"""
         cursor.execute(query)
 
-        query = """INSERT INTO USERS(ID, USERNAME, PASSWORD) VALUES (1, 'hakansander', '123456' )"""
+        query = """INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES ('hakansander', '123456', 'sander@hotmail.com' )"""
         cursor.execute(query)
 
         connection.commit()
@@ -111,18 +112,17 @@ def SignUpPage():
   if request.method == 'POST':
     username = request.form['firstName']
     password = request.form[ 'password']
+    email = request.form['email']
     id = 1
-    #username = request.form['inputUsername']
-    #email = request.form['inputEmail']
-    #password = request.form['inputPassword']
+
 
     with dbapi2.connect(current_app.config['dsn']) as connection:
       cursor = connection.cursor()
 
       query = """
-        INSERT INTO USERS (ID, USERNAME, PASSWORD) 
-        VALUES (%d, '%s', '%s')""" % (
-          6, username, password
+        INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
+        VALUES ('%s', '%s', '%s')""" % (
+          username, password, email
         )
 
       cursor.execute(query)
