@@ -89,6 +89,27 @@ def initialize_database():
         query = """INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES ('hakansander', '123456', 'sander@hotmail.com' )"""
         cursor.execute(query)
 
+
+        # creating table for game friends
+        query = """DROP TABLE IF EXISTS GAMEFRIEND"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE GAMEFRIEND(
+                        ID SERIAL PRIMARY KEY,
+                        NAME VARCHAR(80) NOT NULL,
+                        TYPE VARCHAR(30) NOT NULL,
+                        GAMEDATE DATE,
+                        LOCATION VARCHAR(80),
+                        PLAYERNUMBER INTEGER 
+                )"""
+        cursor.execute(query)
+
+        # Insert an example row to the table GAMEFRIEND
+        query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER) 
+                                    VALUES('Batak', 'Table Game', '2017-10-13', 'MED', 4)"""
+        cursor.execute(query)
+
+
         connection.commit()
 
   return redirect(url_for('site.HomePage'))
@@ -110,8 +131,8 @@ def HousePage():
 @site.route('/sign_up', methods=['GET', 'POST'])
 def SignUpPage():
   if request.method == 'POST':
-    username = request.form['firstName']
-    password = request.form[ 'password']
+    username = request.form['username']
+    password = request.form['password']
     email = request.form['email']
     id = 1
 
@@ -136,7 +157,22 @@ def SignUpPage():
 
 
 
-@site.route('/lost_properties')
+@site.route('/game_friends', methods=['GET', 'POST'])
+def GameFriendPage():
+    if request.method is 'POST':
+
+        return render_template('home.html')
+
+    else:
+        return render_template('game_friends.html')
+
+
+
+@site.route('/lost_properties', methods=['GET', 'POST'])
 def PropertyPage():
-    return render_template('lost_properties.html')
+    if request.method is 'POST':
+
+        return render_template('home.html')
+    else:
+        return render_template('lost_properties.html')
 
