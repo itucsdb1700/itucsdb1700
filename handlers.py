@@ -98,7 +98,7 @@ def initialize_database():
               ID SERIAL PRIMARY KEY NOT NULL,
               STUFFDESC VARCHAR(300) NOT NULL, 
               POSSIBLELOC VARCHAR(50) NOT NULL,
-              POSSIBLEDATE SMALLDATETIME NOT NULL,
+              POSSIBLEDATE DATE NOT NULL,
               OWNERNAME VARCHAR(50) NOT NULL,
               OWNERMAIL VARCHAR(50) NOT NULL,
               OWNERPHONE VARCHAR(15) NOT NULL
@@ -117,7 +117,7 @@ def initialize_database():
                       ID SERIAL PRIMARY KEY NOT NULL,
                       STUFFDESC VARCHAR(300) NOT NULL, 
                       CURRENTLOC VARCHAR(50) NOT NULL,
-                      FINDINGDATE SMALLDATETIME NOT NULL,
+                      FINDINGDATE DATE NOT NULL,
                       FOUNDERNAME VARCHAR(50) NOT NULL,
                       FOUNDERMAIL VARCHAR(50) NOT NULL,
                       FOUNDERPHONE VARCHAR(15) NOT NULL
