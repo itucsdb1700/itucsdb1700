@@ -8,9 +8,9 @@ from flask_login import LoginManager #imported for login page
 from handlers import site #Blueprint "site" is included for routing
 from user import get_user #imported for login page
 
-lm = LoginManager()
+login_manager = LoginManager()
 
-@lm.user_loader
+@login_manager.user_loader
 def load_user( user_id ):
   return get_user()
 
@@ -19,8 +19,9 @@ def CreateApp():
     app.config.from_object('settings')
     app.register_blueprint(site) #registering blueprint in the app is needed before they can be used
 
-    lm.init_app(app)
-    lm.login_view = 'site.login'
+    login_manager.init_app(app)
+    login_manager.login_view = 'site.login'
+    login_manager.login_message = 'logged in succesfully'
 
     return app
 
