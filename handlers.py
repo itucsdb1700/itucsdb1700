@@ -89,19 +89,57 @@ def initialize_database():
         query = """INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES ('hakansander', '123456', 'sander@hotmail.com' )"""
         cursor.execute(query)
 
+        # create table for lost properties
+        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE LOSTSTUFF (
+              ID SERIAL PRIMARY KEY NOT NULL,
+              STUFFDESC VARCHAR(300) NOT NULL, 
+              POSSIBLELOC VARCHAR(50) NOT NULL,
+              POSSIBLEDATE DATE NOT NULL,
+              OWNERNAME VARCHAR(50) NOT NULL,
+              OWNERMAIL VARCHAR(50) NOT NULL,
+              OWNERPHONE VARCHAR(15) NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        cursor.execute(query)
+
+        # create table for found properties
+        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE FOUNDSTUFF (
+              ID SERIAL PRIMARY KEY NOT NULL,
+              STUFFDESC VARCHAR(300) NOT NULL, 
+              CURRENTLOC VARCHAR(50) NOT NULL,
+              FINDINGDATE DATE NOT NULL,
+              FOUNDERNAME VARCHAR(50) NOT NULL,
+              FOUNDERMAIL VARCHAR(50) NOT NULL,
+              FOUNDERPHONE VARCHAR(15) NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        cursor.execute(query)
 
         # creating table for game friends
         query = """DROP TABLE IF EXISTS GAMEFRIEND"""
         cursor.execute(query)
 
-        query = """CREATE TABLE GAMEFRIEND(
-                        ID SERIAL PRIMARY KEY,
-                        NAME VARCHAR(80) NOT NULL,
-                        TYPE VARCHAR(30) NOT NULL,
-                        GAMEDATE DATE,
-                        LOCATION VARCHAR(80),
-                        PLAYERNUMBER INTEGER 
-                )"""
+        query = """
+              CREATE TABLE GAMEFRIEND(
+              ID SERIAL PRIMARY KEY,
+              NAME VARCHAR(80) NOT NULL,
+              TYPE VARCHAR(30) NOT NULL,
+              GAMEDATE DATE,
+              LOCATION VARCHAR(80),
+              PLAYERNUMBER INTEGER 
+        )"""
         cursor.execute(query)
 
         # Insert an example row to the table GAMEFRIEND
@@ -109,6 +147,64 @@ def initialize_database():
                                     VALUES('Batak', 'Table Game', '2017-10-13', 'MED', 4)"""
         cursor.execute(query)
 
+        # creating table for shared house information
+        query = """DROP TABLE IF EXISTS SHAREDHOUSE"""
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE SHAREDHOUSE(
+              ID SERIAL PRIMARY KEY NOT NULL,
+              LOCATION VARCHAR(80) NOT NULL,
+              RENTPRICE INTEGER NOT NULL,
+              NUMBEROFPEOPLE INTEGER NOT NULL,
+              NUMBEROFROOM VARCHAR (3) NOT NULL,
+              DESCRIPTION VARCHAR (300) NOT NULL,
+              GENDER VARCHAR (6) NOT NULL  
+        )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO SHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) VALUES ('Levent', '1500', '2','3+1','aa','Male' )"""
+        cursor.execute(query)
+
+        ###########################################
+        # creating table for person who share house
+        query = """DROP TABLE IF EXISTS PERSONOFSHAREHOUSE"""
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE PERSONOFSHAREHOUSE(
+              ID SERIAL PRIMARY KEY NOT NULL,
+              NAME VARCHAR (50),
+              GENDER VARCHAR (6),
+              DEPARTMENT VARCHAR (30),
+              TELNO VARCHAR (20)
+        )"""
+        cursor.execute(query)
+
+        query = """INSERT INTO PERSONOFSHAREHOUSE(NAME, GENDER, DEPARTMENT,TELNO) VALUES ('Adil Furkan Ekici', 'Male', 'Computer Eng.', '05420000000')"""
+        cursor.execute(query)
+
+        # creating table for share house and housemate information
+        query = """DROP TABLE IF EXISTS FINDINGHOUSEMATE"""
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE FINDINGHOUSEMATE(
+              ID SERIAL PRIMARY KEY NOT NULL,
+              HOUSEMATEID INTEGER REFERENCES PERSONOFSHAREHOUSE(ID),
+              HOUSEID INTEGER REFERENCES SHAREDHOUSE(ID)   
+        )"""
+        cursor.execute(query)
+
+
+
+
+
+        ##########################################################
+
+
+
+        ####################
 
         connection.commit()
 
@@ -141,9 +237,8 @@ def SignUpPage():
       cursor = connection.cursor()
 
       query = """
-        INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
-        VALUES ('%s', '%s', '%s')""" % (
-          username, password, email
+            INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
+            VALUES ('%s', '%s', '%s')""" % (username, password, email
         )
 
       cursor.execute(query)
@@ -168,11 +263,11 @@ def GameFriendPage():
 
 
 
-@site.route('/lost_properties', methods=['GET', 'POST'])
+@site.route('/lost_found', methods=['GET', 'POST'])
 def PropertyPage():
     if request.method is 'POST':
 
         return render_template('home.html')
     else:
-        return render_template('lost_properties.html')
+        return render_template('lost_found.html')
 
