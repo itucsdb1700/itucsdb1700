@@ -182,7 +182,7 @@ def initialize_database():
                CREATE TABLE SHARINGHOUSE(
                ID SERIAL PRIMARY KEY NOT NULL,
                PERSONOFSHAREID INTEGER REFERENCES PERSONOFSHAREHOUSE(ID),
-               SHAREDHOUSEID INTEGER REFERENCES SHAREDHOUSE(ID)   
+               SHAREDHOUSEID INTEGER REFERENCES DATASHAREDHOUSE(ID)   
          )"""
         cursor.execute(query)
 
