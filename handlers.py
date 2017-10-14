@@ -13,6 +13,8 @@ from flask_login import current_user
 from flask_login import LoginManager
 from flask import request
 
+from passlib.apps import custom_app_context as pwd_context
+
 import psycopg2 as dbapi2
 
 site = Blueprint('site', __name__)
@@ -76,7 +78,7 @@ def initialize_database():
               CREATE TABLE USERS (
               ID SERIAL PRIMARY KEY NOT NULL,
               USERNAME VARCHAR(30) NOT NULL,
-              PASSWORD VARCHAR(30) NOT NULL,
+              PASSWORD VARCHAR(500) NOT NULL,
               EMAIL VARCHAR(30) NOT NULL
         )"""
         cursor.execute(query)
@@ -254,6 +256,7 @@ def SignUpPage():
   if request.method == 'POST':
     username = request.form['username']
     password = request.form['password']
+    hashed_password = pwd_context.encrypt(password)
     email = request.form['email']
     id = 1
 
@@ -263,7 +266,7 @@ def SignUpPage():
 
       query = """
             INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
-            VALUES ('%s', '%s', '%s')""" % (username, password, email
+            VALUES ('%s', '%s', '%s')""" % (username, hashed_password, email
         )
 
       cursor.execute(query)
