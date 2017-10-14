@@ -127,25 +127,28 @@ def initialize_database():
         query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
         cursor.execute(query)
 
+
         # creating table for game friends
         query = """DROP TABLE IF EXISTS GAMEFRIEND"""
         cursor.execute(query)
 
         query = """
-              CREATE TABLE GAMEFRIEND(
-              ID SERIAL PRIMARY KEY,
-              NAME VARCHAR(80) NOT NULL,
-              TYPE VARCHAR(30) NOT NULL,
-              GAMEDATE DATE,
-              LOCATION VARCHAR(80),
-              PLAYERNUMBER INTEGER 
-        )"""
+                      CREATE TABLE GAMEFRIEND(
+                      ID SERIAL PRIMARY KEY,
+                      NAME VARCHAR(80) NOT NULL,
+                      TYPE VARCHAR(30) NOT NULL,
+                      GAMEDATE DATE,
+                      LOCATION VARCHAR(80),
+                      PLAYERNUMBER INTEGER,
+                      DESCRIPTION VARCHAR(120)
+                )"""
         cursor.execute(query)
 
         # Insert an example row to the table GAMEFRIEND
-        query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER) 
-                                    VALUES('Batak', 'Table Game', '2017-10-13', 'MED', 4)"""
+        query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION) 
+                                            VALUES('Batak', 'Table Game', '2017-10-13', 'MED', 4, 'Come with your couple')"""
         cursor.execute(query)
+
 
         # creating table for shared house information
         query = """DROP TABLE IF EXISTS DATASHAREDHOUSE CASCADE """
@@ -293,9 +296,28 @@ def SignUpPage():
 
 @site.route('/game_friends', methods=['GET', 'POST'])
 def GameFriendPage():
-    if request.method is 'POST':
+    if request.method == 'POST':
+        gameName = request.form['InputGameName']
+        gameType = request.form['InputGameType']
+        if not request.form['GamePlayerNo']:
+            playerNum = None;
+        else:
+            playerNum = int(request.form['GamePlayerNo'])
+        gameDate = request.form['InputGameDate']
+        gameLoc = request.form['InputGameLocation']
+        gameDesc = request.form['GameDescription']
 
-        return render_template('home.html')
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+
+            query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION) 
+                                                VALUES('%s', '%s', '%s', '%s', '%d', '%s')""" % (
+                gameName, gameType, gameDate, gameLoc, playerNum, gameDesc )
+
+            cursor.execute(query)
+            connection.commit()
+
+        return render_template('game_friends.html')
 
     else:
         return render_template('game_friends.html')
