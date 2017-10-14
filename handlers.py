@@ -41,6 +41,26 @@ def initialize_database():
         #example counter table
         query = """DROP TABLE IF EXISTS COUNTER"""
         cursor.execute(query)
+        query = """DROP TABLE IF EXISTS USERS"""  # DROP TABLE COMMANDS
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS GAMEFRIEND"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS SHARINGHOUSE CASCADE """
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS PERSONOFSHAREHOUSE CASCADE """
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS DATASHAREDHOUSE CASCADE """
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS FINDINGHOUSE CASCADE """
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS PERSONOFSEARCHHOUSE CASCADE """
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS DATASEARCHEDHOUSE CASCADE """
+        cursor.execute(query)
 
         query = """CREATE TABLE COUNTER (N INTEGER)"""
         cursor.execute(query)
@@ -49,33 +69,8 @@ def initialize_database():
         cursor.execute(query)
 
 
-
-        #creating table for lost stuff
-        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE LOSTSTUFF (N INTEGER)"""
-        cursor.execute(query)
-
-        query = """INSERT INTO LOSTSTUFF (N) VALUES (0)"""
-        cursor.execute(query)
-
-
-
-        #creating table for found stuff
-        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
-        cursor.execute(query)
-
-        query = """CREATE TABLE FOUNDSTUFF (N INTEGER)"""
-        cursor.execute(query)
-
-        query = """INSERT INTO FOUNDSTUFF (N) VALUES (0)"""
-        cursor.execute(query)
-
-
         #create table for users
-        query = """DROP TABLE IF EXISTS USERS"""  # DROP TABLE COMMANDS
-        cursor.execute(query)
+
 
         query = """
               CREATE TABLE USERS (
@@ -90,9 +85,6 @@ def initialize_database():
         cursor.execute(query)
 
         # create table for lost properties
-        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
-        cursor.execute(query)
-
         query = """
               CREATE TABLE LOSTSTUFF (
               ID SERIAL PRIMARY KEY NOT NULL,
@@ -109,8 +101,7 @@ def initialize_database():
         cursor.execute(query)
 
         # create table for found properties
-        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
-        cursor.execute(query)
+
 
         query = """
               CREATE TABLE FOUNDSTUFF (
@@ -129,8 +120,7 @@ def initialize_database():
 
 
         # creating table for game friends
-        query = """DROP TABLE IF EXISTS GAMEFRIEND"""
-        cursor.execute(query)
+
 
         query = """
                       CREATE TABLE GAMEFRIEND(
@@ -151,8 +141,7 @@ def initialize_database():
 
 
         # creating table for shared house information
-        query = """DROP TABLE IF EXISTS DATASHAREDHOUSE CASCADE """
-        cursor.execute(query)
+
 
         query = """
               CREATE TABLE DATASHAREDHOUSE(
@@ -171,8 +160,7 @@ def initialize_database():
 
         ###########################################
         # creating table for person who share house
-        query = """DROP TABLE IF EXISTS PERSONOFSHAREHOUSE CASCADE """
-        cursor.execute(query)
+
 
         query = """
               CREATE TABLE PERSONOFSHAREHOUSE(
@@ -188,8 +176,7 @@ def initialize_database():
         cursor.execute(query)
 
         # creating table for share house and housemate information
-        query = """DROP TABLE IF EXISTS SHARINGHOUSE CASCADE """
-        cursor.execute(query)
+
 
         query = """
                CREATE TABLE SHARINGHOUSE(
@@ -200,8 +187,7 @@ def initialize_database():
         cursor.execute(query)
 
         # creating table for criteria of searched house information
-        query = """DROP TABLE IF EXISTS DATASEARCHEDHOUSE CASCADE """
-        cursor.execute(query)
+
 
         query = """
               CREATE TABLE DATASEARCHEDHOUSE(
@@ -219,8 +205,7 @@ def initialize_database():
         cursor.execute(query)
 
         # creating table for person who share house
-        query = """DROP TABLE IF EXISTS PERSONOFSEARCHHOUSE CASCADE """
-        cursor.execute(query)
+
 
         query = """
                       CREATE TABLE PERSONOFSEARCHHOUSE(
@@ -236,8 +221,6 @@ def initialize_database():
         cursor.execute(query)
 
         # creating table for searched house criteria and person of searching house information
-        query = """DROP TABLE IF EXISTS FINDINGHOUSE CASCADE """
-        cursor.execute(query)
 
         query = """
                CREATE TABLE FINDINGHOUSE(
