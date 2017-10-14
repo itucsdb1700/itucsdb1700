@@ -283,7 +283,7 @@ def GameFriendPage():
         gameName = request.form['InputGameName']
         gameType = request.form['InputGameType']
         if not request.form['GamePlayerNo']:
-            playerNum = None;
+            playerNum = None
         else:
             playerNum = int(request.form['GamePlayerNo'])
         gameDate = request.form['InputGameDate']
