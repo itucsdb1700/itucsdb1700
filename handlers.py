@@ -148,11 +148,11 @@ def initialize_database():
         cursor.execute(query)
 
         # creating table for shared house information
-        query = """DROP TABLE IF EXISTS SHAREDHOUSE"""
+        query = """DROP TABLE IF EXISTS DATASHAREDHOUSE CASCADE """
         cursor.execute(query)
 
         query = """
-              CREATE TABLE SHAREDHOUSE(
+              CREATE TABLE DATASHAREDHOUSE(
               ID SERIAL PRIMARY KEY NOT NULL,
               LOCATION VARCHAR(80) NOT NULL,
               RENTPRICE INTEGER NOT NULL,
@@ -163,12 +163,12 @@ def initialize_database():
         )"""
         cursor.execute(query)
 
-        query = """INSERT INTO SHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) VALUES ('Levent', '1500', '2','3+1','aa','Male' )"""
+        query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) VALUES ('Levent', '1500', '2','3+1','aa','Male' )"""
         cursor.execute(query)
 
         ###########################################
         # creating table for person who share house
-        query = """DROP TABLE IF EXISTS PERSONOFSHAREHOUSE"""
+        query = """DROP TABLE IF EXISTS PERSONOFSHAREHOUSE CASCADE """
         cursor.execute(query)
 
         query = """
@@ -185,26 +185,65 @@ def initialize_database():
         cursor.execute(query)
 
         # creating table for share house and housemate information
-        query = """DROP TABLE IF EXISTS FINDINGHOUSEMATE"""
+        query = """DROP TABLE IF EXISTS SHARINGHOUSE CASCADE """
         cursor.execute(query)
 
         query = """
-              CREATE TABLE FINDINGHOUSEMATE(
+               CREATE TABLE SHARINGHOUSE(
+               ID SERIAL PRIMARY KEY NOT NULL,
+               PERSONOFSHAREID INTEGER REFERENCES PERSONOFSHAREHOUSE(ID),
+               SHAREDHOUSEID INTEGER REFERENCES SHAREDHOUSE(ID)   
+         )"""
+        cursor.execute(query)
+
+        # creating table for criteria of searched house information
+        query = """DROP TABLE IF EXISTS DATASEARCHEDHOUSE CASCADE """
+        cursor.execute(query)
+
+        query = """
+              CREATE TABLE DATASEARCHEDHOUSE(
               ID SERIAL PRIMARY KEY NOT NULL,
-              HOUSEMATEID INTEGER REFERENCES PERSONOFSHAREHOUSE(ID),
-              HOUSEID INTEGER REFERENCES SHAREDHOUSE(ID)   
+              LOCATION VARCHAR(80) NOT NULL,
+              MINRENTPRICE INTEGER NOT NULL,
+              MAXRENTPRICE INTEGER NOT NULL,
+              NUMBEROFROOM VARCHAR (3) NOT NULL,
+              DESCRIPTION VARCHAR (300) NOT NULL,
+              GENDER VARCHAR (6) NOT NULL  
         )"""
         cursor.execute(query)
 
+        query = """INSERT INTO DATASEARCHEDHOUSE(LOCATION, MINRENTPRICE, MAXRENTPRICE,NUMBEROFROOM,DESCRIPTION,GENDER) VALUES ('Levent', '300', '500','3+1','aa','Male' )"""
+        cursor.execute(query)
 
+        # creating table for person who share house
+        query = """DROP TABLE IF EXISTS PERSONOFSEARCHHOUSE CASCADE """
+        cursor.execute(query)
 
+        query = """
+                      CREATE TABLE PERSONOFSEARCHHOUSE(
+                      ID SERIAL PRIMARY KEY NOT NULL,
+                      NAME VARCHAR (50),
+                      GENDER VARCHAR (6),
+                      DEPARTMENT VARCHAR (30),
+                      TELNO VARCHAR (20)
+                )"""
+        cursor.execute(query)
 
+        query = """INSERT INTO PERSONOFSHAREHOUSE(NAME, GENDER, DEPARTMENT,TELNO) VALUES ('Adil Furkan Ekici', 'Male', 'Computer Eng.', '05420000000')"""
+        cursor.execute(query)
 
-        ##########################################################
+        # creating table for searched house criteria and person of searching house information
+        query = """DROP TABLE IF EXISTS FINDINGHOUSE CASCADE """
+        cursor.execute(query)
 
+        query = """
+               CREATE TABLE FINDINGHOUSE(
+               ID SERIAL PRIMARY KEY NOT NULL,
+               PERSONOFSEARCHID INTEGER REFERENCES PERSONOFSEARCHHOUSE(ID),
+               SEARCHEDHOUSEID INTEGER REFERENCES DATASEARCHEDHOUSE(ID)   
+         )"""
+        cursor.execute(query)
 
-
-        ####################
 
         connection.commit()
 
