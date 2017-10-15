@@ -281,8 +281,7 @@ def SignUpPage():
 
       query = """
             INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
-            VALUES ('%s', '%s', '%s')""" % (username, hashed_password, email
-        )
+            VALUES ('%s', '%s', '%s')""" % (username, hashed_password, email)
 
       cursor.execute(query)
 
@@ -312,8 +311,7 @@ def GameFriendPage():
             cursor = connection.cursor()
 
             query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION) 
-                                                VALUES('%s', '%s', '%s', '%s', '%d', '%s')""" % (
-                gameName, gameType, gameDate, gameLoc, playerNum, gameDesc )
+                                                VALUES('%s', '%s', '%s', '%s', '%d', '%s')""" % (gameName, gameType, gameDate, gameLoc, playerNum, gameDesc )
 
             cursor.execute(query)
             connection.commit()
