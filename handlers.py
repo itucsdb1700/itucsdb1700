@@ -312,8 +312,26 @@ def HomePage():
 
 @site.route('/house_announcement')
 def HousePage():
-    return render_template('house_announcement.html')
+    if request.method == 'POST'and request.form["InputLocationOfSharingHouse"] != None:
+        LocationOfSharingHouse = request.form['InputLocationOfSharingHouse']
+        RentPriceOfSharingHouse = request.form['InputRentPriceOfSharingHouse']
+        numberOfPeopleInHouse = request.form['InputnumberOfPeopleInHouse']
+        GenderforSharingHouse = request.form['InputGenderforSharingHouse']
+        NumberOfRoomOfSharingHouse = request.form['InputNumberOfRoomforSharingHouse']
+        DescriptionOfSharingHouse = request.form['InputDescriptionOfSharingHouse']
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
 
+            query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) 
+                                                VALUES('%s', '%s', '%s', '%s', '%s', '%s')""" % (LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, GenderforSharingHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse )
+
+            cursor.execute(query)
+            connection.commit()
+
+        return render_template('house_announcement.html')
+    else:
+        return render_template('house_announcement.html')
+####and request.form["InputLocationOfSharingHouse"] != None
 @site.route('/', methods=['GET', 'POST'])
 def LoginPage():
     now = datetime.now()
