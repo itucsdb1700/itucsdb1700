@@ -63,6 +63,20 @@ def initialize_database():
         cursor.execute(query)
         query = """DROP TABLE IF EXISTS DATASEARCHEDHOUSE CASCADE """
         cursor.execute(query)
+        query = """DROP TABLE IF EXISTS RESTAURANTS"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS CAMPUSLOCATIONS"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS FOODTYPES"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS SERVICETYPES"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS RESTAURANTMENUS"""
+        cursor.execute(query)
+        query = """DROP TABLE IF EXISTS RESTAURANTPOINTS"""
+        cursor.execute(query)
+
+
 
         query = """CREATE TABLE COUNTER (N INTEGER)"""
         cursor.execute(query)
@@ -232,6 +246,60 @@ def initialize_database():
          )"""
         cursor.execute(query)
 
+
+
+        #Create tables related to restaurants page
+        #FOREIGN KEYS and REFERENCES will be added later..
+
+        query = """
+                CREATE TABLE RESTAURANTS (
+                  ID SERIAL PRIMARY KEY NOT NULL,
+                  LOCATION INTEGER NOT NULL,
+                  MENUTYPE INTEGER NOT NULL,
+                  RESTAURANTPOINT INTEGER NOT NULL,
+                  PRICEBALANCE INTEGER NOT NULL,
+                  OPENINGTIME TIME  NOT NULL,
+                  CLOSINGTIME TIME NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """
+                CREATE TABLE CAMPUSLOCATIONS (
+                  ID SERIAL PRIMARY KEY NOT NULL,
+                  CAMPUSNAME  VARCHAR(50) NOT NULL,
+                  CAMPUSDISTRICT VARCHAR(50) NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """
+                CREATE TABLE FOODTYPES (
+                  ID SERIAL PRIMARY KEY NOT NULL,
+                  FOODTYPENAME  VARCHAR(50) NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """
+                CREATE TABLE SERVICETYPES (
+                  ID SERIAL PRIMARY KEY NOT NULL,
+                  SERVICETYPE  VARCHAR(50) NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """
+                CREATE TABLE RESTAURANTMENUS (
+                  ID SERIAL PRIMARY KEY NOT NULL,
+                  FOODTYPE  INTEGER NOT NULL,
+                  FOODNAME VARCHAR(40) NOT NULL,
+                  FOODPRICE FLOAT NOT NULL
+        )"""
+        cursor.execute(query)
+
+        query = """
+                        CREATE TABLE RESTAURANTPOINTS (
+                          RESTAURANTID SERIAL PRIMARY KEY NOT NULL,
+                          TOTALPOINTS  INTEGER NOT NULL
+          )"""
+        cursor.execute(query)
 
         connection.commit()
 
