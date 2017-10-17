@@ -9,16 +9,19 @@ from flask import redirect
 from flask.helpers import url_for
 
 from flask_login import login_required
-from flask_login import current_user
+from flask_login import current_user, login_user, logout_user
+from user import User
+from user import get_user
 from flask_login import LoginManager
 from flask import request
+
 
 from passlib.apps import custom_app_context as pwd_context
 
 import psycopg2 as dbapi2
 
 site = Blueprint('site', __name__)
-
+from server import load_user
 @site.route('/count')
 def counter_page():
     with dbapi2.connect(current_app.config['dsn']) as connection:
@@ -33,8 +36,9 @@ def counter_page():
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
-@login_required
+
 @site.route('/initdb')
+@login_required
 def initialize_database():
   #if current_user.is_authenticated: This statement will stay as a comment until the admin user is created
   with dbapi2.connect(current_app.config['dsn']) as connection:
@@ -349,7 +353,9 @@ def LoginPage():
 
         if db_username is not None: #check whether the user exists
           print('%s' % db_username)
-
+          user = load_user(db_username);
+          login_user(user);
+          print("%s" % user.username)
           #print('%s %s' % db_username[0][0], db_username[0][1] ) if the fetchall method is used debug using this line
 
 
@@ -386,6 +392,7 @@ def SignUpPage():
 
 
 @site.route('/game_friends', methods=['GET', 'POST'])
+@login_required
 def GameFriendPage():
     if request.method == 'POST':
         gameName = request.form['InputGameName']
