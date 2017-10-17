@@ -337,16 +337,21 @@ def LoginPage():
     now = datetime.now()
     if request.method == 'POST':
       login_email = request.form['login_email']
+      #print( "%s" % login_email)
       login_password = request.form['login_password']
       hashed_login_password = pwd_context.encrypt(login_password)
 
       with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
-        statement = """SELECT USERNAME, PASSWORD FROM USERS"""
-        cursor.execute(statement)
+        statement = """SELECT USERNAME FROM USERS WHERE USERNAME = %s"""
+        cursor.execute(statement, [login_email])
+        db_username = cursor.fetchone()
 
-        for row, row2 in cursor:
-          print( '{} {}'.format(row,row2))
+        if db_username is not None: #check whether the user exists
+          print('%s' % db_username)
+
+          #print('%s %s' % db_username[0][0], db_username[0][1] ) if the fetchall method is used debug using this line
+
 
       return render_template('home.html', current_time=now.ctime())
     else:
