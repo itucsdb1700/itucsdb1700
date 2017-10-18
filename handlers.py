@@ -36,9 +36,8 @@ def counter_page():
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
-
+#@login_required
 @site.route('/initdb')
-@login_required
 def initialize_database():
   #if current_user.is_authenticated: This statement will stay as a comment until the admin user is created
   with dbapi2.connect(current_app.config['dsn']) as connection:
@@ -117,7 +116,7 @@ def initialize_database():
         )"""
         cursor.execute(query)
 
-        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
         cursor.execute(query)
 
         # create table for found properties
@@ -135,7 +134,7 @@ def initialize_database():
         )"""
         cursor.execute(query)
 
-        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
         cursor.execute(query)
 
 
@@ -422,13 +421,36 @@ def GameFriendPage():
 
 @site.route('/lost_found', methods=['GET', 'POST'])
 def PropertyPage():
-    if request.method is 'POST':
+    if request.method == "POST":
+        formtype = request.form['form-name']
+        if formtype == "LostSomething":
+            lostdesc = request.form['LostSomethingDescription']
+            lostlocation = request.form['LostSomethingPossibleLocation']
+            lostdate = request.form['LostSomethingDate']
+            lostowner = request.form['LostSomethingOwnerName']
+            lostmail = request.form['LostSomethingOwnerMail']
+            lostphone = request.form['LostSomethingOwnerPhone']
 
-        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
-        cursor.execute(query)
-        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
-        cursor.execute(query)
-        return render_template('home.html')
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()
+                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')""" % (lostdesc, lostlocation, lostdate, lostowner, lostmail, lostphone)
+                cursor.execute(query)
+                connection.commit()
+        else:
+            founddesc = request.form['FoundSomethingDescription']
+            foundlocation = request.form['FoundSomethingCurrentLocation']
+            founddate = request.form['FoundSomethingDate']
+            foundname = request.form['FoundSomethingFinderName']
+            foundmail = request.form['FoundSomethingFinderMail']
+            foundphone = request.form['FoundSomethingFinderPhone']
+
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()
+                query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')""" % (founddesc, foundlocation, founddate, foundname, foundmail, foundphone)
+                cursor.execute(query)
+                connection.commit()
+
+        return render_template('lost_found.html')
     else:
         return render_template('lost_found.html')
 

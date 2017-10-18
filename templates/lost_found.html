@@ -5,9 +5,9 @@
         <script src="{{ url_for('static', filename='js/lost_found/lost_found.js') }}"></script>
     </div>
 
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#LostSomethingModal">I lost something</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#LostSomething">I lost something</button>
 
-    <div class="modal fade" id="LostSomethingModal" role="dialog">
+    <div class="modal fade" id="LostSomething" role="dialog">
         <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -15,44 +15,43 @@
                         <h4 class="modal-title">Lost Something</h4>
                       </div>
                       <div class="modal-body">
-                        <form>
+                        <form method="POST" action="{{ url_for('site.PropertyPage') }}" name="LostSomething" role="form">
+                          <input type="hidden" name="form-name" value="LostSomething">
                           <div class="form-group">
                             <label for="InputDescription">Description</label>
-                            <input class="form-control" id="Description" placeholder="Enter Description" type="text">
+                            <input class="form-control" name="LostSomethingDescription" placeholder="Enter Description" type="text">
                           </div>
                           <div class="form-group">
                             <label for="InputPossibleLocation">Possible Location</label>
-                            <input class="form-control" id="PossibleLocation" placeholder="Enter possible location" type="text">
+                            <input class="form-control" name="LostSomethingPossibleLocation" placeholder="Enter possible location" type="text">
                           </div>
                           <div class="form-group">
                             <label for="date">Possible date of losing</label>
-                            <input type="date" format="dd/mm/yyyy" name="date" value="date"><br>
+                            <input class="form-control" name="LostSomethingDate"type="date" name="date" value="date"><br>
                           </div>
                           <div class="form-group">
                             <label for="OwnerName">Name of Owner</label>
-                            <input class="form-control" id="OwnerName" placeholder="Enter Name" type="text">
+                            <input class="form-control" name="LostSomethingOwnerName" placeholder="Enter Name" type="text">
                           </div>
                           <div class="form-group">
                             <label for="OwnerMail">e-Mail of Owner</label>
-                            <input class="form-control" id="OwnerMail" placeholder="Enter e-Mail" type="text">
+                            <input class="form-control" name="LostSomethingOwnerMail" placeholder="Enter e-Mail" type="text">
                           </div>
                           <div class="form-group">
                             <label for="OwnerPhone">Phone Number of Owner</label>
-                            <input class="form-control" id="OwnerPhone" placeholder="Enter phone number" type="text">
+                            <input class="form-control" name="LostSomethingOwnerPhone" placeholder="+90(5--)-------" type="text">
                           </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
                         </form>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Send</button>
-                      </div>
                     </div>
-                  </div>
-                </div>
+        </div>
+    </div>
 
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#FoundSomethingModal">I found something</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#FoundSomething">I found something</button>
 
-    <div class="modal fade" id="FoundSomethingModal" role="dialog">
+    <div class="modal fade" id="FoundSomething" role="dialog">
         <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -60,40 +59,39 @@
                         <h4 class="modal-title">Found Something</h4>
                       </div>
                       <div class="modal-body">
-                        <form>
+                        <form method="POST" action="{{ url_for('site.PropertyPage') }}" name="FoundSomething" role="form">
+                          <input type="hidden" name="form-name" value="FoundSomething">
                           <div class="form-group">
                             <label for="InputDescription">Description</label>
-                            <input class="form-control" id="Description" placeholder="Enter description" type="text">
+                            <input class="form-control" name="FoundSomethingDescription" placeholder="Enter description" type="text">
                           </div>
                           <div class="form-group">
                             <label for="InputCurrentLocation">Current Location</label>
-                            <input class="form-control" id="CurrentLocation" placeholder="Enter current location" type="text">
+                            <input class="form-control" name="FoundSomethingCurrentLocation" placeholder="Enter current location" type="text">
                           </div>
                           <div class="form-group">
                             <label for="date">Date of finding</label>
-                            <input type="date" format="dd/mm/yyyy" name="Date" value="date"><br>
+                            <input class="form-control" name="FoundSomethingDate" type="date" name="Date" value="date"><br>
                           </div>
                           <div class="form-group">
                             <label for="FinderName">Name of person who found</label>
-                            <input class="form-control" id="FinderName" placeholder="Enter Name" type="text">
+                            <input class="form-control" name="FoundSomethingFinderName" placeholder="Enter Name" type="text">
                           </div>
                           <div class="form-group">
                             <label for="FinderMail">e-Mail of person who found</label>
-                            <input class="form-control" id="Finder" placeholder="Enter e-Mail" type="text">
+                            <input class="form-control" name="FoundSomethingFinderMail" placeholder="Enter e-Mail" type="text">
                           </div>
                           <div class="form-group">
                             <label for="FinderPhone">Phone Number of person who found</label>
-                            <input class="form-control" id="FinderPhone" placeholder="Enter phone number" type="text">
+                            <input class="form-control" name="FoundSomethingFinderPhone" placeholder="+90(5--)-------" type="text">
                           </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
                         </form>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Send</button>
-                      </div>
                     </div>
-                  </div>
-                </div>
+        </div>
+    </div>
 
 
 
