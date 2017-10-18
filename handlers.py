@@ -432,9 +432,9 @@ def PropertyPage():
             lostphone = request.form['LostSomethingOwnerPhone']
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
-                cursor = connection.cursor()
-                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')""" % (lostdesc, lostlocation, lostdate, lostowner, lostmail, lostphone)
-                cursor.execute(query)
+                cursor = connection.cursor()#prevented sql injection
+                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES (%s, %s, %s, %s, %s, %s)"""
+                cursor.execute(query, (lostdesc, lostlocation, lostdate, lostowner, lostmail, lostphone))
                 connection.commit()
         else:
             founddesc = request.form['FoundSomethingDescription']
@@ -445,9 +445,9 @@ def PropertyPage():
             foundphone = request.form['FoundSomethingFinderPhone']
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
-                cursor = connection.cursor()
-                query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')""" % (founddesc, foundlocation, founddate, foundname, foundmail, foundphone)
-                cursor.execute(query)
+                cursor = connection.cursor()#prevented sql injection
+                query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES (%s, %s, %s, %s, %s, %s)"""
+                cursor.execute(query, (founddesc, foundlocation, founddate, foundname, foundmail, foundphone))
                 connection.commit()
 
         return render_template('lost_found.html')
