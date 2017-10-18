@@ -19,9 +19,12 @@ from flask import request
 from passlib.apps import custom_app_context as pwd_context
 
 import psycopg2 as dbapi2
+import os.path
 
 site = Blueprint('site', __name__)
+
 from server import load_user
+
 @site.route('/count')
 def counter_page():
     with dbapi2.connect(current_app.config['dsn']) as connection:
@@ -36,277 +39,21 @@ def counter_page():
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
+
 #@login_required
 @site.route('/initdb')
 def initialize_database():
   #if current_user.is_authenticated: This statement will stay as a comment until the admin user is created
   with dbapi2.connect(current_app.config['dsn']) as connection:
-        cursor = connection.cursor()
-
-        #example counter table
-        query = """DROP TABLE IF EXISTS COUNTER"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS USERS"""  # DROP TABLE COMMANDS
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS LOSTSTUFF"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS FOUNDSTUFF"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS GAMEFRIEND"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS SHARINGHOUSE CASCADE """
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS PERSONOFSHAREHOUSE CASCADE """
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS DATASHAREDHOUSE CASCADE """
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS FINDINGHOUSE CASCADE """
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS PERSONOFSEARCHHOUSE CASCADE """
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS DATASEARCHEDHOUSE CASCADE """
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS RESTAURANTS"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS CAMPUSLOCATIONS"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS FOODTYPES"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS SERVICETYPES"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS RESTAURANTMENUS"""
-        cursor.execute(query)
-        query = """DROP TABLE IF EXISTS RESTAURANTPOINTS"""
-        cursor.execute(query)
-
-
-
-        query = """CREATE TABLE COUNTER (N INTEGER)"""
-        cursor.execute(query)
-
-        query = """INSERT INTO COUNTER (N) VALUES (0)"""
-        cursor.execute(query)
-
-
-        #create table for users
-
-
-        query = """
-              CREATE TABLE USERS (
-              ID SERIAL PRIMARY KEY NOT NULL,
-              USERNAME VARCHAR(30) NOT NULL,
-              PASSWORD VARCHAR(500) NOT NULL,
-              EMAIL VARCHAR(30) NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO USERS(USERNAME, PASSWORD, EMAIL) VALUES ('hakansander', '123456', 'sander@hotmail.com' )"""
-        cursor.execute(query)
-
-        # create table for lost properties
-        query = """
-              CREATE TABLE LOSTSTUFF (
-              ID SERIAL PRIMARY KEY NOT NULL,
-              STUFFDESC VARCHAR(300) NOT NULL, 
-              POSSIBLELOC VARCHAR(50) NOT NULL,
-              POSSIBLEDATE DATE NOT NULL,
-              OWNERNAME VARCHAR(50) NOT NULL,
-              OWNERMAIL VARCHAR(50) NOT NULL,
-              OWNERPHONE VARCHAR(15) NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
-        cursor.execute(query)
-
-        # create table for found properties
-
-
-        query = """
-              CREATE TABLE FOUNDSTUFF (
-              ID SERIAL PRIMARY KEY NOT NULL,
-              STUFFDESC VARCHAR(300) NOT NULL, 
-              CURRENTLOC VARCHAR(50) NOT NULL,
-              FINDINGDATE DATE NOT NULL,
-              FOUNDERNAME VARCHAR(50) NOT NULL,
-              FOUNDERMAIL VARCHAR(50) NOT NULL,
-              FOUNDERPHONE VARCHAR(15) NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
-        cursor.execute(query)
-
-
-        # creating table for game friends
-
-
-        query = """
-                      CREATE TABLE GAMEFRIEND(
-                      ID SERIAL PRIMARY KEY,
-                      NAME VARCHAR(80) NOT NULL,
-                      TYPE VARCHAR(30) NOT NULL,
-                      GAMEDATE DATE,
-                      LOCATION VARCHAR(80),
-                      PLAYERNUMBER INTEGER,
-                      DESCRIPTION VARCHAR(120)
-                )"""
-        cursor.execute(query)
-
-        # Insert an example row to the table GAMEFRIEND
-        query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION) 
-                                            VALUES('Batak', 'Table Game', '2017-10-13', 'MED', 4, 'Come with your couple')"""
-        cursor.execute(query)
-
-
-        # creating table for shared house information
-
-
-        query = """
-              CREATE TABLE DATASHAREDHOUSE(
-              ID SERIAL PRIMARY KEY NOT NULL,
-              LOCATION VARCHAR(80) NOT NULL,
-              RENTPRICE INTEGER NOT NULL,
-              NUMBEROFPEOPLE INTEGER NOT NULL,
-              NUMBEROFROOM VARCHAR (10) NOT NULL,
-              DESCRIPTION VARCHAR (300) NOT NULL,
-              GENDER VARCHAR (10) NOT NULL  
-        )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) VALUES ('Levent', '1500', '2','3+1','aa','Male' )"""
-        cursor.execute(query)
-
-        ###########################################
-        # creating table for person who share house
-
-
-        query = """
-              CREATE TABLE PERSONOFSHAREHOUSE(
-              ID SERIAL PRIMARY KEY NOT NULL,
-              NAME VARCHAR (50),
-              GENDER VARCHAR (10),
-              DEPARTMENT VARCHAR (30),
-              TELNO VARCHAR (20)
-        )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO PERSONOFSHAREHOUSE(NAME, GENDER, DEPARTMENT,TELNO) VALUES ('Adil Furkan Ekici', 'Male', 'Computer Eng.', '05420000000')"""
-        cursor.execute(query)
-
-        # creating table for share house and housemate information
-
-
-        query = """
-               CREATE TABLE SHARINGHOUSE(
-               ID SERIAL PRIMARY KEY NOT NULL,
-               PERSONOFSHAREID INTEGER REFERENCES PERSONOFSHAREHOUSE(ID),
-               SHAREDHOUSEID INTEGER REFERENCES DATASHAREDHOUSE(ID)   
-         )"""
-        cursor.execute(query)
-
-        # creating table for criteria of searched house information
-
-
-        query = """
-              CREATE TABLE DATASEARCHEDHOUSE(
-              ID SERIAL PRIMARY KEY NOT NULL,
-              LOCATION VARCHAR(80) NOT NULL,
-              MINRENTPRICE INTEGER NOT NULL,
-              MAXRENTPRICE INTEGER NOT NULL,
-              NUMBEROFROOM VARCHAR (10) NOT NULL,
-              DESCRIPTION VARCHAR (300) NOT NULL,
-              GENDER VARCHAR (10) NOT NULL  
-        )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO DATASEARCHEDHOUSE(LOCATION, MINRENTPRICE, MAXRENTPRICE,NUMBEROFROOM,DESCRIPTION,GENDER) VALUES ('Levent', '300', '500','3+1','aa','Male' )"""
-        cursor.execute(query)
-
-        # creating table for person who share house
-
-
-        query = """
-                      CREATE TABLE PERSONOFSEARCHHOUSE(
-                      ID SERIAL PRIMARY KEY NOT NULL,
-                      NAME VARCHAR (50),
-                      GENDER VARCHAR (10),
-                      DEPARTMENT VARCHAR (30),
-                      TELNO VARCHAR (20)
-                )"""
-        cursor.execute(query)
-
-        query = """INSERT INTO PERSONOFSHAREHOUSE(NAME, GENDER, DEPARTMENT,TELNO) VALUES ('Adil Furkan Ekici', 'Male', 'Computer Eng.', '05420000000')"""
-        cursor.execute(query)
-
-        # creating table for searched house criteria and person of searching house information
-
-        query = """
-               CREATE TABLE FINDINGHOUSE(
-               ID SERIAL PRIMARY KEY NOT NULL,
-               PERSONOFSEARCHID INTEGER REFERENCES PERSONOFSEARCHHOUSE(ID),
-               SEARCHEDHOUSEID INTEGER REFERENCES DATASEARCHEDHOUSE(ID)   
-         )"""
-        cursor.execute(query)
-
-
-
-        #Create tables related to restaurants page
-        #FOREIGN KEYS and REFERENCES will be added later..
-
-        query = """
-                CREATE TABLE RESTAURANTS (
-                  ID SERIAL PRIMARY KEY NOT NULL,
-                  LOCATION INTEGER NOT NULL,
-                  MENUTYPE INTEGER NOT NULL,
-                  RESTAURANTPOINT INTEGER NOT NULL,
-                  PRICEBALANCE INTEGER NOT NULL,
-                  OPENINGTIME TIME  NOT NULL,
-                  CLOSINGTIME TIME NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """
-                CREATE TABLE CAMPUSLOCATIONS (
-                  ID SERIAL PRIMARY KEY NOT NULL,
-                  CAMPUSNAME  VARCHAR(50) NOT NULL,
-                  CAMPUSDISTRICT VARCHAR(50) NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """
-                CREATE TABLE FOODTYPES (
-                  ID SERIAL PRIMARY KEY NOT NULL,
-                  FOODTYPENAME  VARCHAR(50) NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """
-                CREATE TABLE SERVICETYPES (
-                  ID SERIAL PRIMARY KEY NOT NULL,
-                  SERVICETYPE  VARCHAR(50) NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """
-                CREATE TABLE RESTAURANTMENUS (
-                  ID SERIAL PRIMARY KEY NOT NULL,
-                  FOODTYPE  INTEGER NOT NULL,
-                  FOODNAME VARCHAR(40) NOT NULL,
-                  FOODPRICE FLOAT NOT NULL
-        )"""
-        cursor.execute(query)
-
-        query = """
-                        CREATE TABLE RESTAURANTPOINTS (
-                          RESTAURANTID SERIAL PRIMARY KEY NOT NULL,
-                          TOTALPOINTS  INTEGER NOT NULL
-          )"""
-        cursor.execute(query)
-
-        connection.commit()
+        with connection.cursor() as cursor:
+            with site.open_resource('script.sql', 'r') as file:
+                statements = file.read()
+                cursor.execute(statements)
+            #scriptFile = open("script.sql", "r")
+            #cursor.execute(scriptFile.read())
 
   return redirect(url_for('site.HomePage'))
+
 
 @site.route('/home')
 def HomePage():
