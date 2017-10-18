@@ -390,9 +390,8 @@ def SignUpPage():
 
 
 
-
+#@login_required
 @site.route('/game_friends', methods=['GET', 'POST'])
-@login_required
 def GameFriendPage():
     if request.method == 'POST':
         gameName = request.form['InputGameName']
@@ -425,6 +424,10 @@ def GameFriendPage():
 def PropertyPage():
     if request.method is 'POST':
 
+        query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        cursor.execute(query)
+        query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES ('KAYIP', 'MED', '2017-10-13 16:00:00', 'Sercan', 'sahanse@itu.edu.tr', '+905350000000')"""
+        cursor.execute(query)
         return render_template('home.html')
     else:
         return render_template('lost_found.html')
