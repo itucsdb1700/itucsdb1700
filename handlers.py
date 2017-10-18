@@ -168,9 +168,9 @@ def initialize_database():
               LOCATION VARCHAR(80) NOT NULL,
               RENTPRICE INTEGER NOT NULL,
               NUMBEROFPEOPLE INTEGER NOT NULL,
-              NUMBEROFROOM VARCHAR (3) NOT NULL,
+              NUMBEROFROOM VARCHAR (10) NOT NULL,
               DESCRIPTION VARCHAR (300) NOT NULL,
-              GENDER VARCHAR (6) NOT NULL  
+              GENDER VARCHAR (10) NOT NULL  
         )"""
         cursor.execute(query)
 
@@ -185,7 +185,7 @@ def initialize_database():
               CREATE TABLE PERSONOFSHAREHOUSE(
               ID SERIAL PRIMARY KEY NOT NULL,
               NAME VARCHAR (50),
-              GENDER VARCHAR (6),
+              GENDER VARCHAR (10),
               DEPARTMENT VARCHAR (30),
               TELNO VARCHAR (20)
         )"""
@@ -214,9 +214,9 @@ def initialize_database():
               LOCATION VARCHAR(80) NOT NULL,
               MINRENTPRICE INTEGER NOT NULL,
               MAXRENTPRICE INTEGER NOT NULL,
-              NUMBEROFROOM VARCHAR (3) NOT NULL,
+              NUMBEROFROOM VARCHAR (10) NOT NULL,
               DESCRIPTION VARCHAR (300) NOT NULL,
-              GENDER VARCHAR (6) NOT NULL  
+              GENDER VARCHAR (10) NOT NULL  
         )"""
         cursor.execute(query)
 
@@ -230,7 +230,7 @@ def initialize_database():
                       CREATE TABLE PERSONOFSEARCHHOUSE(
                       ID SERIAL PRIMARY KEY NOT NULL,
                       NAME VARCHAR (50),
-                      GENDER VARCHAR (6),
+                      GENDER VARCHAR (10),
                       DEPARTMENT VARCHAR (30),
                       TELNO VARCHAR (20)
                 )"""
@@ -313,7 +313,7 @@ def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
-@site.route('/house_announcement')
+@site.route('/house_announcement',  methods=['GET', 'POST'])
 def HousePage():
     if request.method == 'POST'and request.form["InputLocationOfSharingHouse"] != None:
         LocationOfSharingHouse = request.form['InputLocationOfSharingHouse']
@@ -326,7 +326,7 @@ def HousePage():
             cursor = connection.cursor()
 
             query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) 
-                                                VALUES('%s', '%s', '%s', '%s', '%s', '%s')""" % (LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, GenderforSharingHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse )
+                                                VALUES('%s', '%s', '%s', '%s', '%s', '%s')""" % (LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse,  GenderforSharingHouse)
 
             cursor.execute(query)
             connection.commit()
