@@ -25,10 +25,11 @@ site = Blueprint('site', __name__)
 
 from server import load_user
 
-
-
 from handler_operations.lost_found import *
 from handler_operations.house_announcement import *
+from handler_operations.login import *
+from handler_operations.sign_up import *
+from handler_operations.restaurants import *
 
 @site.route('/count')
 def counter_page():
@@ -65,64 +66,19 @@ def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
+
 @site.route('/house_announcement',  methods=['GET', 'POST'])
+@login_required
 def HousePage():
     return house_announcement_page()
 
-
 @site.route('/', methods=['GET', 'POST'])
 def LoginPage():
-    now = datetime.now()
-    if request.method == 'POST':
-      login_email = request.form['login_email']
-      #print( "%s" % login_email)
-      login_password = request.form['login_password']
-      hashed_login_password = pwd_context.encrypt(login_password)
-
-      with dbapi2.connect(current_app.config['dsn']) as connection:
-        cursor = connection.cursor()
-        statement = """SELECT USERNAME FROM USERS WHERE USERNAME = %s"""
-        cursor.execute(statement, [login_email])
-        db_username = cursor.fetchone()
-
-        if db_username is not None: #check whether the user exists
-          print('%s' % db_username)
-          user = load_user(db_username);
-          login_user(user);
-          print("%s" % user.username)
-          #print('%s %s' % db_username[0][0], db_username[0][1] ) if the fetchall method is used debug using this line
-
-
-      return render_template('home.html', current_time=now.ctime())
-    else:
-      return render_template('login.html', current_time=now.ctime())
+    return login_page()
 
 @site.route('/sign_up', methods=['GET', 'POST'])
 def SignUpPage():
-  if request.method == 'POST':
-    username = request.form['username']
-    password = request.form['password']
-    hashed_password = pwd_context.encrypt(password)
-    email = request.form['email']
-    id = 1
-
-
-    with dbapi2.connect(current_app.config['dsn']) as connection:
-      cursor = connection.cursor()
-
-      query = """
-            INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
-            VALUES ('%s', '%s', '%s')""" % (username, hashed_password, email)
-
-      cursor.execute(query)
-
-      connection.commit()
-    return render_template('home.html')
-
-  else:
-    return render_template('sign_up.html')
-
-
+  return sign_up_page()
 
 #@login_required
 @site.route('/game_friends', methods=['GET', 'POST'])
@@ -157,3 +113,6 @@ def GameFriendPage():
 def PropertyPage():
     return lost_found_page()
 
+@site.route('/restaurants', methods=['GET', 'POST'])
+def RestaurantsPage():
+    return restaurants_page()
