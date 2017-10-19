@@ -28,6 +28,7 @@ from server import load_user
 
 
 from handler_operations.lost_found import *
+from handler_operations.house_announcement import *
 
 @site.route('/count')
 def counter_page():
@@ -66,25 +67,7 @@ def HomePage():
 
 @site.route('/house_announcement',  methods=['GET', 'POST'])
 def HousePage():
-    if request.method == 'POST'and request.form["InputLocationOfSharingHouse"] != None:
-        LocationOfSharingHouse = request.form['InputLocationOfSharingHouse']
-        RentPriceOfSharingHouse = request.form['InputRentPriceOfSharingHouse']
-        numberOfPeopleInHouse = request.form['InputnumberOfPeopleInHouse']
-        GenderforSharingHouse = request.form['InputGenderforSharingHouse']
-        NumberOfRoomOfSharingHouse = request.form['InputNumberOfRoomforSharingHouse']
-        DescriptionOfSharingHouse = request.form['InputDescriptionOfSharingHouse']
-        with dbapi2.connect(current_app.config['dsn']) as connection:
-            cursor = connection.cursor()
-
-            query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) 
-                                                VALUES('%s', '%s', '%s', '%s', '%s', '%s')""" % (LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse,  GenderforSharingHouse)
-
-            cursor.execute(query)
-            connection.commit()
-
-        return render_template('house_announcement.html')
-    else:
-        return render_template('house_announcement.html')
+    return houseAnnouncement_page()
 ####and request.form["InputLocationOfSharingHouse"] != None
 @site.route('/', methods=['GET', 'POST'])
 def LoginPage():
