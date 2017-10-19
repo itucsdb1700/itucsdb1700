@@ -67,8 +67,9 @@ def HomePage():
 
 @site.route('/house_announcement',  methods=['GET', 'POST'])
 def HousePage():
-    return houseAnnouncement_page()
-####and request.form["InputLocationOfSharingHouse"] != None
+    return house_announcement_page()
+
+
 @site.route('/', methods=['GET', 'POST'])
 def LoginPage():
     now = datetime.now()
