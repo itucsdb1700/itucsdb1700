@@ -17,8 +17,6 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
-site = Blueprint('site', __name__)
-
 from server import load_user
 
 def house_announcement_page():
