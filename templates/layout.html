@@ -17,7 +17,13 @@
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}">
   <!-- Custom styles for this template-->
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/sb-admin.css') }}">
-
+  <script type="text/javascript">
+    //Call the method on pageload
+    $(window).load(function(){
+      //Disply the modal popup
+        $('#SearchingHouseAnnouncementModal').modal('show');
+    });
+  </script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">

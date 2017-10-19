@@ -15,7 +15,7 @@
                     <h4 class="modal-title">Share House</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="" name="SharingHouseForm" role="form">
+                    <form method="POST" action="{{ url_for('site.HousePage') }}" name="SharedHouseAnnouncement" role="form">
                         <input type="hidden" name="form-name" value="SharedHouseAnnouncement">
                         <div class="form-group">
                             <label for="InputLocationOfSharingHouse">Location</label>
@@ -61,7 +61,6 @@
                     </div>
                   </div>
                 </div>
-
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SearchingHouseAnnouncementModal">Find House</button>
 
     <div class="modal fade" id="SearchingHouseAnnouncementModal" role="dialog">
@@ -72,17 +71,17 @@
                     <h4 class="modal-title">Find House</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="" name="SearchingHouseAnnouncementForm" role="form">
+                    <form method="POST" action="{{ url_for('site.HousePage') }}" name="SearchingHouseAnnouncement" role="form">
                         <input type="hidden" name="form-name" value="SearchingHouseAnnouncement">
                         <div class="form-group">
                             <label for="InputLocationOfSearchingHouse">Location</label>
                             <input class="form-control" id="InputLocationOfSearchingHouse" placeholder="Enter location" type="text" required>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-radio">
                             <label for="InputGenderforSearchingHouse">Gender of Roommate</label>
-                            <input type="checkbox" name="Male" value="Male"> Male
-                            <input type="checkbox" name="Female" value="Female"> Female<br>
+                            <input type="radio" name="InputGenderforSearchingHouse" value="Male"> Male
+                            <input type="radio" name="InputGenderforSearchingHouse" value="Female"> Female<br>
                           </div>
 
                         <div class="form-group">
@@ -94,18 +93,28 @@
                             <label for="InputMaxRentPriceOfSearchingHouse">Minimum Rent Price</label>
                             <input class="form-control"  name = "InputMaxRentPriceOfSearchingHouse" id="InputMaxRentPriceOfSearchingHouse" placeholder="Enter Maximum Rent Price" type="text"required>
                         </div>
+                        <div class="form-group">
+                            <div class="form-radio">
+                                <label for="InputNumberOfRoomforSearchingHouse">Number of rooms</label>
+                                <input type="radio" name="InputNumberOfRoomforSearchingHouse" value="1+1" checked> 1+1
+                                <input type="radio" name="InputNumberOfRoomforSearchingHouse" value="2+1"> 2+1
+                                <input type="radio" name="InputNumberOfRoomforSearchingHouse" value="3+1"> 3+1
+                                <input type="radio" name="InputNumberOfRoomforSearchingHouse" value="4+1"> 4+1<br>
+                            </div>
+                        </div>
 
-                          <div class="form-group">
+                        <div class="form-group">
                             <label for="InputDescriptionOfSearchingHouse">Description</label>
                             <input class="form-control" name = "InputDescriptionOfSearchingHouse" id="InputDescriptionOfSearchingHouse" placeholder="You may enter description for house" type="text"required>
-                          </div>
-                          <button type="reset">Reset</button>
-                          <button type="submit" formmethod="POST">Send</button>
+                        </div>
+                        <button type="reset">Reset</button>
+                        <button type="submit" formmethod="POST">Send</button>
                         </form>
-                      </div>
                     </div>
-                  </div>
                 </div>
+            </div>
+        </div>
+
 
 
 
