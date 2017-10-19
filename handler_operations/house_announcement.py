@@ -22,21 +22,39 @@ site = Blueprint('site', __name__)
 from server import load_user
 
 def houseAnnouncement_page():
-    if request.method == 'POST'and request.form["InputLocationOfSharingHouse"] != None:
-        LocationOfSharingHouse = request.form['InputLocationOfSharingHouse']
-        RentPriceOfSharingHouse = request.form['InputRentPriceOfSharingHouse']
-        numberOfPeopleInHouse = request.form['InputnumberOfPeopleInHouse']
-        GenderforSharingHouse = request.form['InputGenderforSharingHouse']
-        NumberOfRoomOfSharingHouse = request.form['InputNumberOfRoomforSharingHouse']
-        DescriptionOfSharingHouse = request.form['InputDescriptionOfSharingHouse']
-        with dbapi2.connect(current_app.config['dsn']) as connection:
-            cursor = connection.cursor()
+    if request.method == "POST":
+        formtype = request.form['form-name']
+        if formtype == "SharedHouseAnnouncement":
+            LocationOfSharingHouse = request.form['InputLocationOfSharingHouse']
+            RentPriceOfSharingHouse = request.form['InputRentPriceOfSharingHouse']
+            numberOfPeopleInHouse = request.form['InputnumberOfPeopleInHouse']
+            GenderforSharingHouse = request.form['InputGenderforSharingHouse']
+            NumberOfRoomOfSharingHouse = request.form['InputNumberOfRoomforSharingHouse']
+            DescriptionOfSharingHouse = request.form['InputDescriptionOfSharingHouse']
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+              cursor = connection.cursor()
 
-            query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) 
+              query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) 
                                                 VALUES(%s, %s, %s, %s, %s, %s)"""
 
-            cursor.execute(query,(LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse,  GenderforSharingHouse))
-            connection.commit()
-        return render_template('house_announcement.html')
+              cursor.execute(query,(LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse,  GenderforSharingHouse))
+              connection.commit()
+        else:
+            LocationOfSearchingHouse = request.form["InputLocationOfSearchingHouse"]
+            GenderforSearchingHouse = request.form["InputGenderforSearchingHouse"]
+            MinRentPriceOfSearchingHouse = request.form["InputMinRentPriceOfSearchingHouse"]
+            MaxRentPriceOfSearchingHouse = request.form["InputMaxRentPriceOfSearchingHouse"]
+            DescriptionOfSearchingHouse = request.form["InputDescriptionOfSearchingHouse"]
+
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()
+
+                query = """INSERT INTO DATASEARCHEDHOUSE(LOCATION, MINRENTPRICE, MAXRENTPRICE,DESCRIPTION,GENDER)
+                                                        VALUES (%s,%s,%s,%s,%s,%s)"""
+
+                cursor.execute(query, (LocationOfSearchingHouse, MinRentPriceOfSearchingHouse, MaxRentPriceOfSearchingHouse,DescriptionOfSearchingHouse,GenderforSearchingHouse))
+                connection.commit()
+
+        return render_template("house_announcement.html")
     else:
         return render_template('house_announcement.html')

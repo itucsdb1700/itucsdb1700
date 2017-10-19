@@ -16,7 +16,7 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="" name="SharingHouseForm" role="form">
-
+                        <input type="hidden" name="form-name" value="SharedHouseAnnouncement">
                         <div class="form-group">
                             <label for="InputLocationOfSharingHouse">Location</label>
                             <input class="form-control" name="InputLocationOfSharingHouse" id="InputLocationOfSharingHouse" placeholder="Enter location" type="text" required>
@@ -62,7 +62,7 @@
                   </div>
                 </div>
 
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SSearchingHouseAnnouncementModal">Find House</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SearchingHouseAnnouncementModal">Find House</button>
 
     <div class="modal fade" id="SearchingHouseAnnouncementModal" role="dialog">
         <div class="modal-dialog">
@@ -73,10 +73,10 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="" name="SearchingHouseAnnouncementForm" role="form">
-
+                        <input type="hidden" name="form-name" value="SearchingHouseAnnouncement">
                         <div class="form-group">
                             <label for="InputLocationOfSearchingHouse">Location</label>
-                            <input class="form-control" id="LocationOfNewHouse" placeholder="Enter location" type="text" required>
+                            <input class="form-control" id="InputLocationOfSearchingHouse" placeholder="Enter location" type="text" required>
                         </div>
 
                         <div class="form-group">
