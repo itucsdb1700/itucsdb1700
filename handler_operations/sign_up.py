@@ -33,9 +33,9 @@ def sign_up_page():
 
       query = """
             INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
-            VALUES ('%s', '%s', '%s')""" % (username, hashed_password, email)
+            VALUES (%s, %s, %s)"""
 
-      cursor.execute(query)
+      cursor.execute(query, (username, hashed_password, email))
 
       connection.commit()
     return render_template('home.html')

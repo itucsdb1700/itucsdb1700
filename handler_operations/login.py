@@ -34,8 +34,8 @@ def login_page():
 
       if db_username is not None:  # check whether the user exists
         print('%s' % db_username)
-        user = load_user(db_username);
-        login_user(user);
+        user = load_user(db_username)
+        login_user(user)
         print("%s" % user.username)
         # print('%s %s' % db_username[0][0], db_username[0][1] ) if the fetchall method is used debug using this line
 
