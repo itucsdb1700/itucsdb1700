@@ -66,9 +66,8 @@ def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
-
+#@login_required
 @site.route('/house_announcement',  methods=['GET', 'POST'])
-@login_required
 def HousePage():
     return house_announcement_page()
 
