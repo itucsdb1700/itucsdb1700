@@ -33,7 +33,7 @@ def houseAnnouncement_page():
             cursor = connection.cursor()
 
             query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,GENDER) 
-                                                VALUES('%s', '%s', '%s', '%s', '%s', '%s')"""
+                                                VALUES(%s, %s, %s, %s, %s, %s)"""
 
             cursor.execute(query,(LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse, NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse,  GenderforSharingHouse))
             connection.commit()
