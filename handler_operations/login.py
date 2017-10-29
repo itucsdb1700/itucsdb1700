@@ -11,6 +11,7 @@ from user import User
 from user import get_user
 from flask_login import LoginManager
 from flask import request
+import handlers
 
 from passlib.apps import custom_app_context as pwd_context
 
@@ -35,15 +36,13 @@ def login_page():
         user = load_user(db_username)
         statement = """SELECT PASSWORD FROM USERS WHERE USERNAME = %s"""
         cursor.execute(statement, [login_email])
-        db_password = cursor.fetchone()
         if pwd_context.verify(login_password,user.password) is True:
           login_user(user)
-          print("%s" % user.password)
-          print('%s' % db_password[0])
-
-
+          return redirect((url_for('site.HomePage')))
+        else:
+          return render_template('login.html')
+      else:
+        return render_template('login.html')
         # print('%s %s' % db_username[0][0], db_username[0][1] ) if the fetchall method is used debug using this line
-
-    return render_template('home.html')
   else:
     return render_template('login.html')

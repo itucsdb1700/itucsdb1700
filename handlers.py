@@ -14,6 +14,7 @@ from handler_operations.game_friends import *
 from handler_operations.initdb import *
 
 @site.route('/count')
+@login_required
 def counter_page():
     with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
@@ -28,13 +29,24 @@ def counter_page():
     return "This page was accessed %d times." % count
 
 
-#@login_required
+@site.route('/', methods=['GET', 'POST'])
+def LoginPage():
+    return login_page()
+
+@site.route("/logout")
+@login_required
+def LogoutPage():
+  logout_user()
+  return redirect(url_for('site.LoginPage'))
+
 @site.route('/initdb')
+@login_required
 def initialize_database():
     return init_db()
 
 
 @site.route('/home')
+@login_required
 def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
@@ -45,30 +57,23 @@ def HomePage():
 def HousePage():
     return house_announcement_page()
 
-@site.route('/', methods=['GET', 'POST'])
-def LoginPage():
-    return login_page()
-
 @site.route('/sign_up', methods=['GET', 'POST'])
 def SignUpPage():
   return sign_up_page()
 
 
 @site.route('/game_friends', methods=['GET', 'POST'])
+@login_required
 def GameFriendPage():
     return game_friend_page()
 
 
 @site.route('/lost_found', methods=['GET', 'POST'])
+@login_required
 def PropertyPage():
     return lost_found_page()
 
 @site.route('/restaurants', methods=['GET', 'POST'])
+@login_required
 def RestaurantsPage():
     return restaurants_page()
-
-@site.route("/logout")
-@login_required
-def LogoutPage():
-  logout_user()
-  return redirect(url_for('LoginPage'))
