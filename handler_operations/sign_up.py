@@ -38,7 +38,7 @@ def sign_up_page():
       cursor.execute(query, (username, hashed_password, email))
 
       connection.commit()
-    return render_template('home.html')
+    return redirect(url_for('site.LoginPage'))
 
   else:
     return render_template('sign_up.html')

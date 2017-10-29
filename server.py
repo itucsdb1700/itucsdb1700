@@ -21,7 +21,7 @@ def CreateApp():
 
     login_manager.init_app(app)
     login_manager.login_view = 'site.LoginPage'
-    login_manager.login_message = 'logged in succesfully'
+    #login_manager.login_message = 'logged in succesfully'
 
     return app
 
