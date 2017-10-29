@@ -66,3 +66,9 @@ def PropertyPage():
 @site.route('/restaurants', methods=['GET', 'POST'])
 def RestaurantsPage():
     return restaurants_page()
+
+@site.route("/logout")
+@login_required
+def LogoutPage():
+  logout_user()
+  return redirect(url_for('LoginPage'))
