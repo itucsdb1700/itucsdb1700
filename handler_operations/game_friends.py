@@ -1,6 +1,7 @@
 from flask import render_template
 from flask import current_app
 from flask import request
+from classes.game_friends_class import GameAnnounce
 
 import psycopg2 as dbapi2
 
@@ -17,12 +18,15 @@ def game_friend_page():
         gameLoc = request.form['InputGameLocation']
         gameDesc = request.form['GameDescription']
 
+        gameAnnounce = GameAnnounce(gameName,gameType,playerNum,gameDate,gameLoc,gameDesc)
+
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
 
             query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION) 
                                                 VALUES('%s', '%s', '%s', '%s', '%d', '%s')""" % (
-                gameName, gameType, gameDate, gameLoc, playerNum, gameDesc)
+                gameAnnounce.gameName, gameAnnounce.gameType, gameAnnounce.gameDate,
+                gameAnnounce.gameLoc, gameAnnounce.playerNum, gameAnnounce.gameDesc)
 
             cursor.execute(query)
             connection.commit()
