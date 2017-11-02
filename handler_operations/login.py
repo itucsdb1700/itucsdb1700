@@ -22,20 +22,20 @@ from server import load_user
 
 def login_page():
   if request.method == 'POST':
-    login_email = request.form['login_email']
-    print( "%s" % login_email)
+    login_username = request.form['login_username']
+    print( "%s" % login_username)
     login_password = request.form['login_password']
 
     with dbapi2.connect(current_app.config['dsn']) as connection:
       cursor = connection.cursor()
       statement = """SELECT USERNAME FROM USERS WHERE USERNAME = %s"""
-      cursor.execute(statement, [login_email])
+      cursor.execute(statement, [login_username])
       db_username = cursor.fetchone()
 
       if db_username is not None:  # check whether the user exists
         user = load_user(db_username)
         statement = """SELECT PASSWORD FROM USERS WHERE USERNAME = %s"""
-        cursor.execute(statement, [login_email])
+        cursor.execute(statement, [login_username])
         if pwd_context.verify(login_password,user.password) is True:
           login_user(user)
           return redirect((url_for('site.HomePage')))
