@@ -22,6 +22,6 @@ from server import load_user
 #under development...
 def restaurants_page():
   if request.method == "POST":
-    return render_template('home.html')
+    return render_template('restaurants.html')
   else:
-    return render_template('home.html')
+    return render_template('restaurants.html')
