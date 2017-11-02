@@ -41,6 +41,7 @@ def LogoutPage():
 
 @site.route('/initdb')
 def initialize_database():
+    LogoutPage()
     return init_db()
 
 
