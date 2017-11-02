@@ -34,7 +34,7 @@ def sign_up_page():
       cursor = connection.cursor()
 
       query = """
-            INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
+            INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, ) 
             VALUES (%s, %s, %s)"""
 
       cursor.execute(query, (username, hashed_password, email))
