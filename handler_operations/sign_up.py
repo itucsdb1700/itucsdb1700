@@ -25,6 +25,8 @@ def sign_up_page():
     password = request.form['password']
     hashed_password = pwd_context.encrypt(password)
     email = request.form['email']
+    name = request.form['firstName']
+    last_name = request.form['lastName']
     id = 1
 
 
