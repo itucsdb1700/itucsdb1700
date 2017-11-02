@@ -26,7 +26,7 @@ def sign_up_page():
     hashed_password = pwd_context.encrypt(password)
     email = request.form['email']
     name = request.form['firstName']
-    last_name = request.form['lastName']
+    surname = request.form['lastName']
     id = 1
 
 
@@ -34,10 +34,10 @@ def sign_up_page():
       cursor = connection.cursor()
 
       query = """
-            INSERT INTO USERS (USERNAME, PASSWORD, EMAIL) 
-            VALUES (%s, %s, %s)"""
+            INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, NAME, SURNAME, FACULTYID) 
+            VALUES (%s, %s, %s, %s, %s, %s)"""
 
-      cursor.execute(query, (username, hashed_password, email))
+      cursor.execute(query, (username, hashed_password, email, name, surname, '1'))
 
       connection.commit()
     return redirect(url_for('site.LoginPage'))
