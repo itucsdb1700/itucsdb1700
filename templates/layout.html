@@ -236,9 +236,9 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="yedekIndex.html">Dashboard</a>
+          <a href="{{ url_for('site.HomePage') }}">ITU Helper</a>
         </li>
-        <li class="breadcrumb-item active">Blank Page</li>
+        <li class="breadcrumb-item active">{{ self.title() }}</li>
       </ol>
       <div class="row">
         <div class="col-12">
