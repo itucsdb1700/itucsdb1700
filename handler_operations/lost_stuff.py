@@ -53,4 +53,9 @@ def lost_stuff_page():
                 connection.commit()
         return render_template('lost_stuff.html')
     else:
-        return render_template('lost_stuff.html')
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT STUFFDESC, POSSIBLELOC, POSSIBLEDATE FROM LOSTSTUFF"""
+            cursor.execute(query)
+            lostitems = cursor.fetchall()
+        return render_template('lost_stuff.html', lostitems=lostitems)

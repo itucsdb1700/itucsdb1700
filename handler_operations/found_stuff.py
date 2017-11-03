@@ -38,4 +38,9 @@ def found_stuff_page():
                 connection.commit()
         return render_template('found_stuff.html')
     else:
-        return render_template('found_stuff.html')
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT STUFFDESC, CURRENTLOC, FINDINGDATE FROM FOUNDSTUFF"""
+            cursor.execute(query)
+            founditems = cursor.fetchall()
+        return render_template('found_stuff.html', founditems=founditems)
