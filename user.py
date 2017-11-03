@@ -12,6 +12,12 @@ class User( UserMixin ):
 
   def get_id(self):
     return self.username
+  def get_username(self):
+    return self.username
+  def get_password(self):
+    return self.password
+  def get_email(self):
+    return self.email
 
   @property
   def is_active(self):

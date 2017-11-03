@@ -29,7 +29,6 @@ def counter_page():
         count = cursor.fetchone()[0]
     return "This page was accessed %d times." % count
 
-
 @site.route('/', methods=['GET', 'POST'])
 def LoginPage():
     return login_page()
