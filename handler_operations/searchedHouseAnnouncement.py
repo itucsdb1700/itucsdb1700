@@ -17,6 +17,8 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
+from classes.Searching_House_class import searchingHouseAnnouncement
+
 def searched_House_Announcement_Page():
     if request.method == "POST":
         formtype = request.form['form-name']
@@ -34,10 +36,10 @@ def searched_House_Announcement_Page():
         faculty_id = current_user.get_faculty_id()
         print(faculty_id)
         if formtype == "SearchingHouseAnnouncement":
-            LocationOfSearchingHouse = request.form['InputLocationOfSearchingHouse']
-            MinRentPriceOfSearchingHouse = request.form['InputMinRentPriceOfSearchingHouse']
-            MaxRentPriceOfSearchingHouse = request.form['InputMaxRentPriceOfSearchingHouse']
-            DescriptionOfSearchingHouse = request.form['InputDescriptionOfSearchingHouse']
+            Location = request.form['InputLocationOfSearchingHouse']
+            MinRent = request.form['InputMinRentPriceOfSearchingHouse']
+            MaxRent = request.form['InputMaxRentPriceOfSearchingHouse']
+            Description = request.form['InputDescriptionOfSearchingHouse']
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()
@@ -47,9 +49,11 @@ def searched_House_Announcement_Page():
                 cursor.execute(statement, (username,email))
                 currentuser_id = cursor.fetchone()
 
+                searchingHouseAd = searchingHouseAnnouncement(Location,MinRent,MaxRent,Description,currentuser_id)
+
                 query = """INSERT INTO DATASEARCHEDHOUSE(LOCATION, MINRENTPRICE, MAXRENTPRICE,DESCRIPTION,USERID)
                                                         VALUES (%s,%s,%s,%s,%s)"""
-                cursor.execute(query, (LocationOfSearchingHouse, MinRentPriceOfSearchingHouse, MaxRentPriceOfSearchingHouse,DescriptionOfSearchingHouse,currentuser_id))
+                cursor.execute(query, (searchingHouseAd.LocationOfSearchingHouse, searchingHouseAd.MinRentPriceOfSearchingHouse, searchingHouseAd.MaxRentPriceOfSearchingHouse,searchingHouseAd.DescriptionOfSearchingHouse,searchingHouseAd.id_ownerOfSearchingHouseAnnouncement))
                 connection.commit()
 
         return render_template("searchedhouse_announcement.html")
@@ -60,5 +64,5 @@ def searched_House_Announcement_Page():
                               WHERE(DATASEARCHEDHOUSE.USERID = USERS.ID)
                     """
             cursor.execute(query)
-            searchedHouse = cursor.fetchall()
-        return render_template('searchedhouse_announcement.html', searchedHouse=searchedHouse)
+            ALLSearchedHouse = cursor.fetchall()
+        return render_template('searchedhouse_announcement.html', ALLSearchedHouse=ALLSearchedHouse)
