@@ -48,4 +48,22 @@
                     </div>
         </div>
     </div>
+    {% if lostitems %}
+        <table style="width:120%">
+            <tr>
+                <th>Description</th>
+                <th>Possible Location</th>
+                <th>Possible Date of Losing(YEAR-MONTH-DAY)</th>
+            </tr>
+            {% for item in lostitems %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[2] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There are no items.</p>
+    {% endif %}
 {%endblock %}
