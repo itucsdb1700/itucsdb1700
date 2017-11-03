@@ -20,23 +20,10 @@ import os.path
 
 from server import load_user
 
-def lost_found_page():
+def found_stuff_page():
     if request.method == "POST":
         formtype = request.form['form-name']
-        if formtype == "LostSomething":
-            lostdesc = request.form['LostSomethingDescription']
-            lostlocation = request.form['LostSomethingPossibleLocation']
-            lostdate = request.form['LostSomethingDate']
-            lostowner = request.form['LostSomethingOwnerName']
-            lostmail = request.form['LostSomethingOwnerMail']
-            lostphone = request.form['LostSomethingOwnerPhone']
-
-            with dbapi2.connect(current_app.config['dsn']) as connection:
-                cursor = connection.cursor()#prevented sql injection
-                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES (%s, %s, %s, %s, %s, %s)"""
-                cursor.execute(query, (lostdesc, lostlocation, lostdate, lostowner, lostmail, lostphone))
-                connection.commit()
-        else:
+        if formtype == "FoundSomething":
             founddesc = request.form['FoundSomethingDescription']
             foundlocation = request.form['FoundSomethingCurrentLocation']
             founddate = request.form['FoundSomethingDate']
@@ -49,7 +36,6 @@ def lost_found_page():
                 query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE) VALUES (%s, %s, %s, %s, %s, %s)"""
                 cursor.execute(query, (founddesc, foundlocation, founddate, foundname, foundmail, foundphone))
                 connection.commit()
-
-        return render_template('lost_found.html')
+        return render_template('found_stuff.html')
     else:
-        return render_template('lost_found.html')
+        return render_template('found_stuff.html')

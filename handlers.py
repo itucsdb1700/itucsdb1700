@@ -5,7 +5,8 @@ from flask import Blueprint
 
 site = Blueprint('site', __name__)
 
-from handler_operations.lost_found import *
+from handler_operations.lost_stuff import *
+from handler_operations.found_stuff import *
 from handler_operations.house_announcement import *
 from handler_operations.login import *
 from handler_operations.sign_up import *
@@ -68,10 +69,15 @@ def GameFriendPage():
     return game_friend_page()
 
 
-@site.route('/lost_found', methods=['GET', 'POST'])
+@site.route('/lost_stuff', methods=['GET', 'POST'])
 @login_required
-def PropertyPage():
-    return lost_found_page()
+def LostStuff():
+    return lost_stuff_page()
+
+@site.route('/found_stuff', methods=['GET', 'POST'])
+@login_required
+def FoundStuff():
+    return found_stuff_page()
 
 @site.route('/restaurants', methods=['GET', 'POST'])
 @login_required
