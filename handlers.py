@@ -7,12 +7,13 @@ site = Blueprint('site', __name__)
 
 from handler_operations.lost_stuff import *
 from handler_operations.found_stuff import *
-from handler_operations.house_announcement import *
 from handler_operations.login import *
 from handler_operations.sign_up import *
 from handler_operations.restaurants import *
 from handler_operations.game_friends import *
 from handler_operations.initdb import *
+from handler_operations.sharedMyHouseAnnouncement import *
+from handler_operations.searchedHouseAnnouncement import *
 
 @site.route('/count')
 @login_required
@@ -52,10 +53,16 @@ def HomePage():
     return render_template('home.html', current_time=now.ctime())
 
 
-@site.route('/house_announcement',  methods=['GET', 'POST'])
+@site.route('/sharemyhouse_announcement',methods=['GET', 'POST'])
 @login_required
-def HousePage():
-    return house_announcement_page()
+def ShareMyHousePageAnnouncement():
+    return share_MyHouse_Announcement_Page()
+
+@site.route('/searchedhouse_announcement',methods=['GET', 'POST'])
+@login_required
+def SearchedHousePageAnnouncement():
+    return searched_House_Announcement_Page()
+
 
 @site.route('/sign_up', methods=['GET', 'POST'])
 def SignUpPage():
