@@ -5,4 +5,4 @@ class sharingHouseAnnouncement:
         self.NumberOfPeopleInSharingHouse = numberOfPeople
         self.NumberOfSharingHouseRoom = numberOfRoom
         self.DescriptionOfSharingHouse  = description
-        self.ıd_ownerOfSharingHouseAnnouncement = currentuser_id
+        self.id_ownerOfSharingHouseAnnouncement = currentuser_id

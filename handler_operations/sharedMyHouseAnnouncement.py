@@ -54,7 +54,7 @@ def share_MyHouse_Announcement_Page():
 
                 query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE, NUMBEROFROOM, DESCRIPTION, USERID) VALUES (%s, %s, %s, %s, %s, %s)"""
                 cursor.execute(query, (sharingHouseAd.LocationOfSharingHouse, sharingHouseAd.RentPriceOfSharingHouse, sharingHouseAd.NumberOfPeopleInSharingHouse,
-                                       sharingHouseAd.NumberOfSharingHouseRoom, sharingHouseAd.DescriptionOfSharingHouse,sharingHouseAd.ıd_ownerOfSharingHouseAnnouncement))
+                                       sharingHouseAd.NumberOfSharingHouseRoom, sharingHouseAd.DescriptionOfSharingHouse,sharingHouseAd.id_ownerOfSharingHouseAnnouncement))
 
                 connection.commit()
 
