@@ -12,6 +12,7 @@ from user import get_user
 from flask_login import LoginManager
 from flask import request
 
+
 from passlib.apps import custom_app_context as pwd_context
 
 import psycopg2 as dbapi2
@@ -23,6 +24,20 @@ from server import load_user
 def lost_stuff_page():
     if request.method == "POST":
         formtype = request.form['form-name']
+
+        username = current_user.get_username()
+        print(username) #use print to check whether the correct data is retrieved by checking the terminal
+        password = current_user.get_password()
+        print(password)
+        email = current_user.get_email()
+        print(email)
+        name = current_user.get_name()
+        print(name)
+        surname = current_user.get_surname()
+        print(surname)
+        faculty_id = current_user.get_faculty_id()
+        print(faculty_id)
+
         if formtype == "LostSomething":
             lostdesc = request.form['LostSomethingDescription']
             lostlocation = request.form['LostSomethingPossibleLocation']
