@@ -17,6 +17,8 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
+from classes.Sharing_House_class import sharingHouseAnnouncement
+
 def share_MyHouse_Announcement_Page():
     if request.method == "POST":
         formtype = request.form['form-name']
@@ -35,22 +37,25 @@ def share_MyHouse_Announcement_Page():
         print(faculty_id)
 
         if formtype == "SharedHouseAnnouncement":
-            LocationOfSharingHouse = request.form['InputLocationOfSharingHouse']
-            RentPriceOfSharingHouse = request.form['InputRentPriceOfSharingHouse']
-            numberOfPeopleInHouse = request.form['InputnumberOfPeopleInHouse']
-            NumberOfRoomOfSharingHouse = request.form['InputNumberOfRoomforSharingHouse']
-            DescriptionOfSharingHouse = request.form['InputDescriptionOfSharingHouse']
+            Location = request.form['InputLocationOfSharingHouse']
+            RentPrice = request.form['InputRentPriceOfSharingHouse']
+            NumberOfPeople = request.form['InputnumberOfPeopleInHouse']
+            NumberOfRoom = request.form['InputNumberOfRoomforSharingHouse']
+            Description = request.form['InputDescriptionOfSharingHouse']
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()#prevented sql injection
-                statement = """SELECT ID FROM USERS
-                                      WHERE(USERS.USERNAME = %s)
-                                      AND(USERS.EMAIL = %s)"""
+                statement = """SELECT ID FROM USERS WHERE(USERS.USERNAME = %s) AND(USERS.EMAIL = %s)"""
                 cursor.execute(statement, (username,email))
                 currentuser_id = cursor.fetchone()
 
+                sharingHouseAd = sharingHouseAnnouncement(Location,RentPrice,NumberOfPeople,NumberOfRoom,Description,currentuser_id)
+
+
                 query = """INSERT INTO DATASHAREDHOUSE(LOCATION, RENTPRICE, NUMBEROFPEOPLE, NUMBEROFROOM, DESCRIPTION, USERID) VALUES (%s, %s, %s, %s, %s, %s)"""
-                cursor.execute(query, (LocationOfSharingHouse, RentPriceOfSharingHouse, numberOfPeopleInHouse,NumberOfRoomOfSharingHouse, DescriptionOfSharingHouse,currentuser_id))
+                cursor.execute(query, (sharingHouseAd.LocationOfSharingHouse, sharingHouseAd.RentPriceOfSharingHouse, sharingHouseAd.NumberOfPeopleInSharingHouse,
+                                       sharingHouseAd.NumberOfSharingHouseRoom, sharingHouseAd.DescriptionOfSharingHouse,sharingHouseAd.ıd_ownerOfSharingHouseAnnouncement))
+
                 connection.commit()
 
         return render_template("sharedmyhouse_announcement.html")
@@ -62,5 +67,5 @@ def share_MyHouse_Announcement_Page():
                               WHERE(DATASHAREDHOUSE.USERID = USERS.ID)
                     """
             cursor.execute(query)
-            sharingHouse = cursor.fetchall()
-        return render_template('sharedmyhouse_announcement.html', sharingHouse=sharingHouse)
+            ALLSharingHouse = cursor.fetchall()
+        return render_template('sharedmyhouse_announcement.html', ALLSharingHouse=ALLSharingHouse)
