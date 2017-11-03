@@ -31,6 +31,12 @@ def lost_stuff_page():
         print(password)
         email = current_user.get_email()
         print(email)
+        name = current_user.get_name()
+        print(name)
+        surname = current_user.get_surname()
+        print(surname)
+        faculty_id = current_user.get_faculty_id()
+        print(faculty_id)
 
         if formtype == "LostSomething":
             lostdesc = request.form['LostSomethingDescription']

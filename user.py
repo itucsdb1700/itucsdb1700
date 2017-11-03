@@ -3,10 +3,13 @@ from flask_login import UserMixin
 import psycopg2 as dbapi2
 
 class User( UserMixin ):
-  def __init__(self, username, password, email):
+  def __init__(self, username, password, email, name, surname, faculty_id):
     self.username = username
     self.password = password
     self.email = email
+    self.name = name
+    self.surname = surname
+    self.faculty_id = faculty_id
     self.active = True
     self.is_admin = False
 
@@ -18,6 +21,12 @@ class User( UserMixin ):
     return self.password
   def get_email(self):
     return self.email
+  def get_name(self):
+    return self.name
+  def get_surname(self):
+    return self.surname
+  def get_faculty_id(self):
+    return self.faculty_id
 
   @property
   def is_active(self):
@@ -30,7 +39,7 @@ def get_user(db_username):
     statement = """SELECT * FROM USERS WHERE USERNAME = %s"""
     cursor.execute(statement, [db_username])
     db_user = cursor.fetchall()
-    user = User(db_user[0][1], db_user[0][2], db_user[0][3])
+    user = User(db_user[0][1], db_user[0][2], db_user[0][3],db_user[0][4], db_user[0][5], db_user[0][6])
     print('%s' % db_user[0][0])
 
   if user is not None:
