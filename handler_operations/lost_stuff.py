@@ -50,19 +50,19 @@ def lost_stuff_page():
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()#prevented sql injection
-                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.MAIL = %s)"""
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
                 cursor.execute(statement, (username, email))
                 lostuser_id = cursor.fetchone()
 
                 lost = lost_stuff(lostdesc, lostlocation, lostdate, lostownername, lostmail, lostphone, lostuser_id)
-                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE, USERID) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 cursor.execute(query, (lost.description, lost.location, lost.date, lost.ownername, lost.mail, lost.phone, lost.user_id))
                 connection.commit()
         return render_template('lost_stuff.html')
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT STUFFDESC, POSSIBLELOC, POSSIBLEDATE FROM LOSTSTUFF"""
+            query = """SELECT STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME FROM LOSTSTUFF"""
             cursor.execute(query)
             lostitems = cursor.fetchall()
         return render_template('lost_stuff.html', lostitems=lostitems)
