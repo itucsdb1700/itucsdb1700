@@ -48,7 +48,7 @@ def special_student_page():
             query = """INSERT INTO SPECIALSTUDENTS(SUBJECT, FULLNAME, EMAIL, PHONENUMBER, USERID) VALUES (%s, %s, %s, %s, %s)"""
             cursor.execute(query, (student.subject, student.fullname, student.email, student.phonenumber, student.user_id))
             connection.commit()
-        return redirect(url_for('siteSpecialStudent'))
+        return redirect(url_for('site.SpecialStudent'))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
