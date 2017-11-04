@@ -63,8 +63,9 @@ def share_MyHouse_Announcement_Page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT LOCATION,RENTPRICE,NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,USERS.NAME,USERS.SURNAME FROM DATASHAREDHOUSE,USERS
+            query = """SELECT LOCATION,RENTPRICE,NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM DATASHAREDHOUSE,USERS,FACULTIES
                               WHERE(DATASHAREDHOUSE.USERID = USERS.ID)
+                              AND(USERS.FACULTYID = FACULTIES.ID)   
                     """
             cursor.execute(query)
             ALLSharingHouse = cursor.fetchall()
