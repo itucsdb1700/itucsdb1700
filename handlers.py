@@ -20,6 +20,7 @@ from handler_operations.itu_activities import *
 from handler_operations.club_activities import *
 from handler_operations.sport_activities import *
 from handler_operations.sharedBooksAnnouncement import *
+from handler_operations.sharedLessonNotesAnnouncement import *
 
 
 @site.route('/count')
@@ -75,6 +76,11 @@ def SearchedHousePageAnnouncement():
 @login_required
 def SharedBooksAnnouncementPage():
     return shared_Books_Announcement_Page()
+
+@site.route('/sharelessonnotes',methods = ['GET','POST'])
+@login_required
+def SharedLessonNotesAnnouncementPage():
+    return shared_LessonNotes_Announcement_Page()
 
 @site.route('/sign_up', methods=['GET', 'POST'])
 def SignUpPage():
