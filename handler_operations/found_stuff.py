@@ -56,11 +56,8 @@ def found_stuff_page():
                 found = found_stuff(founddesc, foundlocation, founddate, foundname, foundmail, foundphone, founduser_id)
                 query = """INSERT INTO FOUNDSTUFF(STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE, USERID) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 cursor.execute(query, (found.description, found.location, found.date, found.name, found.mail, found.phone, found.user_id))
-                query = """SELECT STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME FROM FOUNDSTUFF"""
-                cursor.execute(query)
-                founditems = cursor.fetchall()
                 connection.commit()
-                return render_template('found_stuff.html', founditems=founditems)
+                return redirect(url_for('site.FoundStuff'))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
