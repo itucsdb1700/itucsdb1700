@@ -17,6 +17,8 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
+from classes.LessonNotes_class import sharingLessonNotesAnnouncement
+
 def shared_LessonNotes_Announcement_Page():
     if request.method == "POST":
         formtype = request.form['form-name']
@@ -32,17 +34,27 @@ def shared_LessonNotes_Announcement_Page():
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()
 
-                statement = """SELECT ID FROM USERS
-                                  WHERE(USERS.USERNAME = %s)
-                                  AND(USERS.EMAIL = %s)"""
+                statement = """SELECT ID FROM USERS WHERE(USERS.USERNAME = %s) AND(USERS.EMAIL = %s)"""
                 cursor.execute(statement, (username, email))
                 currentuser_id = cursor.fetchone()
+
+                sharedLessonNotesAd = sharingLessonNotesAnnouncement(NameOfLessonNote,LessonName,LessonCode,TeacherName,currentuser_id)
+
                 query = """INSERT INTO SHAREDLESSONNOTES(NAMEOFNOTES, LESSONNAME, LESSONCODE,TEACHERNAME,USERID)
                                                                         VALUES (%s,%s,%s,%s,%s)"""
 
-                cursor.execute(query, (NameOfLessonNote,LessonName,LessonCode,TeacherName,currentuser_id))
+                cursor.execute(query, (sharedLessonNotesAd.NameOFSharingLessonNote,sharedLessonNotesAd.LessonNameOfSharingLessonNote,sharedLessonNotesAd.LessonCodeOfSharingLessonNote,
+                                       sharedLessonNotesAd.TeacherNameOFSharingLessonNote,sharedLessonNotesAd.id_ownerOfSharingLessonNote))
 
                 connection.commit()
-        return render_template("sharedbooks_announcement.html")
+        return redirect(url_for('site.SharedLessonNotesAnnouncementPage'))
     else:
-        return render_template("sharedbooks_announcement.html")
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT NAMEOFNOTES,LESSONNAME,LESSONCODE,TEACHERNAME,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM SHAREDLESSONNOTES,USERS,FACULTIES
+                              WHERE(SHAREDLESSONNOTES.USERID = USERS.ID)
+                              AND(USERS.FACULTYID = FACULTIES.ID)   
+                    """
+            cursor.execute(query)
+            ALLSharingLessonNotes = cursor.fetchall()
+            return render_template("sharedlessonnotes.html",ALLSharingLessonNotes=ALLSharingLessonNotes)
