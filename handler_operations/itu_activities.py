@@ -21,8 +21,8 @@ def itu_activity_page():
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
 
-            query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION) 
-                                                VALUES('%s', '%s', '%s', '%s', '%d', '%s')""" % (
+            query = """INSERT INTO ITUACTIVITIES (NAME, SPECIALPARTICIPANT, ACTIVITYDATE, ACTIVITYTIME, LOCATION, DESCRIPTION) 
+                                                            VALUES('%s', '%s', '%s', '%s', '%s', '%s')""" % (
                 ituActivity.activityName, ituActivity.participantName, ituActivity.activityDate,
                 ituActivity.activityTime, ituActivity.activityLoc, ituActivity.activityDesc)
 
