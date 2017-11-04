@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %} Special Students{% endblock %}
+{% block content %}
+    <div>
+        <script src="{{ url_for('static', filename='js/special_lesson/special_lesson.js') }}"></script>
+    </div>
+
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SpecialStudent">New Special Student</button>
+
+    <div class="modal fade" id="SpecialStudent" role="dialog">
+        <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add New Special Student Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form">
+                          <div class="form-group">
+                            <label for="OwnerName">Subject</label>
+                            <input class="form-control" name="SpecialStudentSubject" placeholder="Enter Subject" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputDescription">Name</label>
+                            <input class="form-control" name="SpecialStudentName" placeholder="Enter Name" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputPossibleLocation">E-mail</label>
+                            <input class="form-control" name="SpecialStudentMail" placeholder="Enter e-mail" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Phone Number</label>
+                            <input class="form-control" name="SpecialStudentPhone" placeholder="Enter Phone" type="text"><br>
+                          </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                      </div>
+                    </div>
+        </div>
+    </div>
+    {% if specialstudents %}
+        <table style="width:110%">
+            <tr>
+                <th>Subject</th>
+                <th>Student's Name</th>
+                <th>Student's e-mail</th>
+                <th>Student's Phone Number</th>
+            </tr>
+            {% for students in specialstudents %}
+                <tr>
+                    <td>{{ students[0] }}</td>
+                    <td>{{ students[1] }}</td>
+                    <td>{{ students[2] }}</td>
+                    <td>{{ students[3] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <br>
+        <p>There are no students available currently.</p>
+    {% endif %}
+{%endblock %}

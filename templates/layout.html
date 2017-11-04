@@ -59,11 +59,11 @@
 
 
               <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Lost-Found Stuff">
-				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseLostFound" data-parent="#exampleAccordion">
 					  <i class="fa fa-fw fa-file"></i>
 					  <span class="nav-link-text">Lost-Found Stuff</span>
 				  </a>
-				  <ul class="sidenav-second-level collapse" id="collapseExamplePages">
+				  <ul class="sidenav-second-level collapse" id="collapseLostFound">
 					  <li>
 						  <a href="{{ url_for('site.LostStuff') }}">I Lost Something</a>
 					  </li>
@@ -72,12 +72,14 @@
 					  </li>
 				  </ul>
 			  </li>
+
 			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Game Friend">
 				  <a class="nav-link" href="{{ url_for('site.GameFriendPage') }}">
 					  <i class="fa fa-fw fa-area-chart"></i>
 					  <span class="nav-link-text">Game Friend Finder</span>
 				  </a>
 			  </li>
+
 			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
 				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
 					  <i class="fa fa-fw fa-wrench"></i>
@@ -95,6 +97,21 @@
 					      <i class="fa fa-fw fa-area-chart"></i>
 					      <span class="nav-link-text">Add Restaurant</span>
 				      </a>
+					  </li>
+				  </ul>
+			  </li>
+
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="SpecialLessons">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSpecialLessons" data-parent="#exampleAccordion">
+					  <i class="fa fa-fw fa-file"></i>
+					  <span class="nav-link-text">Special Lessons</span>
+				  </a>
+				  <ul class="sidenav-second-level collapse" id="collapseSpecialLessons">
+					  <li>
+						  <a href="{{ url_for('site.SpecialTutor') }}">Tutors</a>
+					  </li>
+					  <li>
+						  <a href="{{ url_for('site.SpecialStudent') }}">Students</a>
 					  </li>
 				  </ul>
 			  </li>

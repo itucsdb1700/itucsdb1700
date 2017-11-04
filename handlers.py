@@ -14,6 +14,8 @@ from handler_operations.game_friends import *
 from handler_operations.initdb import *
 from handler_operations.sharedMyHouseAnnouncement import *
 from handler_operations.searchedHouseAnnouncement import *
+from handler_operations.special_tutor import *
+from handler_operations.special_student import *
 
 @site.route('/count')
 @login_required
@@ -89,3 +91,13 @@ def FoundStuff():
 @login_required
 def RestaurantsPage():
     return restaurants_page()
+
+@site.route('/special_tutors', methods=['GET', 'POST'])
+@login_required
+def SpecialTutor():
+    return special_tutor_page()
+
+@site.route('/special_students', methods=['GET', 'POST'])
+@login_required
+def SpecialStudent():
+    return special_student_page()
