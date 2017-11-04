@@ -57,11 +57,8 @@ def lost_stuff_page():
                 lost = lost_stuff(lostdesc, lostlocation, lostdate, lostownername, lostmail, lostphone, lostuser_id)
                 query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE, USERID) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
                 cursor.execute(query, (lost.description, lost.location, lost.date, lost.ownername, lost.mail, lost.phone, lost.user_id))
-                query = """SELECT STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME FROM LOSTSTUFF"""
-                cursor.execute(query)
-                lostitems = cursor.fetchall()
                 connection.commit()
-            return render_template('lost_stuff.html', lostitems=lostitems)
+            return redirect(url_for('site.LostStuff'))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()

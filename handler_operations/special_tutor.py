@@ -47,12 +47,8 @@ def special_tutor_page():
             tutor = special_tutor(tutorsubject, tutorname, tutormail, tutorphone, tutorid)
             query = """INSERT INTO SPECIALTUTORS(SUBJECT, FULLNAME, EMAIL, PHONENUMBER, USERID) VALUES (%s, %s, %s, %s, %s)"""
             cursor.execute(query, (tutor.subject, tutor.fullname, tutor.email, tutor.phonenumber, tutor.user_id))
-
-            query = """SELECT SUBJECT, FULLNAME, EMAIL, PHONENUMBER FROM SPECIALTUTORS"""
-            cursor.execute(query)
-            specialtutors = cursor.fetchall()
             connection.commit()
-        return render_template('special_tutor.html', specialtutors=specialtutors)
+        return redirect(url_for('siteSpecialStudent'))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
