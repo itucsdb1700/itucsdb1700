@@ -17,6 +17,8 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
+from classes.Books_class import sharingBooksAnnouncement
+
 
 def shared_Books_Announcement_Page():
     if request.method == "POST":
@@ -42,12 +44,24 @@ def shared_Books_Announcement_Page():
                                   AND(USERS.EMAIL = %s)"""
                 cursor.execute(statement, (username, email))
                 currentuser_id = cursor.fetchone()
+
+                sharedBooksAd = sharingBooksAnnouncement(NameOfBook,LessonName,LessonCode,TypeOfShare,Price,currentuser_id)
                 query = """INSERT INTO SHAREDBOOKS(NAMEOFBOOK, LESSONNAME, LESSONCODE,TYPEOFSHARE,PRICE,USERID)
                                                                         VALUES (%s,%s,%s,%s,%s,%s)"""
 
-                cursor.execute(query, (NameOfBook,LessonName,LessonCode,TypeOfShare,Price,currentuser_id))
+                cursor.execute(query, (sharedBooksAd.NameOFSharingBooks,sharedBooksAd.LessonNameOfSharingBooks,
+                                       sharedBooksAd.LessonCodeOfSharingBooks,sharedBooksAd.TypeOfSharingBooks,
+                                       sharedBooksAd.PriceOFSharingBooks,sharedBooksAd.id_ownerOfSharingBooks))
 
                 connection.commit()
-        return render_template("sharedbooks_announcement.html")
+        return redirect(url_for('site.SharedBooksAnnouncementPage'))
     else:
-        return render_template("sharedbooks_announcement.html")
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT NAMEOFBOOK,LESSONNAME,LESSONCODE,TYPEOFSHARE,PRICE,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM SHAREDBOOKS,USERS,FACULTIES
+                              WHERE(SHAREDBOOKS.USERID = USERS.ID)
+                              AND(USERS.FACULTYID = FACULTIES.ID)   
+                    """
+            cursor.execute(query)
+            ALLSharingBooks = cursor.fetchall()
+            return render_template("sharedbooks_announcement.html",ALLSharingBooks=ALLSharingBooks)
