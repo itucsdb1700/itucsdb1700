@@ -56,7 +56,26 @@
 					  </li>
 				  </ul>
 			  </li>
-
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="SharingBook&Notes">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseShareBook-Notes" data-parent="#exampleAccordion">
+					  <i class="fa fa-fw fa-wrench"></i>
+					  <span class="nav-link-text">ShareBook&Notes</span>
+				  </a>
+				  <ul class="sidenav-second-level collapse" id="collapseShareBook-Notes">
+					  <li>
+              <a class="nav-link" href="{{ url_for('site.SharedBooksAnnouncementPage') }}">
+					      <i class="fa fa-fw fa-area-chart"></i>
+					      <span class="nav-link-text">Sharing Books</span>
+				      </a>
+					  </li>
+                      <li>
+					<a class="nav-link" href="{{ url_for('site.SearchedHousePageAnnouncement') }}">
+					      <i class="fa fa-fw fa-area-chart"></i>
+					      <span class="nav-link-text">Searching Houses</span>
+				      </a>
+					  </li>
+				  </ul>
+			  </li>
 
               <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Lost-Found Stuff">
 				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseLostFound" data-parent="#exampleAccordion">

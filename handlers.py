@@ -19,6 +19,7 @@ from handler_operations.special_student import *
 from handler_operations.itu_activities import *
 from handler_operations.club_activities import *
 from handler_operations.sport_activities import *
+from handler_operations.sharedBooksAnnouncement import *
 
 
 @site.route('/count')
@@ -69,6 +70,11 @@ def ShareMyHousePageAnnouncement():
 def SearchedHousePageAnnouncement():
     return searched_House_Announcement_Page()
 
+
+@site.route('/sharebooks',methods = ['GET','POST'])
+@login_required
+def SharedBooksAnnouncementPage():
+    return shared_Books_Announcement_Page()
 
 @site.route('/sign_up', methods=['GET', 'POST'])
 def SignUpPage():
