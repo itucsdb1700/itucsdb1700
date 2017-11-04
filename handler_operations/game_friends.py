@@ -1,6 +1,7 @@
 from flask import render_template
 from flask import current_app
 from flask import request
+
 from classes.game_friends_class import GameAnnounce
 
 import psycopg2 as dbapi2
