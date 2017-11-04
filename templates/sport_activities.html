@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %} ITU Activities {% endblock %}
+{% block content %}
+
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SportActivities">Add Sport Activity</button>
+
+	<div class="modal fade" id="SportActivities" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Sport Activity</h4>
+				</div>
+				<div class="modal-body">
+					<form method="POST" action="" name="sportActivityForm" role="form">
+
+						<div class="form-group">
+							<label for="InputActivityName">Activity Name</label>
+							<input class="form-control" name="InputActivityName" id="InputActivityName" placeholder="Enter Activity Name" type="text" required>
+						</div>
+
+						<div class="form-group">
+							<label for="InputSportName">Sport Name</label>
+							<input class="form-control" name="InputSportName" id="InputSportName" placeholder="Enter Sport's Name" type="text" required>
+						</div>
+
+						<div class="form-group">
+							<label for="InputActivityDate">Activity Date</label>
+							<input class="form-control" name="InputActivityDate" id="InputActivityDate" type="date" value="date" required>
+						</div>
+
+						<div class="form-group">
+							<label for="InputActivityTime">Activity Time</label>
+							<input class="form-control" name="InputActivityTime" id="InputActivityTime" type="time" value="time" required>
+						</div>
+
+						<div class="form-group">
+							<label for="InputActivityLocation">Location</label>
+							<input class="form-control" name="InputActivityLocation" id="InputActivityLocation" placeholder="Enter Activity Location" type="text" required>
+						</div>
+
+						<div class="form-group">
+							<label for="ActivityDescription">Description</label>
+							<input class="form-control" name="ActivityDescription" id="ActivityDescription" placeholder="Details about activity" type="text">
+						</div>
+
+						<button type="submit" class="btn btn-default" id="buttonSend">Send</button>
+						<button type="reset" class="btn btn-default" id="buttonReset">Reset</button>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+{%endblock %}
