@@ -18,6 +18,7 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
+from classes.lost_stuff_class import lost_stuff
 
 from server import load_user
 
@@ -26,30 +27,36 @@ def lost_stuff_page():
         formtype = request.form['form-name']
 
         username = current_user.get_username()
-        print(username) #use print to check whether the correct data is retrieved by checking the terminal
-        password = current_user.get_password()
-        print(password)
+        #print(username) #use print to check whether the correct data is retrieved by checking the terminal
         email = current_user.get_email()
-        print(email)
+        #print(email)
         name = current_user.get_name()
-        print(name)
+        #print(name)
         surname = current_user.get_surname()
-        print(surname)
-        faculty_id = current_user.get_faculty_id()
-        print(faculty_id)
+        #print(surname)
 
         if formtype == "LostSomething":
             lostdesc = request.form['LostSomethingDescription']
             lostlocation = request.form['LostSomethingPossibleLocation']
             lostdate = request.form['LostSomethingDate']
-            lostowner = request.form['LostSomethingOwnerName']
+            lostownername = request.form['LostSomethingOwnerName']
+            if not lostownername:
+                seq = {name, surname}
+                lostownername = " ".join(seq)
             lostmail = request.form['LostSomethingOwnerMail']
+            if not lostmail:
+                lostmail = email
             lostphone = request.form['LostSomethingOwnerPhone']
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()#prevented sql injection
-                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES (%s, %s, %s, %s, %s, %s)"""
-                cursor.execute(query, (lostdesc, lostlocation, lostdate, lostowner, lostmail, lostphone))
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.MAIL = %s)"""
+                cursor.execute(statement, (username, email))
+                lostuser_id = cursor.fetchone()
+
+                lost = lost_stuff(lostdesc, lostlocation, lostdate, lostownername, lostmail, lostphone, lostuser_id)
+                query = """INSERT INTO LOSTSTUFF(STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE) VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+                cursor.execute(query, (lost.description, lost.location, lost.date, lost.ownername, lost.mail, lost.phone, lost.user_id))
                 connection.commit()
         return render_template('lost_stuff.html')
     else:
