@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block title %} Special Tutors{% endblock %}
+{% block content %}
+    <div>
+        <script src="{{ url_for('static', filename='js/special_lesson/special_lesson.js') }}"></script>
+    </div>
+
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SpecialTutor">New Special Tutor</button>
+
+    <div class="modal fade" id="SpecialTutor" role="dialog">
+        <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add New Special Tutor Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ url_for('site.SpecialTutor') }}" name="SpecialTutor" role="form">
+                          <div class="form-group">
+                            <label for="OwnerName">Subject</label>
+                            <input class="form-control" name="SpecialTutorSubject" placeholder="Enter Subject" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputDescription">Name</label>
+                            <input class="form-control" name="SpecialTutorName" placeholder="Enter Name" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputPossibleLocation">E-mail</label>
+                            <input class="form-control" name="SpecialTutorMail" placeholder="Enter e-mail" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Phone Number</label>
+                            <input class="form-control" name="SpecialTutorPhone" placeholder="Enter Phone" type="text"><br>
+                          </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                      </div>
+                    </div>
+        </div>
+    </div>
+    {% if specialtutors %}
+        <table style="width:110%">
+            <tr>
+                <th>Subject</th>
+                <th>Tutor's Name</th>
+                <th>Tutor's e-mail</th>
+                <th>Tutor's Phone Number</th>
+            </tr>
+            {% for tutors in specialtutors %}
+                <tr>
+                    <td>{{ tutors[0] }}</td>
+                    <td>{{ tutors[1] }}</td>
+                    <td>{{ tutors[2] }}</td>
+                    <td>{{ tutors[3] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <br>
+        <p>There are no tutors available currently.</p>
+    {% endif %}
+{%endblock %}
