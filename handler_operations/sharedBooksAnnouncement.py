@@ -25,7 +25,7 @@ def shared_Books_Announcement_Page():
         username = current_user.get_username()
         email = current_user.get_email()
         if formtype == "SharedBooksAnnouncement":
-            Name = request.form['InputNameOfSharedBook']
+            NameOfBook = request.form['InputNameOfSharedBook']
             LessonName = request.form['InputLessonNameOfShareBook']
             LessonCode = request.form['InputLessonCodeOfShareBook']
             TypeOfShare = request.form['InputTypeOfSharedBooks']
@@ -45,7 +45,7 @@ def shared_Books_Announcement_Page():
                 query = """INSERT INTO SHAREDBOOKS(NAMEOFBOOK, LESSONNAME, LESSONCODE,TYPEOFSHARE,PRICE,USERID)
                                                                         VALUES (%s,%s,%s,%s,%s,%s)"""
 
-                cursor.execute(query, (Name,LessonName,LessonCode,TypeOfShare,Price,currentuser_id))
+                cursor.execute(query, (NameOfBook,LessonName,LessonCode,TypeOfShare,Price,currentuser_id))
 
                 connection.commit()
         return render_template("sharedbooks_announcement.html")

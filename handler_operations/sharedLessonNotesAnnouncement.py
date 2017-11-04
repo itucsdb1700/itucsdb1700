@@ -24,7 +24,7 @@ def shared_LessonNotes_Announcement_Page():
         username = current_user.get_username()
         email = current_user.get_email()
         if formtype == "SharedLessonNotesAnnouncement":
-            Name = request.form['InputNameOfSharedLessonNote']
+            NameOfLessonNote = request.form['InputNameOfSharedLessonNote']
             TeacherName = request.form['InputTeacherNameofSharedLessonNote']
             LessonName = request.form['InputLessonNameOfShareLessonNote']
             LessonCode = request.form['InputLessonCodeOfShareLessonNote']
@@ -40,7 +40,7 @@ def shared_LessonNotes_Announcement_Page():
                 query = """INSERT INTO SHAREDLESSONNOTES(NAMEOFNOTES, LESSONNAME, LESSONCODE,TEACHERNAME,USERID)
                                                                         VALUES (%s,%s,%s,%s,%s)"""
 
-                cursor.execute(query, (Name,LessonName,LessonCode,TeacherName,currentuser_id))
+                cursor.execute(query, (NameOfLessonNote,LessonName,LessonCode,TeacherName,currentuser_id))
 
                 connection.commit()
         return render_template("sharedbooks_announcement.html")
