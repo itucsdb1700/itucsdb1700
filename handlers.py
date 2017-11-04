@@ -119,4 +119,4 @@ def SportActivityPage():
 @site.route('/itu_activities', methods=['GET', 'POST'])
 @login_required
 def ItuActivityPage():
-    return club_activity_page()
+    return itu_activity_page()
