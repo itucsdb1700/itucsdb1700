@@ -115,6 +115,25 @@
 					  </li>
 				  </ul>
 			  </li>
+
+			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activities">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSpecialLessons" data-parent="#exampleAccordion">
+					  <i class="fa fa-fw fa-file"></i>
+					  <span class="nav-link-text">Activities</span>
+				  </a>
+				  <ul class="sidenav-second-level collapse" id="collapseSpecialLessons">
+					  <li>
+						  <a href="{{ url_for('site.ClubActivityPage') }}">Student Club Activities</a>
+					  </li>
+					  <li>
+						  <a href="{{ url_for('site.ItuActivityPage') }}">ITU Activities</a>
+					  </li>
+					  <li>
+						  <a href="{{ url_for('site.SportActivityPage') }}">Sport Activities</a>
+					  </li>
+				  </ul>
+			  </li>
+
 			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
 				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
 					  <i class="fa fa-fw fa-sitemap"></i>
