@@ -16,6 +16,10 @@ from handler_operations.sharedMyHouseAnnouncement import *
 from handler_operations.searchedHouseAnnouncement import *
 from handler_operations.special_tutor import *
 from handler_operations.special_student import *
+from handler_operations.itu_activities import *
+from handler_operations.club_activities import *
+from handler_operations.sport_activities import *
+
 
 @site.route('/count')
 @login_required
@@ -101,3 +105,18 @@ def SpecialTutor():
 @login_required
 def SpecialStudent():
     return special_student_page()
+
+@site.route('/club_activities', methods=['GET', 'POST'])
+@login_required
+def ClubActivityPage():
+    return club_activity_page()
+
+@site.route('/sport_activities', methods=['GET', 'POST'])
+@login_required
+def SportActivityPage():
+    return sport_activity_page()
+
+@site.route('/itu_activities', methods=['GET', 'POST'])
+@login_required
+def ItuActivityPage():
+    return club_activity_page()
