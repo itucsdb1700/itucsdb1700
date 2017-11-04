@@ -21,7 +21,7 @@ def club_activity_page():
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
 
-            query = """INSERT INTO CLUBACTIVITIES (NAME, SPORTNAME, ACTIVITYDATE, ACTIVITYTIME, LOCATION, DESCRIPTION) 
+            query = """INSERT INTO CLUBACTIVITIES (NAME, CLUBNAME, ACTIVITYDATE, ACTIVITYTIME, LOCATION, DESCRIPTION) 
                                                 VALUES('%s', '%s', '%s', '%s', '%s', '%s')""" % (
                 clubActivity.activityName, clubActivity.clubName, clubActivity.activityDate,
                 clubActivity.activityTime, clubActivity.activityLoc, clubActivity.activityDesc)
