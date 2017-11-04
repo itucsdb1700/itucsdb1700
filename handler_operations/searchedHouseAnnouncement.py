@@ -60,8 +60,9 @@ def searched_House_Announcement_Page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT  DATASEARCHEDHOUSE.ID ,LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME FROM DATASEARCHEDHOUSE,USERS
+            query = """SELECT  LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM DATASEARCHEDHOUSE,USERS,FACULTIES
                               WHERE(DATASEARCHEDHOUSE.USERID = USERS.ID)
+                              AND(USERS.FACULTYID = FACULTIES.ID)
                     """
             cursor.execute(query)
             ALLSearchedHouse = cursor.fetchall()
