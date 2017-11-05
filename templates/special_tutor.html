@@ -40,19 +40,39 @@
         </div>
     </div>
     {% if specialtutors %}
-        <table style="width:110%">
+        <table id = "SpecialTutorsTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
             <tr>
-                <th>Subject</th>
-                <th>Tutor's Name</th>
-                <th>Tutor's e-mail</th>
-                <th>Tutor's Phone Number</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Position: activate to sort column ascending">Subject</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">Name of Tutor</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">Contact Info of Tutor</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Person Who Posted</th>
             </tr>
-            {% for tutors in specialtutors %}
+            {% for item in specialtutors %}
                 <tr>
-                    <td>{{ tutors[0] }}</td>
-                    <td>{{ tutors[1] }}</td>
-                    <td>{{ tutors[2] }}</td>
-                    <td>{{ tutors[3] }}</td>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[2] }}<br>{{ item[3] }}</td>
+                    <td>
+                       <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Profile</button>
+                         <div class = "modal fade" id = "profileOfOwnerAd" role ="dialog">
+                             <div class = "modal-dialog">
+                                 <div class = "modal-content">
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title">Profile</h4>
+                                     </div>
+                                     <div class = "modal-body">
+                                         <label>NAME and SURNAME</label>
+                                         <p>{{ item[4] }} {{ item[5] }}</p>
+                                         <label>EMAIL</label>
+                                         <p>{{ item[6] }}</p>
+                                         <label>FACULTY</label>
+                                         <p>{{ item[7] }} - {{ item[8] }}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
