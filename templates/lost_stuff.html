@@ -49,12 +49,14 @@
         </div>
     </div>
     {% if lostitems %}
-        <table style="width:110%">
+        <table id = "LostStuffTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
             <tr>
-                <th>Description</th>
-                <th>Possible Location</th>
-                <th>Possible Date of Losing(YEAR-MONTH-DAY)</th>
-                <th>Name of Person Who Lost</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Position: activate to sort column ascending">Description</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">Possible Location</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">Possible Date of Losing<br>(YYYY-MM-DD)</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Name of Owner</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Contact Info</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Person Who Posted</th>
             </tr>
             {% for item in lostitems %}
                 <tr>
@@ -62,6 +64,28 @@
                     <td>{{ item[1] }}</td>
                     <td>{{ item[2] }}</td>
                     <td>{{ item[3] }}</td>
+                    <td>{{ item[4] }}<br>{{ item[5] }}</td>
+                    <td>
+                       <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Profile</button>
+                         <div class = "modal fade" id = "profileOfOwnerAd" role ="dialog">
+                             <div class = "modal-dialog">
+                                 <div class = "modal-content">
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title">Profile</h4>
+                                     </div>
+                                     <div class = "modal-body">
+                                         <label>NAME and SURNAME</label>
+                                         <p>{{ item[6] }} {{ item[7] }}</p>
+                                         <label>EMAIL</label>
+                                         <p>{{ item[8] }}</p>
+                                         <label>FACULTY</label>
+                                         <p>{{ item[9] }} - {{ item[10] }}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                    </td>
                 </tr>
             {% endfor %}
         </table>
