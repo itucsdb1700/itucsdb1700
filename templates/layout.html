@@ -36,85 +36,22 @@
 	  <div class="collapse navbar-collapse" id="navbarResponsive">
 		  <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 
-              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HouseMate">
-				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseHouseMate" data-parent="#exampleAccordion">
-					  <i class="fa fa-fw fa-wrench"></i>
-					  <span class="nav-link-text">HouseMate</span>
-				  </a>
-				  <ul class="sidenav-second-level collapse" id="collapseHouseMate">
-					  <li>
-              <a class="nav-link" href="{{ url_for('site.ShareMyHousePageAnnouncement') }}">
-					      <i class="fa fa-fw fa-area-chart"></i>
-					      <span class="nav-link-text">Sharing Houses</span>
-				      </a>
-					  </li>
-					  <li>
-              <a class="nav-link" href="{{ url_for('site.SearchedHousePageAnnouncement') }}">
-					      <i class="fa fa-fw fa-area-chart"></i>
-					      <span class="nav-link-text">Searching Houses</span>
-				      </a>
-					  </li>
-				  </ul>
-			  </li>
               <li class="nav-item" data-toggle="tooltip" data-placement="right" title="SharingBook&Notes">
 				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseShareBook-Notes" data-parent="#exampleAccordion">
-					  <i class="fa fa-fw fa-wrench"></i>
-					  <span class="nav-link-text">ShareBook&Notes</span>
+					  <i class="fa fa-fw fa-book"></i>
+					  <span class="nav-link-text">Share Book&Notes</span>
 				  </a>
 				  <ul class="sidenav-second-level collapse" id="collapseShareBook-Notes">
 					  <li>
               <a class="nav-link" href="{{ url_for('site.SharedBooksAnnouncementPage') }}">
-					      <i class="fa fa-fw fa-area-chart"></i>
+					      <i class="fa fa-fw fa-book"></i>
 					      <span class="nav-link-text">Sharing Books</span>
 				      </a>
 					  </li>
                       <li>
 					<a class="nav-link" href="{{ url_for('site.SharedLessonNotesAnnouncementPage') }}">
-					      <i class="fa fa-fw fa-area-chart"></i>
+					      <i class="fa fa-fw fa-book"></i>
 					      <span class="nav-link-text">Sharing Lesson Notes</span>
-				      </a>
-					  </li>
-				  </ul>
-			  </li>
-
-              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Lost-Found Stuff">
-				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseLostFound" data-parent="#exampleAccordion">
-					  <i class="fa fa-fw fa-file"></i>
-					  <span class="nav-link-text">Lost-Found Stuff</span>
-				  </a>
-				  <ul class="sidenav-second-level collapse" id="collapseLostFound">
-					  <li>
-						  <a href="{{ url_for('site.LostStuff') }}">I Lost Something</a>
-					  </li>
-					  <li>
-						  <a href="{{ url_for('site.FoundStuff') }}">I Found Something</a>
-					  </li>
-				  </ul>
-			  </li>
-
-			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Game Friend">
-				  <a class="nav-link" href="{{ url_for('site.GameFriendPage') }}">
-					  <i class="fa fa-fw fa-area-chart"></i>
-					  <span class="nav-link-text">Game Friend Finder</span>
-				  </a>
-			  </li>
-
-			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-					  <i class="fa fa-fw fa-wrench"></i>
-					  <span class="nav-link-text">Restaurants</span>
-				  </a>
-				  <ul class="sidenav-second-level collapse" id="collapseComponents">
-					  <li>
-              <a class="nav-link" href="{{ url_for('site.RestaurantsPage') }}">
-					      <i class="fa fa-fw fa-area-chart"></i>
-					      <span class="nav-link-text">Search Restaurant</span>
-				      </a>
-					  </li>
-					  <li>
-              <a class="nav-link" href="{{ url_for('site.RestaurantsPage') }}">
-					      <i class="fa fa-fw fa-area-chart"></i>
-					      <span class="nav-link-text">Add Restaurant</span>
 				      </a>
 					  </li>
 				  </ul>
@@ -127,32 +64,117 @@
 				  </a>
 				  <ul class="sidenav-second-level collapse" id="collapseSpecialLessons">
 					  <li>
-						  <a href="{{ url_for('site.SpecialTutor') }}">Tutors</a>
+						  <a class="nav-link" href="{{ url_for('site.SpecialTutor') }}">
+                          <i class="fa fa-fw fa-file"></i>
+					      <span class="nav-link-text">Tutors</span>
+                          </a>
 					  </li>
 					  <li>
-						  <a href="{{ url_for('site.SpecialStudent') }}">Students</a>
+						  <a class="nav-link" href="{{ url_for('site.SpecialStudent') }}">
+                          <i class="fa fa-fw fa-file"></i>
+					      <span class="nav-link-text">Students</span>
+                          </a>
 					  </li>
 				  </ul>
 			  </li>
 
-			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activities">
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HouseMate">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseHouseMate" data-parent="#exampleAccordion">
+					  <i class="fa fa-fw fa-home"></i>
+					  <span class="nav-link-text">HouseMate</span>
+				  </a>
+				  <ul class="sidenav-second-level collapse" id="collapseHouseMate">
+					  <li>
+              <a class="nav-link" href="{{ url_for('site.ShareMyHousePageAnnouncement') }}">
+					      <i class="fa fa-fw fa-home"></i>
+					      <span class="nav-link-text">Sharing Houses</span>
+				      </a>
+					  </li>
+					  <li>
+              <a class="nav-link" href="{{ url_for('site.SearchedHousePageAnnouncement') }}">
+					      <i class="fa fa-fw fa-home"></i>
+					      <span class="nav-link-text">Searching Houses</span>
+				      </a>
+					  </li>
+				  </ul>
+			  </li>
+
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+					  <i class="fa fa-fw fa-spoon"></i>
+					  <span class="nav-link-text">Restaurants</span>
+				  </a>
+				  <ul class="sidenav-second-level collapse" id="collapseComponents">
+					  <li>
+              <a class="nav-link" href="{{ url_for('site.RestaurantsPage') }}">
+					      <i class="fa fa-fw fa-spoon"></i>
+					      <span class="nav-link-text">Search Restaurant</span>
+				      </a>
+					  </li>
+					  <li>
+              <a class="nav-link" href="{{ url_for('site.RestaurantsPage') }}">
+					      <i class="fa fa-fw fa-spoon"></i>
+					      <span class="nav-link-text">Add Restaurant</span>
+				      </a>
+					  </li>
+				  </ul>
+			  </li>
+
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Lost-Found Stuff">
+				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseLostFound" data-parent="#exampleAccordion">
+					  <i class="fa fa-fw fa-table"></i>
+					  <span class="nav-link-text">Lost-Found Stuff</span>
+				  </a>
+				  <ul class="sidenav-second-level collapse" id="collapseLostFound">
+					  <li>
+                          <a class="nav-link" href="{{ url_for('site.LostStuff') }}">
+                          <i class="fa fa-fw fa-table"></i>
+						  <span class="nav-link-text">I Lost Something</span>
+                          </a>
+					  </li>
+					  <li>
+                          <a class="nav-link" href="{{ url_for('site.FoundStuff') }}">
+                          <i class="fa fa-fw fa-table"></i>
+						  <span class="nav-link-text">I Found Something</span>
+                          </a>
+					  </li>
+				  </ul>
+			  </li>
+
+              <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activities">
 				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivities" data-parent="#exampleAccordion">
-					  <i class="fa fa-fw fa-file"></i>
+					  <i class="fa fa-fw fa-puzzle-piece"></i>
 					  <span class="nav-link-text">Activities</span>
 				  </a>
 				  <ul class="sidenav-second-level collapse" id="collapseActivities">
 					  <li>
-						  <a href="{{ url_for('site.ClubActivityPage') }}">Student Club Activities</a>
+						  <a class ="nav-link" href="{{ url_for('site.ClubActivityPage') }}">
+                          <i class="fa fa-fw fa-puzzle-piece"></i>
+                          <span class="nav-link-text">Student Club Activities</span>
+                          </a>
 					  </li>
 					  <li>
-						  <a href="{{ url_for('site.ItuActivityPage') }}">ITU Activities</a>
+						  <a class ="nav-link" href="{{ url_for('site.ItuActivityPage') }}">
+                          <i class="fa fa-fw fa-puzzle-piece"></i>
+                          <span class="nav-link-text">ITU Activities</span>
+                          </a>
 					  </li>
 					  <li>
-						  <a href="{{ url_for('site.SportActivityPage') }}">Sport Activities</a>
+						  <a class ="nav-link" href="{{ url_for('site.SportActivityPage') }}">
+                          <i class="fa fa-fw fa-puzzle-piece"></i>
+                          <span class="nav-link-text">Sport Activities</span>
+                          </a>
 					  </li>
 				  </ul>
 			  </li>
 
+			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Game Friend">
+				  <a class="nav-link" href="{{ url_for('site.GameFriendPage') }}">
+					  <i class="fa fa-fw fa-gamepad"></i>
+					  <span class="nav-link-text">Game Friend Finder</span>
+				  </a>
+			  </li>
+<!--
 			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
 				  <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
 					  <i class="fa fa-fw fa-sitemap"></i>
@@ -189,10 +211,10 @@
 					  <i class="fa fa-fw fa-link"></i>
 					  <span class="nav-link-text">Link</span>
 				  </a>
-			  </li>
+			  </li>-->
 			  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Game Friend">
 				  <a class="nav-link" href="{{ url_for('site.initialize_database') }}">
-					  <i class="fa fa-fw fa-area-chart"></i>
+					  <i class="fa fa-fw fa-wrench"></i>
 					   <span class="nav-link-text">Initialize Database</span>
 				  </a>
 			  </li>
@@ -205,7 +227,7 @@
 			  </li>
 		  </ul>
 		  <ul class="navbar-nav ml-auto">
-			  <li class="nav-item dropdown">
+			  <!--<li class="nav-item dropdown">
 				  <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					  <i class="fa fa-fw fa-envelope"></i>
 					  <span class="d-lg-none">Messages
@@ -293,7 +315,7 @@
               </span>
 					  </div>
 				  </form>
-			  </li>
+			  </li>-->
 			  <li class="nav-item">
 				  <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
 					  <i class="fa fa-fw fa-sign-out"></i>Logout</a>
