@@ -48,7 +48,7 @@ the exact time and places where they lost their properties.
 and activities of the ITU is integrated in the website. Students will be able to join 
 them through registration on the system if respective activity has one.
 
-8. There is also be a section, which could help students to find playmates. The reason 
+8. There is also a section, which could help students to find playmates. The reason
 for this is that university students mostly play games, including table games and 
 video games, to relax and spend their leisure time. However, it is not easy to find 
 congenial playmates, especially in the busy campus life. Therefore, students who are 
@@ -82,7 +82,10 @@ video games. This would help students in building new friendships and socializat
 2. Browse to root directory of repository.
 3. Open terminal or command line.
 4. Run `vagrant up` command and wait it to finish.
-5. Run `python server.py` command.
+5. Run `python server.py` command.\(Alternatively you can start program in your preferred IDE\)
+
+## Other Details
+This project is forked from [itucsdb15](https://github.com/uyar/itucsdb15).
 
 ## License
 This project is available under the terms of the GNU General Public License, version 3.
