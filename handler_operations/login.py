@@ -3,7 +3,7 @@ from flask import current_app
 from datetime import datetime
 
 from flask import redirect
-from flask.helpers import url_for
+from flask.helpers import url_for, flash
 
 from flask_login import login_required
 from flask_login import current_user, login_user, logout_user
@@ -38,6 +38,7 @@ def login_page():
         cursor.execute(statement, [login_username])
         if pwd_context.verify(login_password,user.password) is True:
           login_user(user)
+          flash('You have succesfully logged in ' + user.get_name() + ' ' + user.get_surname() )
           return redirect((url_for('site.HomePage')))
         else:
           return render_template('login.html')
