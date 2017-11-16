@@ -49,6 +49,7 @@ def LogoutPage():
   return redirect(url_for('site.LoginPage'))
 
 @site.route('/initdb')
+#@login_required DONT FORGET TO OPEN LATER!
 def initialize_database():
     LogoutPage()
     return init_db()
