@@ -49,15 +49,18 @@
         </div>
     </div>
     {% if lostitems %}
-        <table id = "LostStuffTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
-            <tr>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Position: activate to sort column ascending">Description</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">Possible Location</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">Possible Date of Losing<br>(YYYY-MM-DD)</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Name of Owner</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Contact Info</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">Person Who Posted</th>
+        <br><br>
+        <table id = "dataTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
+            <thead>
+            <tr role="row">
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Description: activate to sort column ascending">Description</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Possible Location: activate to sort column ascending">Possible Location</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Possible Date of Losing: activate to sort column ascending">Possible Date of Losing<br>(YYYY-MM-DD)</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Name of Owner: activate to sort column ascending">Name of Owner</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Contact Info: activate to sort column ascending">Contact Info</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Person Who Posted: activate to sort column ascending">Person Who Posted</th>
             </tr>
+            </thead>
             {% for item in lostitems %}
                 <tr>
                     <td>{{ item[0] }}</td>
