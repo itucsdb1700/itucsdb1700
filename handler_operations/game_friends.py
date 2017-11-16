@@ -43,10 +43,10 @@ def game_friend_page():
             # to insert the new announcement information
             cursor = connection.cursor()
             query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION, USERID) 
-                                                VALUES('%s', '%s', '%s', '%s', '%d', '%s', '%s')""" % (
-                gameAnnounce.gameName, gameAnnounce.gameType, gameAnnounce.gameDate,
-                gameAnnounce.gameLoc, gameAnnounce.playerNum, gameAnnounce.gameDesc, gameAnnounce.user_id)
-            cursor.execute(query)
+                                                VALUES(%s,%s,%s,%s,%s,%s,%s)"""
+            cursor.execute(query, (gameAnnounce.gameName, gameAnnounce.gameType,
+                                   gameAnnounce.gameDate, gameAnnounce.gameLoc,
+                                   gameAnnounce.playerNum, gameAnnounce.gameDesc, gameAnnounce.user_id))
             connection.commit()
 
         #return render_template('game_friends.html')

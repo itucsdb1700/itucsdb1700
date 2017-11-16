@@ -38,10 +38,10 @@ def club_activity_page():
 
             cursor = connection.cursor()
             query = """INSERT INTO CLUBACTIVITIES (NAME, CLUBNAME, ACTIVITYDATE, ACTIVITYTIME, LOCATION, DESCRIPTION, USERID) 
-                                                VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')""" % (
-                clubActivity.activityName, clubActivity.clubName, clubActivity.activityDate,
-                clubActivity.activityTime, clubActivity.activityLoc, clubActivity.activityDesc, clubActivity.user_id)
-            cursor.execute(query)
+                                                VALUES(%s,%s,%s,%s,%s,%s,%s)"""
+            cursor.execute(query, (clubActivity.activityName, clubActivity.clubName,
+                                   clubActivity.activityDate, clubActivity.activityTime,
+                                   clubActivity.activityLoc, clubActivity.activityDesc, clubActivity.user_id))
             connection.commit()
 
         return redirect(url_for('site.ClubActivityPage'))

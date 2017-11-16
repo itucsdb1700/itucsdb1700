@@ -39,10 +39,10 @@ def itu_activity_page():
 
             cursor = connection.cursor()
             query = """INSERT INTO ITUACTIVITIES (NAME, SPECIALPARTICIPANT, ACTIVITYDATE, ACTIVITYTIME, LOCATION, DESCRIPTION, USERID) 
-                                                            VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')""" % (
-                ituActivity.activityName, ituActivity.participantName, ituActivity.activityDate,
-                ituActivity.activityTime, ituActivity.activityLoc, ituActivity.activityDesc, ituActivity.user_id)
-            cursor.execute(query)
+                                                            VALUES(%s,%s,%s,%s,%s,%s,%s)"""
+            cursor.execute(query, (ituActivity.activityName, ituActivity.participantName,
+                                   ituActivity.activityDate, ituActivity.activityTime,
+                                   ituActivity.activityLoc, ituActivity.activityDesc, ituActivity.user_id))
             connection.commit()
 
         return redirect(url_for('site.ItuActivityPage'))
