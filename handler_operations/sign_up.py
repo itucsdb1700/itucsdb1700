@@ -27,8 +27,16 @@ def sign_up_page():
     email = request.form['email']
     name = request.form['firstName']
     surname = request.form['lastName']
-    id = 1
+    faculty = request.form['faculty']
 
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+      cursor = connection.cursor()
+      query = """SELECT FACULTIES.ID
+        FROM FACULTIES 
+        WHERE FACULTIES.FACULTYNAME = %s
+      """
+      cursor.execute(query, [faculty])
+      faculty_id = cursor.fetchone()
 
     with dbapi2.connect(current_app.config['dsn']) as connection:
       cursor = connection.cursor()
@@ -37,10 +45,17 @@ def sign_up_page():
             INSERT INTO USERS (USERNAME, PASSWORD, EMAIL, NAME, SURNAME, FACULTYID) 
             VALUES (%s, %s, %s, %s, %s, %s)"""
 
-      cursor.execute(query, (username, hashed_password, email, name, surname, '1'))
+      cursor.execute(query, (username, hashed_password, email, name, surname, faculty_id))
 
       connection.commit()
     return redirect(url_for('site.LoginPage'))
 
   else:
-    return render_template('sign_up.html')
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+      cursor = connection.cursor()
+      query = """SELECT FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE 
+        FROM FACULTIES 
+      """
+      cursor.execute(query)
+      allFaculties = cursor.fetchall()
+    return render_template('sign_up.html', allFaculties=allFaculties)
