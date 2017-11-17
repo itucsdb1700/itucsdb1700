@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %} Profile Page {% endblock %}
+{% block content %}
+    <h1>Welcome to ITUHelper!</h1>
+
+    {% if user %}
+        <p>{{ user.get_name() }}</p>
+    {% endif %}
+
+
+{% endblock %}

@@ -138,3 +138,9 @@ def SportActivityPage():
 @login_required
 def ItuActivityPage():
     return itu_activity_page()
+
+@site.route('/profile/<int:user_id>')
+@login_required
+def ProfilePage(user_id):
+    user = current_user;
+    return render_template('profile.html', user=user)
