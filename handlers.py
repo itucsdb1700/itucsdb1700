@@ -147,4 +147,7 @@ def ProfilePage():
 @site.route('/profile/<string:username>')
 @login_required
 def SelectedProfilePage(username):
-    return render_template('profile.html')
+    if username == current_user.get_username():
+        return render_template('profile.html')
+    else:
+        return redirect(url_for('site.HomePage'))
