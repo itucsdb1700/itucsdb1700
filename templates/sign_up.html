@@ -55,20 +55,20 @@
                     </div>
                 </div>
 
+                {% if allFaculties %}
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="exampleInputPassword1">Select your faculty</label>
                             <select class="form-control" id="faculty" name="faculty" >
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                {% for faculty in allFaculties %}
+                                <option value="{{ faculty[0] }}">{{ faculty[1] }} - {{ faculty[0] }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                     </div>
                 </div>
+                {% endif %}
 
 
 
