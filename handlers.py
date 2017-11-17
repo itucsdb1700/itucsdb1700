@@ -21,6 +21,7 @@ from handler_operations.club_activities import *
 from handler_operations.sport_activities import *
 from handler_operations.sharedBooksAnnouncement import *
 from handler_operations.sharedLessonNotesAnnouncement import *
+from handler_operations.add_faculty import *
 
 
 @site.route('/count')
@@ -49,11 +50,15 @@ def LogoutPage():
   return redirect(url_for('site.LoginPage'))
 
 @site.route('/initdb')
-#@login_required DONT FORGET TO OPEN LATER!
+@login_required
 def initialize_database():
     LogoutPage()
     return init_db()
 
+@site.route('/add_faculty', methods=['GET', 'POST'])
+@login_required
+def AddFaculty():
+    return add_faculty()
 
 @site.route('/home')
 @login_required
