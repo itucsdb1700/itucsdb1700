@@ -16,14 +16,14 @@
                     <form method="POST" action="{{ url_for('site.AddFaculty') }}" name="AddFaculty" role="form">
                         <input type="hidden" name="addFacultyForm" value="SharedHouseAnnouncement">
                         <div class="form-group">
-                            <label for="InputLocationOfSharingHouse">Faculty Name</label>
+                            <label for="InputFacultyCode">Faculty Code</label>
+                            <input class="form-control" name = "InputFacultyCode" id="InputFacultyCode" placeholder="Enter faculty code" type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="InputFacultyName">Faculty Name</label>
                             <input class="form-control" name="InputFacultyName" id="InputFacultyName" placeholder="Enter faculty name" type="text" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="InputRentPriceOfSharingHouse">Faculty Code</label>
-                            <input class="form-control" name = "InputFacultyCode" id="InputFacultyCode" placeholder="Enter faculty code" type="text" required>
-                        </div>
                         <button type="reset">Reset</button>
                         <button type="submit" formmethod="POST">Send</button>
                     </form>
