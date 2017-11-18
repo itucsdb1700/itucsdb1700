@@ -56,8 +56,7 @@ def found_stuff_page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE, USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE FROM FOUNDSTUFF, USERS, FACULTIES
-                              WHERE (FOUNDSTUFF.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
+            query = """SELECT STUFFDESC, CURRENTLOC, FINDINGDATE, FOUNDERNAME, FOUNDERMAIL, FOUNDERPHONE, USERS.USERNAME FROM FOUNDSTUFF, USERS WHERE (FOUNDSTUFF.USERID = USERS.ID)"""
             cursor.execute(query)
             founditems = cursor.fetchall()
         return render_template('found_stuff.html', founditems=founditems)

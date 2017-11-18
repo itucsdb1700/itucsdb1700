@@ -55,8 +55,7 @@ def lost_stuff_page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE, USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE FROM LOSTSTUFF, USERS, FACULTIES
-                              WHERE (LOSTSTUFF.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
+            query = """SELECT STUFFDESC, POSSIBLELOC, POSSIBLEDATE, OWNERNAME, OWNERMAIL, OWNERPHONE, USERS.USERNAME FROM LOSTSTUFF, USERS WHERE (LOSTSTUFF.USERID = USERS.ID)"""
             cursor.execute(query)
             lostitems = cursor.fetchall()
         return render_template('lost_stuff.html', lostitems=lostitems)

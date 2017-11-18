@@ -69,28 +69,9 @@
                     <td>{{ item[3] }}</td>
                     <td>{{ item[4] }}<br>{{ item[5] }}</td>
                     <td>
-                       <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Profile</button>
-                         <div class = "modal fade" id = "profileOfOwnerAd" role ="dialog">
-                             <div class = "modal-dialog">
-                                 <div class = "modal-content">
-                                     <div class="modal-header">
-                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                         <h4 class="modal-title">Profile</h4>
-                                     </div>
-                                     <div class = "modal-body">
-                                         <label>NAME and SURNAME</label>
-                                         <p>{{ item[7] }} {{ item[8] }}</p>
-                                         <label>EMAIL</label>
-                                         <p>{{ item[9] }}</p>
-                                         <label>FACULTY</label>
-                                         <p>{{ item[10] }} - {{ item[11] }}</p>
-                                         <a href="{{ url_for('site.SelectedProfilePage', username=item[6]) }}">
-                                            <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
-                                         </a>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
+                        <a href="{{ url_for('site.SelectedProfilePage', username=item[6]) }}">
+                            <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
