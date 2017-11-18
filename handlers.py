@@ -149,8 +149,8 @@ def ProfilePage():
 @login_required
 def SelectedProfilePage(username):
     if CheckUser(username): #returns 0 if the username does not exist
-        user = get_user(username)
-        return render_template('profile.html', user=user)
+        user = get_user(username) #create the user object
+        return render_template('profile.html', user=user) #send the user object to the html
     else:
         return redirect(url_for('site.HomePage'))
 
