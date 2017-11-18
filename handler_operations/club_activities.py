@@ -2,6 +2,7 @@ from flask import render_template
 from flask import current_app
 from flask import request
 from flask_login import current_user
+from flask import session
 
 from flask import redirect
 from flask.helpers import url_for
@@ -13,6 +14,10 @@ import psycopg2 as dbapi2
 
 def club_activity_page():
     if request.method == 'POST':
+        if 'userSearchButton' in request.form:  # if the search button is submitted
+            session['search_username'] = request.form['usernameSearch']
+            return redirect(url_for('site.SearchUserPage'))
+
         # current user information is taken
         username = current_user.get_username()
         email = current_user.get_email()
@@ -50,7 +55,7 @@ def club_activity_page():
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = """SELECT CLUBACTIVITIES.NAME, CLUBNAME, ACTIVITYDATE, ACTIVITYTIME, LOCATION, DESCRIPTION, 
-            USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE 
+            USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE, USERS.USERNAME 
             FROM CLUBACTIVITIES, USERS, FACULTIES 
             WHERE (CLUBACTIVITIES.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
             cursor.execute(query)
