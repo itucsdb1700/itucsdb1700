@@ -46,7 +46,7 @@ def special_student_page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT SUBJECT, FULLNAME, SPECIALSTUDENTS.EMAIL, PHONENUMBER, USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE FROM SPECIALSTUDENTS, USERS, FACULTIES
+            query = """SELECT SUBJECT, FULLNAME, SPECIALSTUDENTS.EMAIL, PHONENUMBER, USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE FROM SPECIALSTUDENTS, USERS, FACULTIES
                               WHERE (SPECIALSTUDENTS.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
             cursor.execute(query)
             specialstudents = cursor.fetchall()

@@ -66,11 +66,14 @@
                                      </div>
                                      <div class = "modal-body">
                                          <label>NAME and SURNAME</label>
-                                         <p>{{ item[4] }} {{ item[5] }}</p>
+                                         <p>{{ item[5] }} {{ item[6] }}</p>
                                          <label>EMAIL</label>
-                                         <p>{{ item[6] }}</p>
+                                         <p>{{ item[7] }}</p>
                                          <label>FACULTY</label>
-                                         <p>{{ item[7] }} - {{ item[8] }}</p>
+                                         <p>{{ item[8] }} - {{ item[9] }}</p>
+                                         <a href="{{ url_for('site.SelectedProfilePage', username=item[4]) }}">
+                                            <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
+                                         </a>
                                      </div>
                                  </div>
                              </div>
