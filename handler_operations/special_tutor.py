@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, session
 from flask import current_app
 from datetime import datetime
 
@@ -24,6 +24,10 @@ from server import load_user
 
 def special_tutor_page():
     if request.method == "POST":
+        if 'userSearchButton' in request.form: #if the search button is submitted
+            session['search_username'] = request.form['usernameSearch']
+            return redirect(url_for('site.SearchUserPage'))
+
         username = current_user.get_username()
         email = current_user.get_email()
         name = current_user.get_name()
