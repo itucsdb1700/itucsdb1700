@@ -39,7 +39,7 @@
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="UserProfile">
                     <a class="nav-link" href="{{ url_for('site.ProfilePage') }}">
-                        <i class="fa fa-fw fa-wrench"></i>
+                        <i class="fa fa-fw  fa-user"></i>
                         <span class="nav-link-text">Profile</span>
                     </a>
                 </li>
@@ -222,22 +222,22 @@
                                   </a>
                               </li>-->
                 {% if current_user.is_admin %}
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Initialize Database">
-                        <a class="nav-link" href="{{ url_for('site.initialize_database') }}">
-                            <i class="fa fa-fw fa-wrench"></i>
-                            <span class="nav-link-text">Initialize Database</span>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="ListUsers">
+                        <a class="nav-link" href="{{ url_for('site.ListUsers') }}">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span class="nav-link-text">List Users</span>
                         </a>
                     </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="AddFaculty">
                         <a class="nav-link" href="{{ url_for('site.AddFaculty') }}">
-                            <i class="fa fa-fw fa-wrench"></i>
+                            <i class="fa fa-fw fa-building"></i>
                             <span class="nav-link-text">Add Faculty</span>
                         </a>
                     </li>
-                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="ListUsers">
-                        <a class="nav-link" href="{{ url_for('site.ListUsers') }}">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Initialize Database">
+                        <a class="nav-link" href="{{ url_for('site.initialize_database') }}">
                             <i class="fa fa-fw fa-wrench"></i>
-                            <span class="nav-link-text">List Users</span>
+                            <span class="nav-link-text">Initialize Database</span>
                         </a>
                     </li>
                 {% endif %}
