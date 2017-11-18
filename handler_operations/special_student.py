@@ -1,29 +1,23 @@
-from flask import render_template, Blueprint
-from flask import current_app
-from datetime import datetime
-
-from flask import redirect
+from flask import render_template, Blueprint, current_app, session, redirect, request
 from flask.helpers import url_for
-
-from flask_login import login_required
-from flask_login import current_user, login_user, logout_user
-from user import User
-from user import get_user
-from flask_login import LoginManager
-from flask import request
-
-
-from passlib.apps import custom_app_context as pwd_context
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 
 import psycopg2 as dbapi2
+
+from server import load_user
+from user import User, get_user
+from passlib.apps import custom_app_context as pwd_context
+from datetime import datetime
 import os.path
 
 from classes.special_students_class import special_student
 
-from server import load_user
-
 def special_student_page():
     if request.method == "POST":
+        if 'userSearchButton' in request.form:  # if the search button is submitted
+            session['search_username'] = request.form['usernameSearch']
+            return redirect(url_for('site.SearchUserPage'))
+
         username = current_user.get_username()
         email = current_user.get_email()
         name = current_user.get_name()
