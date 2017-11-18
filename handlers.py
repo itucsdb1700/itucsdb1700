@@ -156,4 +156,8 @@ def SelectedProfilePage(username):
 @site.route('/search_user', methods=['GET', 'POST'])
 @login_required
 def SearchUserPage():
+    print( 'yess!')
+
+
     return search_user_page()
+

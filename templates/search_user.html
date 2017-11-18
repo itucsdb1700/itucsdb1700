@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %} Search Users {% endblock %}
+{% block content %}
+
+    {% if found_user %}
+		<br> <br>
+
+		<table id="dataTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
+			<thead>
+			<tr role="row">
+				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Username: activate to sort column ascending">Username</th>
+				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Name: activate to sort column ascending">Name</th>
+				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Surname: activate to sort column ascending">Surname</th>
+				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Email: activate to sort column ascending">Email</th>
+			</tr>
+			</thead>
+
+
+			<tbody>
+			{% for user in found_user %}
+				<tr role="row">
+					<td>{{ user[0] }}</td>
+					<td>{{ user[1] }}</td>
+					<td>{{ user[2] }}</td>
+					<td>{{ user[3] }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+
+
+		</table>
+
+
+	{% else %}
+		<p> The user can not be found! </p>
+	{% endif %}
+
+{% endblock %}

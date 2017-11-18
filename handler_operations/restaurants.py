@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint
 from flask import current_app
 from datetime import datetime
+from flask import session
 
 from flask import redirect
 from flask.helpers import url_for
@@ -24,10 +25,11 @@ from server import load_user
 #under development...
 def restaurants_page():
   if request.method == "POST":
-    search_username = request.form['usernameSearch']
-    if search_username:
-      print('yess!')
 
-    return search_user_page(search_username)
+    session['search_username'] = request.form['usernameSearch']
+    if session['search_username']:
+      return redirect(url_for('site.SearchUserPage'))
+    else:
+      return render_template('restaurants.html')
   else:
     return render_template('restaurants.html')
