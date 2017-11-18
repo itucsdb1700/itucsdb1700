@@ -22,6 +22,7 @@ from handler_operations.sport_activities import *
 from handler_operations.sharedBooksAnnouncement import *
 from handler_operations.sharedLessonNotesAnnouncement import *
 from handler_operations.add_faculty import *
+from handler_operations.search_user import *
 
 
 @site.route('/count')
@@ -147,4 +148,16 @@ def ProfilePage():
 @site.route('/profile/<string:username>')
 @login_required
 def SelectedProfilePage(username):
-    return render_template('profile.html')
+    if username == current_user.get_username():
+        return render_template('profile.html')
+    else:
+        return redirect(url_for('site.HomePage'))
+
+@site.route('/search_user', methods=['GET', 'POST'])
+@login_required
+def SearchUserPage():
+    print( 'yess!')
+
+
+    return search_user_page()
+
