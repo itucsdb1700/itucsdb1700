@@ -148,8 +148,9 @@ def ProfilePage():
 @site.route('/profile/<string:username>')
 @login_required
 def SelectedProfilePage(username):
-    if username == current_user.get_username():
-        return render_template('profile.html')
+    if CheckUser(username): #returns 0 if the username does not exist
+        user = get_user(username)
+        return render_template('profile.html', user=user)
     else:
         return redirect(url_for('site.HomePage'))
 
@@ -157,7 +158,14 @@ def SelectedProfilePage(username):
 @login_required
 def SearchUserPage():
     print( 'yess!')
-
-
     return search_user_page()
 
+def CheckUser(username):
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT COUNT(USERS.USERNAME) 
+                        FROM USERS 
+                        WHERE (USERS.USERNAME = %s)"""
+        cursor.execute(statement, [username])
+        existence_flag = cursor.fetchone()
+        return existence_flag[0]
