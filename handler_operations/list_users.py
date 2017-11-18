@@ -23,33 +23,9 @@ from server import load_user
 
 #under development...
 def list_users_page():
-  if request.method == "POST":
-    search_username = request.form['usernameSearch']
-    if search_username:
-      with dbapi2.connect(current_app.config['dsn']) as connection:
-        edited_search_username = search_username + '%'
-        print(edited_search_username)
+    with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
-        query = """SELECT USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL
-                    FROM  USERS
-                    WHERE ( USERS.USERNAME LIKE %s )"""
-        cursor.execute(query, [edited_search_username])
-        found_user = cursor.fetchall()
-        return render_template('search_user.html', found_user=found_user)
-    else:
-      return render_template('search_user.html')
-
-  elif session['search_username']:
-      with dbapi2.connect(current_app.config['dsn']) as connection:
-        edited_search_username = session['search_username'] + '%'
-        print(edited_search_username)
-        cursor = connection.cursor()
-        query = """SELECT USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL
-                    FROM  USERS
-                    WHERE ( USERS.USERNAME LIKE %s )"""
-        cursor.execute(query, [edited_search_username])
-        found_user = cursor.fetchall()
-        return render_template('search_user.html', found_user=found_user)
-
-  else:
-    return render_template('search_user.html')
+        query = """SELECT USERS.ID, USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL, USERS.FACULTYID FROM USERS """
+        cursor.execute(query)
+        user_list = cursor.fetchall()
+        return render_template('list_users.html', user_list=user_list)
