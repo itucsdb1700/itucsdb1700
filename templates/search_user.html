@@ -12,6 +12,7 @@
 				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Name: activate to sort column ascending">Name</th>
 				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Surname: activate to sort column ascending">Surname</th>
 				<th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Email: activate to sort column ascending">Email</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Email: activate to sort column ascending">Profile Link of the User</th>
 			</tr>
 			</thead>
 
@@ -23,6 +24,11 @@
 					<td>{{ user[1] }}</td>
 					<td>{{ user[2] }}</td>
 					<td>{{ user[3] }}</td>
+                    <td>
+                        <a href="{{ url_for('site.SelectedProfilePage', username=user[0]) }}">
+                            <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Profile</button>
+                        </a>
+                    </td>
 				</tr>
 			{% endfor %}
 			</tbody>
