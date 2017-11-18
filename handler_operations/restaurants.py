@@ -26,8 +26,8 @@ from server import load_user
 def restaurants_page():
   if request.method == "POST":
 
-    session['search_username'] = request.form['usernameSearch']
-    if session['search_username']:
+    if 'userSearchButton' in request.form: #if the search button is submitted
+      session['search_username'] = request.form['usernameSearch']
       return redirect(url_for('site.SearchUserPage'))
     else:
       return render_template('restaurants.html')
