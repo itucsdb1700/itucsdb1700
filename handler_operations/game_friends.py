@@ -61,7 +61,7 @@ def game_friend_page():
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = """SELECT GAMEFRIEND.NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION, 
-            USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE 
+            USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE, USERS.USERNAME
             FROM GAMEFRIEND, USERS, FACULTIES 
             WHERE (GAMEFRIEND.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
             cursor.execute(query)
