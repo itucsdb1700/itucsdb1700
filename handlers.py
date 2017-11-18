@@ -3,6 +3,8 @@
 
 from flask import Blueprint
 
+
+
 site = Blueprint('site', __name__)
 
 from handler_operations.lost_stuff import *
@@ -23,6 +25,7 @@ from handler_operations.sharedBooksAnnouncement import *
 from handler_operations.sharedLessonNotesAnnouncement import *
 from handler_operations.add_faculty import *
 from handler_operations.search_user import *
+from handler_operations.list_users import *
 
 
 @site.route('/count')
@@ -157,8 +160,12 @@ def SelectedProfilePage(username):
 @site.route('/search_user', methods=['GET', 'POST'])
 @login_required
 def SearchUserPage():
-    print( 'yess!')
     return search_user_page()
+
+@site.route('/search_user', methods=['GET', 'POST'])
+@login_required
+def ListUsers():
+    return list_users_page()
 
 def CheckUser(username):
     with dbapi2.connect(current_app.config['dsn']) as connection:
