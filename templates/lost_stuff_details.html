@@ -3,14 +3,36 @@
 {% block content %}
     <h1>Details for Lost Property </h1>
 	<br>
-	<p> Description: {{ lost.get_desc() }}</p>
-	<p> Possible Location: {{ lost.get_location() }}</p>
-	<p> Possible Date of Losing (YYYY-MM-DD): {{ lost.get_date() }}</p>
-	<p> Name of Person Who Lost It: {{ lost.get_name() }}</p>
-	<p> E-mail of Person Who Lost It: {{ lost.get_mail() }}</p>
-    <p> Phone Number of Person Who Lost It: {{ lost.get_phone() }}</p>
-	<p> User Id: {{ lost.get_user_id() }}</p>
-
+    <table style="width: 50%">
+	    <tr>
+            <td style="width: 40%"><b>Description:</b></td>
+            <td>{{ lost.get_desc() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Possible Location:</b></td>
+            <td>{{ lost.get_location() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Possible Date of Losing (YYYY-MM-DD):</b></td>
+            <td>{{ lost.get_date() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Name of Person Who Lost It:</b></td>
+            <td>{{ lost.get_name() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>E-mail of Person Who Lost It:</b></td>
+            <td>{{ lost.get_mail() }}</td>
+        </tr>
+        <tr>
+            <td style="width: 40%"><b>Phone Number of Person Who Lost It:</b></td>
+            <td>{{ lost.get_phone() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>User Id:</b></td>
+            <td>{{ lost.get_user_id() }}</td>
+        </tr>
+    </table>
 	<br>
 
 

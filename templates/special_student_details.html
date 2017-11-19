@@ -3,12 +3,27 @@
 {% block content %}
     <h1>Details for Student </h1>
 	<br>
-	<p> Subject for Special Lesson: {{ student.get_subject() }}</p>
-	<p> Name of Student Candidate: {{ student.get_name() }}</p>
-	<p> E-mail of Student Candidate: {{ student.get_mail() }}</p>
-    <p> Phone Number of Student Candidate: {{ student.get_phone() }}</p>
-	<p> User Id: {{ student.get_user_id() }}</p>
-
+    <table style="width: 30%">
+	    <tr>
+            <td><b>Subject for Special Lesson:</b></td>
+            <td>{{ student.get_subject() }}</td>
+        </tr>
+	    <tr>
+            <td><b>Name of Student Candidate:</b></td>
+            <td>{{ student.get_name() }}</td>
+        </tr>
+	    <tr>
+            <td><b>E-mail of Student Candidate:</b></td>
+            <td>{{ student.get_mail() }}</td>
+        </tr>
+        <tr>
+            <td><b>Phone Number of Student Candidate:</b></td>
+            <td>{{ student.get_phone() }}</td>
+        </tr>
+	    <tr>
+            <td><b>User Id:</b></td>
+            <td>{{ student.get_user_id() }}</td>
+        </tr>
 	<br>
 
 

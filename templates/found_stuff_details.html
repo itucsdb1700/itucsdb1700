@@ -3,14 +3,36 @@
 {% block content %}
     <h1>Details for Found Property </h1>
 	<br>
-	<p> Description: {{ found.get_desc() }}</p>
-	<p> Current Location: {{ found.get_location() }}</p>
-	<p> Date of Finding (YYYY-MM-DD): {{ found.get_date() }}</p>
-	<p> Name of Person Who Found It: {{ found.get_name() }}</p>
-	<p> E-mail of Person Who Found It: {{ found.get_mail() }}</p>
-    <p> Phone Number of Person Who Found It: {{ found.get_phone() }}</p>
-	<p> User Id: {{ found.get_user_id() }}</p>
-
+    <table style="width: 50%">
+	    <tr>
+            <td style="width: 40%"><b>Description</b></td>
+            <td>{{ found.get_desc() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Current Location: </b></td>
+            <td>{{ found.get_location() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Date of Finding (YYYY-MM-DD): </b></td>
+            <td>{{ found.get_date() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Name of Person Who Found It: </b></td>
+            <td>{{ found.get_name() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>E-mail of Person Who Found It:</b></td>
+            <td>{{ found.get_mail() }}</td>
+        </tr>
+        <tr>
+            <td style="width: 40%"><b>Phone Number of Person Who Found It:</b></td>
+            <td>{{ found.get_phone() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>User Id: </b></td>
+            <td>{{ found.get_user_id() }}</td>
+        </tr>
+    </table>
 	<br>
 
 

@@ -3,12 +3,28 @@
 {% block content %}
     <h1>Details for Tutor </h1>
 	<br>
-	<p> Subject for Special Lesson: {{ tutor.get_subject() }}</p>
-	<p> Name of Tutor Candidate: {{ tutor.get_name() }}</p>
-	<p> E-mail of Tutor Candidate: {{ tutor.get_mail() }}</p>
-    <p> Phone Number of Tutor Candidate: {{ tutor.get_phone() }}</p>
-	<p> User Id: {{ tutor.get_user_id() }}</p>
-
+    <table style="width: 30%">
+	    <tr>
+            <td><b>Subject for Special Lesson:</b></td>
+            <td>{{ tutor.get_subject() }}</td>
+        </tr>
+	    <tr>
+            <td><b>Name of Tutor Candidate:</b></td>
+            <td>{{ tutor.get_name() }}</td>
+        </tr>
+	    <tr>
+            <td><b>E-mail of Tutor Candidate:</b></td>
+            <td>{{ tutor.get_mail() }}</td>
+        </tr>
+        <tr>
+            <td><b>Phone Number of Tutor Candidate:</b></td>
+            <td>{{ tutor.get_phone() }}</td>
+        </tr>
+	    <tr>
+            <td><b>User Id:</b></td>
+            <td>{{ tutor.get_user_id() }}</td>
+        </tr>
+    </table>
 	<br>
 
 
@@ -20,7 +36,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<p>Delete Record</p>
+					<p>Delete Record</tr>
 				</div>
 				<div class="modal-body">
 					<p>Are you sure to delete this record? </p>
