@@ -47,6 +47,10 @@ def counter_page():
 def LoginPage():
     return login_page()
 
+@site.route('/sign_up', methods=['GET', 'POST'])
+def SignUpPage():
+  return sign_up_page()
+
 @site.route("/logout")
 @login_required
 def LogoutPage():
@@ -70,6 +74,40 @@ def HomePage():
     now = datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
+@site.route('/profile')
+@login_required
+def ProfilePage():
+    return redirect(url_for('site.SelectedProfilePage', username=current_user.get_username()))
+
+@site.route('/profile/<string:username>')
+@login_required
+def SelectedProfilePage(username):
+    if CheckUser(username): #returns 0 if the username does not exist
+        user = get_user(username) #create the user object
+        return render_template('profile.html', user=user) #send the user object to the html
+    else:
+        return redirect(url_for('site.HomePage'))
+
+@site.route('/search_user', methods=['GET', 'POST'])
+@login_required
+def SearchUserPage():
+    return search_user_page()
+
+@site.route('/search_user', methods=['GET', 'POST'])
+@login_required
+def ListUsers():
+    return list_users_page()
+
+def CheckUser(username):
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT COUNT(USERS.USERNAME) 
+                        FROM USERS 
+                        WHERE (USERS.USERNAME = %s)"""
+        cursor.execute(statement, [username])
+        existence_flag = cursor.fetchone()
+        return existence_flag[0]
+
 
 @site.route('/sharemyhouse_announcement',methods=['GET', 'POST'])
 @login_required
@@ -92,16 +130,21 @@ def SharedBooksAnnouncementPage():
 def SharedLessonNotesAnnouncementPage():
     return shared_LessonNotes_Announcement_Page()
 
-@site.route('/sign_up', methods=['GET', 'POST'])
-def SignUpPage():
-  return sign_up_page()
-
-
 @site.route('/game_friends', methods=['GET', 'POST'])
 @login_required
 def GameFriendPage():
     return game_friend_page()
 
+@site.route('/game_friends/<string:announceId>')
+@login_required
+def SelectedGameAnnounce(announceId):
+    announce = GameAnnounce.get_announce_byId(announceId)
+    return render_template('game_friend_announces.html', announce=announce)
+
+@site.route('/delete_game_friends/<int:id>', methods=['POST'])
+def deleteGameFriend(id):
+    GameAnnounce.delete_announce_byId(id)
+    return redirect(url_for('site.GameFriendPage'))
 
 @site.route('/lost_stuff', methods=['GET', 'POST'])
 @login_required
@@ -142,52 +185,3 @@ def SportActivityPage():
 @login_required
 def ItuActivityPage():
     return itu_activity_page()
-
-@site.route('/profile')
-@login_required
-def ProfilePage():
-    return redirect(url_for('site.SelectedProfilePage', username=current_user.get_username()))
-
-@site.route('/profile/<string:username>')
-@login_required
-def SelectedProfilePage(username):
-    if CheckUser(username): #returns 0 if the username does not exist
-        user = get_user(username) #create the user object
-        return render_template('profile.html', user=user) #send the user object to the html
-    else:
-        return redirect(url_for('site.HomePage'))
-
-
-@site.route('/game_friends/<string:announceId>')
-@login_required
-def SelectedGameAnnounce(announceId):
-    announce = GameAnnounce.get_announce_byId(announceId)
-    return render_template('game_friend_announces.html', announce=announce)
-
-
-@site.route('/delete/<int:id>', methods=['POST'])
-def delete(id):
-    GameAnnounce.delete_announce_byId(id)
-    return redirect(url_for('site.GameFriendPage'))
-
-
-
-@site.route('/search_user', methods=['GET', 'POST'])
-@login_required
-def SearchUserPage():
-    return search_user_page()
-
-@site.route('/search_user', methods=['GET', 'POST'])
-@login_required
-def ListUsers():
-    return list_users_page()
-
-def CheckUser(username):
-    with dbapi2.connect(current_app.config['dsn']) as connection:
-        cursor = connection.cursor()
-        statement = """SELECT COUNT(USERS.USERNAME) 
-                        FROM USERS 
-                        WHERE (USERS.USERNAME = %s)"""
-        cursor.execute(statement, [username])
-        existence_flag = cursor.fetchone()
-        return existence_flag[0]

@@ -30,7 +30,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 
-					<form method="post" action="{{ url_for('site.delete', id=announce.get_id()) }}">
+					<form method="post" action="{{ url_for('site.deleteGameFriend', id=announce.get_id()) }}">
 						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
 					</form>
 
