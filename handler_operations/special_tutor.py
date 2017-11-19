@@ -46,7 +46,7 @@ def special_tutor_page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT SUBJECT, FULLNAME, SPECIALTUTORS.EMAIL, PHONENUMBER, USERS.USERNAME FROM SPECIALTUTORS, USERS WHERE (SPECIALTUTORS.USERID = USERS.ID)"""
+            query = """SELECT SUBJECT, FULLNAME, SPECIALTUTORS.EMAIL, PHONENUMBER, USERS.USERNAME, SPECIALTUTORS.ID FROM SPECIALTUTORS, USERS WHERE (SPECIALTUTORS.USERID = USERS.ID)"""
             cursor.execute(query)
             specialtutors = cursor.fetchall()
         return render_template('special_tutor.html', specialtutors=specialtutors)

@@ -48,6 +48,7 @@
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Name of Tutor: activate to sort column ascending">Name of Tutor</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Contact Info of Tutor: activate to sort column ascending">Contact Info of Tutor</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Person Who Posted: activate to sort column ascending">Person Who Posted</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Edit-Update: activate to sort column ascending">Update-Delete</th>
             </tr>
             </thead>
             {% for item in specialtutors %}
@@ -60,6 +61,11 @@
                             <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
                         </a>
                     </td>
+                    <td>
+						<a href="{{ url_for('site.selected_special_tutor', tutorId=item[5]) }}">
+                            <button type="button" class="btn btn-info btn-md">Go to Details</button>
+                        </a>
+					</td>
                 </tr>
             {% endfor %}
         </table>

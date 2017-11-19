@@ -151,10 +151,32 @@ def deleteGameFriend(id):
 def LostStuff():
     return lost_stuff_page()
 
+@site.route('/lost_stuff/<string:lostId>')
+@login_required
+def selected_lost_stuff(lostId):
+    lost = lost_stuff.get_lost_byId(lostId)
+    return render_template('lost_stuff_details.html', lost = lost)
+
+@site.route('/delete_lost_stuff/<int:id>', methods=['POST'])
+def delete_lost_stuff(id):
+    lost_stuff.delete_lost_byId(id)
+    return redirect(url_for('site.LostStuff'))
+
 @site.route('/found_stuff', methods=['GET', 'POST'])
 @login_required
 def FoundStuff():
     return found_stuff_page()
+
+@site.route('/found_stuff/<string:foundId>')
+@login_required
+def selected_found_stuff(foundId):
+    found = found_stuff.get_found_byId(foundId)
+    return render_template('found_stuff_details.html', found=found)
+
+@site.route('/delete_found_stuff/<int:id>', methods=['POST'])
+def delete_found_stuff(id):
+    found_stuff.delete_found_byId(id)
+    return redirect(url_for('site.FoundStuff'))
 
 @site.route('/restaurants', methods=['GET', 'POST'])
 @login_required
@@ -166,10 +188,32 @@ def RestaurantsPage():
 def SpecialTutor():
     return special_tutor_page()
 
+@site.route('/special_tutors/<string:tutorId>')
+@login_required
+def selected_special_tutor(tutorId):
+    tutor = special_tutor.get_tutor_byId(tutorId)
+    return render_template('special_tutor_details.html', tutor=tutor)
+
+@site.route('/delete_special_tutor/<int:id>', methods=['POST'])
+def delete_special_tutor(id):
+    special_tutor.delete_tutor_byId(id)
+    return redirect(url_for('site.SpecialTutor'))
+
 @site.route('/special_students', methods=['GET', 'POST'])
 @login_required
 def SpecialStudent():
     return special_student_page()
+
+@site.route('/special_students/<string:studentId>')
+@login_required
+def selected_special_student(studentId):
+    student = special_student.get_student_byId(studentId)
+    return render_template('special_student_details.html', student=student)
+
+@site.route('/delete_special_student/<int:id>', methods=['POST'])
+def delete_special_student(id):
+    special_student.delete_student_byId(id)
+    return redirect(url_for('site.SpecialStudent'))
 
 @site.route('/club_activities', methods=['GET', 'POST'])
 @login_required
