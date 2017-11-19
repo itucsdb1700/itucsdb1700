@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %} Game Friend Announces {% endblock %}
+{% block content %}
+    <h1>Announce: {{ announce.get_gameName() }} </h1>
+
+	<br>
+	<p> Game Type: {{ announce.get_gameType() }}</p>
+	<p> Player Number: {{ announce.get_playerNum() }}</p>
+	<p> Game Date: {{ announce.get_gameDate() }}</p>
+	<p> Game Location: {{ announce.get_gameLoc() }}</p>
+	<p> Game Description: {{ announce.get_gameDesc() }}</p>
+	<p> User Id: {{ announce.get_user_id() }}</p>
+
+	<br>
+
+
+	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+		Delete record
+	</button>
+
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p>Delete Record</p>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure to delete {{ announce.get_gameName() }} record? </p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+					<form method="post" action="{{ url_for('site.delete', id=announce.get_id()) }}">
+						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+{% endblock %}

@@ -157,6 +157,21 @@ def SelectedProfilePage(username):
     else:
         return redirect(url_for('site.HomePage'))
 
+
+@site.route('/game_friends/<string:announceId>')
+@login_required
+def SelectedGameAnnounce(announceId):
+    announce = GameAnnounce.get_announce_byId(announceId)
+    return render_template('game_friend_announces.html', announce=announce)
+
+
+@site.route('/delete/<int:id>', methods=['POST'])
+def delete(id):
+    GameAnnounce.delete_announce_byId(id)
+    return redirect(url_for('site.GameFriendPage'))
+
+
+
 @site.route('/search_user', methods=['GET', 'POST'])
 @login_required
 def SearchUserPage():
