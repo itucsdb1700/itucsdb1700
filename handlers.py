@@ -151,6 +151,17 @@ def deleteGameFriend(id):
 def LostStuff():
     return lost_stuff_page()
 
+@site.route('/lost_stuff/<string:lostId>')
+@login_required
+def selected_lost_stuff(lostId):
+    lost = lost_stuff.get_lost_byId(lostId)
+    return render_template('lost_stuff_details.html', lost = lost)
+
+@site.route('/delete_lost_stuff/<int:id>', methods=['POST'])
+def delete_lost_stuff(id):
+    lost_stuff.delete_lost_byId(id)
+    return redirect(url_for('site.LostStuff'))
+
 @site.route('/found_stuff', methods=['GET', 'POST'])
 @login_required
 def FoundStuff():
