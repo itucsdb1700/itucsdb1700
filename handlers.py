@@ -193,6 +193,17 @@ def SpecialTutor():
 def SpecialStudent():
     return special_student_page()
 
+@site.route('/special_students/<string:studentId>')
+@login_required
+def selected_special_student(studentId):
+    student = special_student.get_student_byId(studentId)
+    return render_template('special_student_details.html', student=student)
+
+@site.route('/delete_special_student/<int:id>', methods=['POST'])
+def delete_special_student(id):
+    special_student.delete_student_byId(id)
+    return redirect(url_for('site.SpecialStudent'))
+
 @site.route('/club_activities', methods=['GET', 'POST'])
 @login_required
 def ClubActivityPage():
