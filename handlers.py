@@ -156,6 +156,17 @@ def LostStuff():
 def FoundStuff():
     return found_stuff_page()
 
+@site.route('/found_stuff/<string:foundId>')
+@login_required
+def selected_found_stuff(foundId):
+    found = found_stuff.get_found_byId(foundId)
+    return render_template('found_stuff_details.html', found=found)
+
+@site.route('/delete_found_stuff/<int:id>', methods=['POST'])
+def delete_found_stuff(id):
+    found_stuff.delete_found_byId(id)
+    return redirect(url_for('site.FoundStuff'))
+
 @site.route('/restaurants', methods=['GET', 'POST'])
 @login_required
 def RestaurantsPage():
