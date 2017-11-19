@@ -188,6 +188,17 @@ def RestaurantsPage():
 def SpecialTutor():
     return special_tutor_page()
 
+@site.route('/special_tutors/<string:tutorId>')
+@login_required
+def selected_special_tutor(tutorId):
+    tutor = special_tutor.get_tutor_byId(tutorId)
+    return render_template('special_tutor_details.html', tutor=tutor)
+
+@site.route('/delete_special_tutor/<int:id>', methods=['POST'])
+def delete_special_tutor(id):
+    special_tutor.delete_tutor_byId(id)
+    return redirect(url_for('site.SpecialTutor'))
+
 @site.route('/special_students', methods=['GET', 'POST'])
 @login_required
 def SpecialStudent():
