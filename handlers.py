@@ -93,7 +93,7 @@ def SelectedProfilePage(username):
 def SearchUserPage():
     return search_user_page()
 
-@site.route('/search_user', methods=['GET', 'POST'])
+@site.route('/list_user', methods=['GET', 'POST'])
 @login_required
 def ListUsers():
     return list_users_page()
