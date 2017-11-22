@@ -24,6 +24,7 @@ from handler_operations.sport_activities import *
 from handler_operations.sharedBooksAnnouncement import *
 from handler_operations.sharedLessonNotesAnnouncement import *
 from handler_operations.searchedHouseAnnouncementForProfile import *
+from handler_operations.sharedHouseAnnouncementForProfile import *
 from handler_operations.add_faculty import *
 from handler_operations.search_user import *
 from handler_operations.list_users import *
@@ -116,21 +117,37 @@ def CheckUser(username):
 def ShareHousePageAnnouncement():
     return share_MyHouse_Announcement_Page()
 
-@site.route('/searchedhouse_announcement',methods=['GET', 'POST'])
+@site.route('/my_shared_house_announcement',methods = ['GET','POST'])
 @login_required
-def SearchedHousePageAnnouncement():
-    return searched_House_Announcement_Page()
+def ProfileOfSharingHouseAnnouncementPage():
+    return shared_House_Announcement_For_Profile_Page();
+
+@site.route('/delete_shared_house_announcement/<int:id>',methods = ['POST'])
+@login_required
+def deleteSharedHouse(id):
+    sharingHouseAnnouncement.delete_sharingHouseAnnouncement_byId(id)
+    return redirect(url_for('site.ProfileOfSharingHouseAnnouncementPage'))
 
 
+
+##################################################
 @site.route('/sharebooks',methods = ['GET','POST'])
 @login_required
 def SharedBooksAnnouncementPage():
     return shared_Books_Announcement_Page()
+#################################################
+
 
 @site.route('/sharelessonnotes',methods = ['GET','POST'])
 @login_required
 def SharedLessonNotesAnnouncementPage():
     return shared_LessonNotes_Announcement_Page()
+
+#######################################################################
+@site.route('/searchedhouse_announcement',methods=['GET', 'POST'])
+@login_required
+def SearchedHousePageAnnouncement():
+    return searched_House_Announcement_Page()
 
 @site.route('/my_searched_house_announcement',methods = ['GET','POST'])
 @login_required
@@ -142,9 +159,7 @@ def ProfileOfSearchingHouseAnnouncementPage():
 def deleteSearchedHouse(id):
     searchingHouseAnnouncement.delete_searchingHouseAnnouncement_byId(id)
     return redirect(url_for('site.ProfileOfSearchingHouseAnnouncementPage'))
-
-
-#########################################################
+#######################################################################
 
 @site.route('/game_friends', methods=['GET', 'POST'])
 @login_required

@@ -4,6 +4,9 @@
 
 
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SharingHouseAnnouncementModal">Share House</button>
+    <a href="{{ url_for('site.ProfileOfSharingHouseAnnouncementPage')}}">
+        <button type="button" class="btn btn-info btn-lg">Your Announcements</button>
+    </a>
 
     <div class="modal fade" id="SharingHouseAnnouncementModal" role="dialog">
         <div class="modal-dialog">
@@ -13,7 +16,7 @@
                     <h4 class="modal-title">Share House</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ url_for('site.ShareMyHousePageAnnouncement') }}" name="SharedHouseAnnouncement" role="form">
+                    <form method="POST" action="{{ url_for('site.ShareHousePageAnnouncement') }}" name="SharedHouseAnnouncement" role="form">
                         <input type="hidden" name="form-name" value="SharedHouseAnnouncement">
                         <div class="form-group">
                             <label for="InputLocationOfSharingHouse">Location</label>
