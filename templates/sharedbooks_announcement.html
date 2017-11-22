@@ -48,25 +48,29 @@
     </div>
         {% if ALLSharingBooks %}
         <table id = "SharingLessonNotesAnnouncementTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
-            <tr>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="Position: activate to sort column ascending">NAME</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">LESSON NAME</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="Position: activate to sort column ascending">LESSON CODE</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">TYPES OF SHARE</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">PRICE OF BOOKS</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="Position: activate to sort column ascending">OWNER OF ANNOUNCEMENT</th>
+            <thead>
+                <tr role="row">
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="NAME: activate to sort column ascending">NAME</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="LESSON NAME: activate to sort column ascending">LESSON NAME</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="LESSON CODE: activate to sort column ascending">LESSON CODE</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="TYPES OF SHARE: activate to sort column ascending">TYPES OF SHARE</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="PRICE OF BOOKS: activate to sort column ascending">PRICE OF BOOKS</th>
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="OWNER OF ANNOUNCEMENT: activate to sort column ascending">OWNER OF ANNOUNCEMENT</th>
 
-            </tr>
+                </tr>
+            </thead>
+            <tbody>
             {% for item in ALLSharingBooks %}
-                <tr>
+
+                <tr role="row">
                     <td>{{ item[0] }}</td>
                     <td>{{ item[1] }}</td>
                     <td>{{ item[2] }}</td>
                     <td>{{ item[3] }}</td>
                     {% if item[4] != None %}
-                    <td>{{ item[4] }}</td>
+                        <td>{{ item[4] }}</td>
                     {% else %}
-                    <td><p>No Price</p></td>
+                        <td><p>No Price</p></td>
                     {% endif %}
                     <td>
                        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Profile</button>
@@ -92,7 +96,9 @@
 
                 </tr>
             {% endfor %}
+        </tbody>
         </table>
+
     {% else %}
         <p>There are no items.</p>
     {% endif %}
