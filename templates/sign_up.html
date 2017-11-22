@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Start Bootstrap Template</title>
+    <title>ITUHelper Register</title>
     <!-- Bootstrap core CSS-->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
     <!-- Custom fonts for this template-->
@@ -46,12 +46,16 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="exampleInputPassword1">Password</label>
-                            <input class="form-control" id="password" name="password" type="password" placeholder="Password" required>
+                            <input class="form-control" id="password" name="password" type="password" placeholder="Password" pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
                         </div>
                         <div class="col-md-6">
                             <label for="exampleConfirmPassword">Confirm password</label>
-                            <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password" required>
+                            <input class="form-control" id="confirm_password" type="password" placeholder="Confirm password" required>
+                            <div>
+                                <script src="{{ url_for('static', filename='js/password.js') }}"></script>
+                            </div>
                         </div>
+                        <h6 style="font-size:small">*Password must contain at least one uppercase letter, one lowercase letter, one number and <br> must be at least 8 characters long.</h6>
                     </div>
                 </div>
 

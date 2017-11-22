@@ -23,7 +23,7 @@ from server import load_user
 def login_page():
   if request.method == 'POST':
     login_username = request.form['login_username']
-    print( "%s" % login_username)
+    #print( "%s" % login_username)
     login_password = request.form['login_password']
 
     with dbapi2.connect(current_app.config['dsn']) as connection:
