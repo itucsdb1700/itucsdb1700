@@ -13,6 +13,7 @@ import os.path
 from classes.Searching_House_class import searchingHouseAnnouncement
 
 def searched_House_Announcement_Page():
+
     if request.method == "POST":
         if 'userSearchButton' in request.form:  # if the search button is submitted
             session['search_username'] = request.form['usernameSearch']
@@ -51,13 +52,8 @@ def searched_House_Announcement_Page():
                 query = """INSERT INTO DATASEARCHEDHOUSE(LOCATION, MINRENTPRICE, MAXRENTPRICE,DESCRIPTION,USERID)
                                                         VALUES (%s,%s,%s,%s,%s)"""
                 cursor.execute(query, (searchingHouseAd.LocationOfSearchingHouse, searchingHouseAd.MinRentPriceOfSearchingHouse, searchingHouseAd.MaxRentPriceOfSearchingHouse,searchingHouseAd.DescriptionOfSearchingHouse,searchingHouseAd.id_ownerOfSearchingHouseAnnouncement))
-                query = """SELECT  LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE,USERS.ID FROM DATASEARCHEDHOUSE,USERS,FACULTIES
-                                              WHERE(DATASEARCHEDHOUSE.USERID = USERS.ID)
-                                              AND(USERS.FACULTYID = FACULTIES.ID)
-                                    """
-                cursor.execute(query)
-                ALLSearchedHouse = cursor.fetchall()
                 connection.commit()
+        return redirect(url_for('site.SearchedHousePageAnnouncement'))
 
         return render_template("searchedhouse_announcement.html",ALLSearchedHouse =ALLSearchedHouse)
     else:

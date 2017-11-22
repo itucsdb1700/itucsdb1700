@@ -38,3 +38,10 @@ class searchingHouseAnnouncement:
             profileForSearchingHouseAnnouncement = cursor.fetchone()
             SearchingHouseAnnouncementForProfile = searchingHouseAnnouncement(db_searchingHouseAnnouncement[0][1], db_searchingHouseAnnouncement[0][2], db_searchingHouseAnnouncement[0][5], db_searchingHouseAnnouncement[0][3], db_searchingHouseAnnouncement[0][4], db_searchingHouseAnnouncement[0][6], db_searchingHouseAnnouncement[0][7])
             return SearchingHouseAnnouncementForProfile
+
+
+    def delete_searchingHouseAnnouncement_byId(id):
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            statement = """DELETE FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
+            cursor.execute(statement, [id])
