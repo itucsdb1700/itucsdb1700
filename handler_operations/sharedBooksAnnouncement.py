@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint,session
 from flask import current_app
 from datetime import datetime
 
@@ -22,6 +22,10 @@ from classes.Books_class import sharingBooksAnnouncement
 
 def shared_Books_Announcement_Page():
     if request.method == "POST":
+        if 'userSearchButton' in request.form:  # if the search button is submitted
+            session['search_username'] = request.form['usernameSearch']
+            return redirect(url_for('site.SearchUserPage'))
+
         formtype = request.form['form-name']
 
         username = current_user.get_username()
