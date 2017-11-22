@@ -18,7 +18,7 @@
                         <form method="POST" action="{{ url_for('site.SpecialTutor') }}" name="SpecialTutor" role="form">
                           <div class="form-group">
                             <label for="OwnerName">Subject</label>
-                            <input class="form-control" name="SpecialTutorSubject" placeholder="Enter Subject" type="text">
+                            <input class="form-control" name="SpecialTutorSubject" placeholder="Enter Subject" type="text" required>
                           </div>
                           <div class="form-group">
                             <label for="InputDescription">Name of Tutor</label>
@@ -26,11 +26,11 @@
                           </div>
                           <div class="form-group">
                             <label for="InputPossibleLocation">E-mail of Tutor</label>
-                            <input class="form-control" name="SpecialTutorMail" placeholder="Enter e-mail of Tutor" type="text">
+                            <input class="form-control" name="SpecialTutorMail" placeholder="Enter e-mail of Tutor" type="email">
                           </div>
                           <div class="form-group">
                             <label for="date">Phone Number</label>
-                            <input class="form-control" name="SpecialTutorPhone" placeholder="Enter Phone Number" type="text"><br>
+                            <input class="form-control" name="SpecialTutorPhone" placeholder="05xxxxxxxxx" type="tel" pattern="^(?:050|053|054|055?)\d{1}\d{7}" required><br>
                           </div>
                           <button type="reset">Reset</button>
                           <button type="submit" formmethod="POST">Send</button>

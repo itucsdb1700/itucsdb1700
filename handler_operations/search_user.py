@@ -28,7 +28,7 @@ def search_user_page():
     if search_username:
       with dbapi2.connect(current_app.config['dsn']) as connection:
         edited_search_username = search_username + '%'
-        print(edited_search_username)
+        #print(edited_search_username)
         cursor = connection.cursor()
         query = """SELECT USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL
                     FROM  USERS
@@ -42,7 +42,7 @@ def search_user_page():
   elif session['search_username']:
       with dbapi2.connect(current_app.config['dsn']) as connection:
         edited_search_username = session['search_username'] + '%'
-        print(edited_search_username)
+        #print(edited_search_username)
         cursor = connection.cursor()
         query = """SELECT USERS.USERNAME, USERS.NAME, USERS.SURNAME, USERS.EMAIL
                     FROM  USERS

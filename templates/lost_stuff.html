@@ -15,19 +15,19 @@
                         <h4 class="modal-title">Lost Something</h4>
                       </div>
                       <div class="modal-body">
-                        <form method="POST" action="{{ url_for('site.LostStuff') }}" name="LostSomething" role="form">
+                        <form method="POST" action="{{ url_for('site.LostStuff') }}" name="LostSomething" role="form" required>
                           <input type="hidden" name="form-name" value="LostSomething">
                           <div class="form-group">
                             <label for="InputDescription">Description</label>
-                            <input class="form-control" name="LostSomethingDescription" placeholder="Enter Description" type="text">
+                            <input class="form-control" name="LostSomethingDescription" placeholder="Enter Description" type="text" required>
                           </div>
                           <div class="form-group">
                             <label for="InputPossibleLocation">Possible Location</label>
-                            <input class="form-control" name="LostSomethingPossibleLocation" placeholder="Enter possible location" type="text">
+                            <input class="form-control" name="LostSomethingPossibleLocation" placeholder="Enter possible location" type="text" required>
                           </div>
                           <div class="form-group">
                             <label for="date">Possible date of losing</label>
-                            <input class="form-control" name="LostSomethingDate"type="date" value="date"><br>
+                            <input class="form-control" name="LostSomethingDate"type="date" value="date" required><br>
                           </div>
                           <div class="form-group">
                             <label for="OwnerName">Name of Owner</label>
@@ -35,11 +35,11 @@
                           </div>
                           <div class="form-group">
                             <label for="OwnerMail">e-Mail of Owner</label>
-                            <input class="form-control" name="LostSomethingOwnerMail" placeholder="Enter e-Mail" type="text">
+                            <input class="form-control" name="LostSomethingOwnerMail" placeholder="Enter e-Mail" type="email">
                           </div>
                           <div class="form-group">
                             <label for="OwnerPhone">Phone Number of Owner</label>
-                            <input class="form-control" name="LostSomethingOwnerPhone" placeholder="+90(5--)-------" type="text">
+                            <input class="form-control" name="LostSomethingOwnerPhone" placeholder="05xxxxxxxxx" type="tel" pattern="^(?:050|053|054|055?)\d{1}\d{7}" required>
                           </div>
                           <button type="reset">Reset</button>
                           <button type="submit" formmethod="POST">Send</button>

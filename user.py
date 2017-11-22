@@ -40,7 +40,7 @@ def get_user(db_username):
     cursor.execute(statement, [db_username])
     db_user = cursor.fetchall()
     user = User(db_user[0][1], db_user[0][2], db_user[0][3],db_user[0][4], db_user[0][5], db_user[0][6])
-    print('%s' % db_user[0][0])
+    #print('%s' % db_user[0][0])
 
   if user is not None:
     user.is_admin = user.username in current_app.config['ADMIN_USERS']

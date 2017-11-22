@@ -15,10 +15,10 @@
                         <h4 class="modal-title">Add New Special Student Entry</h4>
                       </div>
                       <div class="modal-body">
-                        <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form">
+                        <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form" required>
                           <div class="form-group">
                             <label for="OwnerName">Subject</label>
-                            <input class="form-control" name="SpecialStudentSubject" placeholder="Enter Subject" type="text">
+                            <input class="form-control" name="SpecialStudentSubject" placeholder="Enter Subject" type="text" required>
                           </div>
                           <div class="form-group">
                             <label for="InputDescription">Name of Student</label>
@@ -26,11 +26,11 @@
                           </div>
                           <div class="form-group">
                             <label for="InputPossibleLocation">E-mail of Student</label>
-                            <input class="form-control" name="SpecialStudentMail" placeholder="Enter e-mail of Student" type="text">
+                            <input class="form-control" name="SpecialStudentMail" placeholder="Enter e-mail of Student" type="email">
                           </div>
                           <div class="form-group">
                             <label for="date">Phone Number</label>
-                            <input class="form-control" name="SpecialStudentPhone" placeholder="+90(5--)-------" type="text"><br>
+                            <input class="form-control" name="SpecialStudentPhone" placeholder="05xxxxxxxxx" type="tel" pattern="^(?:050|053|054|055?)\d{1}\d{7}" required><br>
                           </div>
                           <button type="reset">Reset</button>
                           <button type="submit" formmethod="POST">Send</button>

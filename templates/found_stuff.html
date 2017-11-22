@@ -2,7 +2,7 @@
 {% block title %} Found Stuff{% endblock %}
 {% block content %}
     <div>
-        <script src="{{ url_for('static', filename='js/lost_found/special_lesson.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/lost_found/lost_found.js') }}"></script>
     </div>
 
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#FoundSomething">I found something</button>
@@ -19,15 +19,15 @@
                           <input type="hidden" name="form-name" value="FoundSomething">
                           <div class="form-group">
                             <label for="InputDescription">Description</label>
-                            <input class="form-control" name="FoundSomethingDescription" placeholder="Enter description" type="text">
+                            <input class="form-control" name="FoundSomethingDescription" placeholder="Enter description" type="text" required>
                           </div>
                           <div class="form-group">
                             <label for="InputCurrentLocation">Current Location</label>
-                            <input class="form-control" name="FoundSomethingCurrentLocation" placeholder="Enter current location" type="text">
+                            <input class="form-control" name="FoundSomethingCurrentLocation" placeholder="Enter current location" type="text" required>
                           </div>
                           <div class="form-group">
                             <label for="date">Date of finding</label>
-                            <input class="form-control" name="FoundSomethingDate" type="date" value="date"><br>
+                            <input class="form-control" name="FoundSomethingDate" type="date" value="date" required><br>
                           </div>
                           <div class="form-group">
                             <label for="FinderName">Name of person who found</label>
@@ -35,11 +35,11 @@
                           </div>
                           <div class="form-group">
                             <label for="FinderMail">e-Mail of person who found</label>
-                            <input class="form-control" name="FoundSomethingFinderMail" placeholder="Enter e-Mail" type="text">
+                            <input class="form-control" name="FoundSomethingFinderMail" placeholder="Enter e-Mail" type="email">
                           </div>
                           <div class="form-group">
                             <label for="FinderPhone">Phone Number of person who found</label>
-                            <input class="form-control" name="FoundSomethingFinderPhone" placeholder="+90(5--)-------" type="text">
+                            <input class="form-control" name="FoundSomethingFinderPhone" placeholder="05xxxxxxxxx" type="tel" pattern="^(?:050|053|054|055?)\d{1}\d{7}" required>
                           </div>
                           <button type="reset">Reset</button>
                           <button type="submit" formmethod="POST">Send</button>
