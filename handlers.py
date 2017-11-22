@@ -108,6 +108,7 @@ def CheckUser(username):
         existence_flag = cursor.fetchone()
         return existence_flag[0]
 
+######################################################################
 
 @site.route('/sharemyhouse_announcement',methods=['GET', 'POST'])
 @login_required
@@ -129,6 +130,14 @@ def SharedBooksAnnouncementPage():
 @login_required
 def SharedLessonNotesAnnouncementPage():
     return shared_LessonNotes_Announcement_Page()
+
+@site.route('/searched_announcement/<string:profileForSearchingHouseAnnouncement>')
+@login_required
+def ProfileOfSearchingHouseAnnouncementPage(userId):
+    SearchingHouseAnnouncementForProfile=searchingHouseAnnouncement.get_searchingHouseAnnouncementById(userId)
+    return render_template("profile_searchedhouse_announcement.html",AnnouncementForProfile = SearchingHouseAnnouncementForProfile)
+
+#########################################################
 
 @site.route('/game_friends', methods=['GET', 'POST'])
 @login_required

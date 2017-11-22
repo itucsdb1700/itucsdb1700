@@ -61,4 +61,4 @@ def shared_LessonNotes_Announcement_Page():
                     """
             cursor.execute(query)
             ALLSharingLessonNotes = cursor.fetchall()
-            return render_template("sharedlessonnotes.html",ALLSharingLessonNotes=ALLSharingLessonNotes)
+            return render_template("sharedlessonnotes_announcement.html", ALLSharingLessonNotes=ALLSharingLessonNotes)

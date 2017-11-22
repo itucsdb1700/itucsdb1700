@@ -51,7 +51,7 @@ def searched_House_Announcement_Page():
                 query = """INSERT INTO DATASEARCHEDHOUSE(LOCATION, MINRENTPRICE, MAXRENTPRICE,DESCRIPTION,USERID)
                                                         VALUES (%s,%s,%s,%s,%s)"""
                 cursor.execute(query, (searchingHouseAd.LocationOfSearchingHouse, searchingHouseAd.MinRentPriceOfSearchingHouse, searchingHouseAd.MaxRentPriceOfSearchingHouse,searchingHouseAd.DescriptionOfSearchingHouse,searchingHouseAd.id_ownerOfSearchingHouseAnnouncement))
-                query = """SELECT  LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM DATASEARCHEDHOUSE,USERS,FACULTIES
+                query = """SELECT  LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE,USERS.ID FROM DATASEARCHEDHOUSE,USERS,FACULTIES
                                               WHERE(DATASEARCHEDHOUSE.USERID = USERS.ID)
                                               AND(USERS.FACULTYID = FACULTIES.ID)
                                     """
