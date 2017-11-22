@@ -30,7 +30,7 @@
                           </div>
                           <div class="form-group">
                             <label for="date">Phone Number</label>
-                            <input class="form-control" name="SpecialTutorPhone" placeholder="05xxxxxxxxx" type="tel" pattern="^(?:050|053|054|055?)\d{1}\d{7}" required><br>
+                            <input class="form-control" name="SpecialTutorPhone" placeholder="05xxxxxxxxx" type="tel" maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}" required><br>
                           </div>
                           <button type="reset">Reset</button>
                           <button type="submit" formmethod="POST">Send</button>
