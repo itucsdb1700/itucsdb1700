@@ -17,7 +17,7 @@ from passlib.apps import custom_app_context as pwd_context
 import psycopg2 as dbapi2
 import os.path
 
-from classes.Books_class import sharingBooksAnnouncement
+from classes.Sharing_Books_class import sharingBooksAnnouncement
 
 
 def shared_Books_Announcement_Page():

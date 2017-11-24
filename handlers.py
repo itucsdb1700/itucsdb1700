@@ -25,6 +25,7 @@ from handler_operations.sharedBooksAnnouncement import *
 from handler_operations.sharedLessonNotesAnnouncement import *
 from handler_operations.searchedHouseAnnouncementForProfile import *
 from handler_operations.sharedHouseAnnouncementForProfile import *
+from handler_operations.sharedBooksAnnouncementForProfile import *
 from handler_operations.add_faculty import *
 from handler_operations.search_user import *
 from handler_operations.list_users import *
@@ -128,13 +129,22 @@ def deleteSharedHouse(id):
     sharingHouseAnnouncement.delete_sharingHouseAnnouncement_byId(id)
     return redirect(url_for('site.ProfileOfSharingHouseAnnouncementPage'))
 
-
-
 ##################################################
 @site.route('/sharebooks',methods = ['GET','POST'])
 @login_required
 def SharedBooksAnnouncementPage():
     return shared_Books_Announcement_Page()
+
+@site.route('/my_shared_books_announcement',methods = ['GET','POST'])
+@login_required
+def ProfileOfSharingBooksAnnouncementPage():
+    return shared_Books_Announcement_For_Profile_Page();
+
+@site.route('/delete_shared_house_announcement/<int:id>',methods = ['POST'])
+@login_required
+def deleteSharedBooks(id):
+    sharingHouseAnnouncement.delete_sharingBooksAnnouncement_byId(id)
+    return redirect(url_for('site.ProfileOfBooksHouseAnnouncementPage'))
 #################################################
 
 
