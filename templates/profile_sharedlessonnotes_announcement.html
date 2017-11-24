@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block title %} Searching House{% endblock %}
+{% block content %}
+
+{% if AllYourSharedLessonNotesAnnouncement %}
+    <br> <br>
+
+
+
+    <table id = "dataTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
+        <thead>
+            <tr role="row">
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 100.333px;" aria-label="NAME: activate to sort column ascending">NAME</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="LESSON NAME: activate to sort column ascending">LESSON NAME</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 125.333px;" aria-label="LESSON CODE: activate to sort column ascending">LESSON CODE</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="TEACHER NAME: activate to sort column ascending">TEACHER NAME</th>
+                <th style = "width: 75.333px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in AllYourSharedLessonNotesAnnouncement %}
+                <tr role="row">
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[2] }}</td>
+                    <td>{{ item[3] }}</td>
+                    <td>
+                        <button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+		                    Delete record
+	                    </button>
+
+	                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		                    <div class="modal-dialog">
+			                    <div class="modal-content">
+				                    <div class="modal-header">
+                                        <p>Delete Record</p>
+				                    </div>
+				                    <div class="modal-body">
+					                    <p>Are you sure to delete record? </p>
+				                    </div>
+				                    <div class="modal-footer">
+					                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+					                    <form method="post" action="{{ url_for('site.deleteSharedLessonNotes', id=item[4]) }}">
+                                            <button type="submit" class="btn btn-danger btn-md">Delete</button>
+					                    </form>
+
+				                    </div>
+			                    </div>
+		                    </div>
+	                    </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+        <br><br>
+        <p>There Is No Your Sharing Lesson Notes Announcement.</p>
+{% endif %}
+
+
+{%endblock %}
