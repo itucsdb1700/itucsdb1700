@@ -10,24 +10,24 @@ from passlib.apps import custom_app_context as pwd_context
 from datetime import datetime
 import os.path
 
-
-def shared_House_Announcement_For_Profile_Page():
+def shared_Books_Announcement_For_Profile_Page():
     username = current_user.get_username()
     email = current_user.get_email()
 
     with dbapi2.connect(current_app.config['dsn']) as connection:
         cursor = connection.cursor()
         statement = """SELECT ID FROM USERS
-                              WHERE(USERS.USERNAME = %s)
-                              AND(USERS.EMAIL = %s)"""
+                                  WHERE(USERS.USERNAME = %s)
+                                  AND(USERS.EMAIL = %s)"""
         cursor.execute(statement, (username, email))
         currentuser_id = cursor.fetchone()
 
-        query = """SELECT LOCATION,RENTPRICE,NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,ID FROM DATASHAREDHOUSE
-                                      WHERE(DATASHAREDHOUSE.USERID = %s)
-                            """
-        cursor.execute(query,(currentuser_id))
-        AllYourSharedHouseAnnouncement = cursor.fetchall()
+        query = """SELECT NAMEOFBOOK,LESSONNAME,LESSONCODE,TYPEOFSHARE,PRICE,ID FROM SHAREDBOOKS
+                                          WHERE(SHAREDBOOKS.USERID = %s)
+                                """
+        cursor.execute(query, (currentuser_id))
+        AllYourSharedBooksAnnouncement = cursor.fetchall()
         connection.commit()
 
-    return render_template("profile_sharedhouse_announcement.html",AllYourSharedHouseAnnouncement = AllYourSharedHouseAnnouncement)
+    return render_template("profile_sharedbooks_announcement.html",
+                           AllYourSharedBooksAnnouncement=AllYourSharedBooksAnnouncement)
