@@ -183,21 +183,6 @@ def deleteSearchedHouse(id):
     return redirect(url_for('site.ProfileOfSearchingHouseAnnouncementPage'))
 #######################################################################
 
-@site.route('/game_friends', methods=['GET', 'POST'])
-@login_required
-def GameFriendPage():
-    return game_friend_page()
-
-@site.route('/game_friends/<string:announceId>')
-@login_required
-def SelectedGameAnnounce(announceId):
-    announce = GameAnnounce.get_announce_byId(announceId)
-    return render_template('game_friend_announces.html', announce=announce)
-
-@site.route('/delete_game_friends/<int:id>', methods=['POST'])
-def deleteGameFriend(id):
-    GameAnnounce.delete_announce_byId(id)
-    return redirect(url_for('site.GameFriendPage'))
 
 @site.route('/lost_stuff', methods=['GET', 'POST'])
 @login_required
@@ -268,6 +253,10 @@ def delete_special_student(id):
     special_student.delete_student_byId(id)
     return redirect(url_for('site.SpecialStudent'))
 
+
+#######################################################################
+
+
 @site.route('/club_activities', methods=['GET', 'POST'])
 @login_required
 def ClubActivityPage():
@@ -282,3 +271,60 @@ def SportActivityPage():
 @login_required
 def ItuActivityPage():
     return itu_activity_page()
+
+@site.route('/game_friends', methods=['GET', 'POST'])
+@login_required
+def GameFriendPage():
+    return game_friend_page()
+
+
+@site.route('/game_friends/<string:announceId>')
+@login_required
+def SelectedGameAnnounce(announceId):
+    announce = GameAnnounce.get_announce_byId(announceId)
+    return render_template('game_friend_announces.html', announce=announce)
+
+@site.route('/delete_game_friends/<int:id>', methods=['POST'])
+@login_required
+def deleteGameFriend(id):
+    GameAnnounce.delete_announce_byId(id)
+    return redirect(url_for('site.GameFriendPage'))
+
+
+@site.route('/itu_activities/<string:activityId>')
+@login_required
+def SelectedItuActivity(activityId):
+    activity = ItuActivity.get_activity_byId(activityId)
+    return render_template('itu_activities_detail.html', activity=activity)
+
+@site.route('/delete_itu_activity/<int:id>', methods=['POST'])
+@login_required
+def DeleteItuActivity(id):
+    ItuActivity.delete_activity_byId(id)
+    return redirect(url_for('site.ItuActivityPage'))
+
+
+@site.route('/club_activities/<string:activityId>')
+@login_required
+def SelectedClubActivity(activityId):
+    activity = ClubActivity.get_activity_byId(activityId)
+    return render_template('club_activities_detail.html', activity=activity)
+
+@site.route('/delete_club_activity/<int:id>', methods=['POST'])
+@login_required
+def DeleteClubActivity(id):
+    ClubActivity.delete_activity_byId(id)
+    return redirect(url_for('site.ClubActivityPage'))
+
+
+@site.route('/sport_activities/<string:activityId>')
+@login_required
+def SelectedSportActivity(activityId):
+    activity = SportActivity.get_activity_byId(activityId)
+    return render_template('sport_activities_detail.html', activity=activity)
+
+@site.route('/delete_sport_activity/<int:id>', methods=['POST'])
+@login_required
+def DeleteSportActivity(id):
+    SportActivity.delete_activity_byId(id)
+    return redirect(url_for('site.SportActivityPage'))

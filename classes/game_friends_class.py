@@ -1,5 +1,4 @@
 from flask import current_app
-from flask_login import UserMixin
 import psycopg2 as dbapi2
 
 class GameAnnounce:
