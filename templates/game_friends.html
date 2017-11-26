@@ -17,7 +17,7 @@
 
 						<div class="form-group">
 							<label for="InputGameName">Game Name</label>
-							<input class="form-control" name="InputGameName" id="InputGameName" placeholder="Enter Game Name" type="text" required>
+							<input class="form-control" name="InputGameName" id="InputGameName" placeholder="Enter Game Name" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<div class="form-group">
@@ -31,24 +31,24 @@
 						</div>
 
 						<div class="form-group">
-							<label for="GamePlayerNo">Player Number</label>
-							<input class="form-control" name="GamePlayerNo" id="GamePlayerNo" placeholder="Number of players required" type="number" min="0" required>
+							<label for="GamePlayerNo">Number of Players</label>
+							<input class="form-control" name="GamePlayerNo" id="GamePlayerNo" placeholder="Number of players" type="number" min="0" required>
 						</div>
 
 
 						<div class="form-group">
 							<label for="InputGameDate">Game Date</label>
-							<input class="form-control" name="InputGameDate" id="InputGameDate" type="date" value="date">
+							<input class="form-control" name="InputGameDate" id="InputGameDate" type="date" value="date" required>
 						</div>
 
 						<div class="form-group">
 							<label for="InputGameLocation">Game Location</label>
-							<input class="form-control" name="InputGameLocation" id="InputGameLocation" placeholder="Enter Game Location" type="text">
+							<input class="form-control" name="InputGameLocation" id="InputGameLocation" placeholder="Enter Game Location" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<div class="form-group">
 							<label for="GameDescription">Description</label>
-							<input class="form-control" name="GameDescription" id="GameDescription" placeholder="Details about game announcement" type="text">
+							<input class="form-control" name="GameDescription" id="GameDescription" placeholder="Details about game announcement" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<button type="submit" class="btn btn-default" id="buttonSend">Send</button>
@@ -117,3 +117,4 @@
 
 
 {%endblock %}
+

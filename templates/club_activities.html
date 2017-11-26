@@ -16,12 +16,12 @@
 
 						<div class="form-group">
 							<label for="InputActivityName">Activity Name</label>
-							<input class="form-control" name="InputActivityName" id="InputActivityName" placeholder="Enter Activity Name" type="text" required>
+							<input class="form-control" name="InputActivityName" id="InputActivityName" placeholder="Enter Activity Name" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<div class="form-group">
 							<label for="InputClubName">Club Name</label>
-							<input class="form-control" name="InputClubName" id="InputClubName" placeholder="Enter Club Name" type="text" required>
+							<input class="form-control" name="InputClubName" id="InputClubName" placeholder="Enter Club Name" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<div class="form-group">
@@ -36,12 +36,12 @@
 
 						<div class="form-group">
 							<label for="InputActivityLocation">Location</label>
-							<input class="form-control" name="InputActivityLocation" id="InputActivityLocation" placeholder="Enter Activity Location" type="text" required>
+							<input class="form-control" name="InputActivityLocation" id="InputActivityLocation" placeholder="Enter Activity Location" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<div class="form-group">
 							<label for="ActivityDescription">Description</label>
-							<input class="form-control" name="ActivityDescription" id="ActivityDescription" placeholder="Details about activity" type="text">
+							<input class="form-control" name="ActivityDescription" id="ActivityDescription" placeholder="Details about activity" type="text" required pattern=".*[^ ].*" title="This field is required">
 						</div>
 
 						<button type="submit" class="btn btn-default" id="buttonSend">Send</button>
