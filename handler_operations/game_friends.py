@@ -26,10 +26,7 @@ def game_friend_page():
 
         gameName = request.form['InputGameName']
         gameType = request.form['InputGameType']
-        if not request.form['GamePlayerNo']:
-            playerNum = None
-        else:
-            playerNum = int(request.form['GamePlayerNo'])
+        playerNum = int(request.form['GamePlayerNo'])
         gameDate = request.form['InputGameDate']
         gameLoc = request.form['InputGameLocation']
         gameDesc = request.form['GameDescription']
