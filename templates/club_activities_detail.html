@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %} Club Activity Details {% endblock %}
+{% block content %}
+    <h1>Activity: {{ activity.get_activityName() }} </h1>
+
+	<br>
+	<p> Club: {{ activity.get_clubName() }}</p>
+	<p> Activity Date: {{ activity.get_activityDate() }}</p>
+	<p> Activity Time: {{ activity.get_activityTime() }}</p>
+	<p> Activity Location: {{ activity.get_activityLoc() }}</p>
+	<p> Activity Description: {{ activity.get_activityDesc() }}</p>
+	<p> User Id: {{ activity.get_user_id() }}</p>
+
+	<br>
+
+
+	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+		Delete record
+	</button>
+
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p>Delete Record</p>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure to delete {{ activity.get_activityName() }} record? </p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+					<form method="post" action="{{ url_for('site.DeleteClubActivity', id=activity.get_id()) }}">
+						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+{% endblock %}
