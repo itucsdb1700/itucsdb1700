@@ -27,6 +27,42 @@
     </table>
 	<br>
 
+    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#SpecialTutor">Update Entry</button>
+
+    <div class="modal fade" id="SpecialTutor" role="dialog">
+        <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ url_for('site.SpecialTutor') }}" name="SpecialTutor" role="form">
+                          <input type="hidden" name="form-name" value="SpecialTutorUpdate">
+                          <input type="hidden" name="tutor-id" value="{{ tutor.get_id() }}">
+                          <div class="form-group">
+                            <label for="OwnerName">Subject</label>
+                            <input class="form-control" name="SpecialTutorSubject" placeholder="Enter Subject" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputDescription">Name of Tutor</label>
+                            <input class="form-control" name="SpecialTutorName" placeholder="Enter Name of Tutor" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputPossibleLocation">E-mail of Tutor</label>
+                            <input class="form-control" name="SpecialTutorMail" placeholder="Enter e-mail of Tutor" type="email">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Phone Number</label>
+                            <input class="form-control" name="SpecialTutorPhone" placeholder="05xxxxxxxxx" type="tel" maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}"><br>
+                          </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                      </div>
+                    </div>
+        </div>
+    </div>
 
 	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
 		Delete record

@@ -11,7 +11,6 @@ class found_stuff:
         self.mail = foundmail
         self.phone = foundphone
         self.user_id = founduser_id
-
     def get_desc(self):
         return self.description
     def get_location(self):

@@ -16,6 +16,7 @@
                       </div>
                       <div class="modal-body">
                         <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form" required>
+                          <input type="hidden" name="form-name" value="SpecialStudent">
                           <div class="form-group">
                             <label for="OwnerName">Subject</label>
                             <input class="form-control" name="SpecialStudentSubject" placeholder="Enter Subject" type="text" required>
