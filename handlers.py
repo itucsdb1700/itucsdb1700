@@ -30,6 +30,7 @@ from handler_operations.sharedLessonNotesAnnouncementForProfile import *
 from handler_operations.add_faculty import *
 from handler_operations.search_user import *
 from handler_operations.list_users import *
+from handler_operations.home import *
 
 
 @site.route('/count')
@@ -72,20 +73,25 @@ def initialize_database():
 def AddFaculty():
     return add_faculty()
 
-@site.route('/home')
+@site.route('/home', methods=['GET', 'POST'])
 @login_required
 def HomePage():
     now = datetime.now()
-    return render_template('home.html', current_time=now.ctime())
+    return home_page()
 
 @site.route('/profile')
 @login_required
 def ProfilePage():
     return redirect(url_for('site.SelectedProfilePage', username=current_user.get_username()))
 
-@site.route('/profile/<string:username>')
+@site.route('/profile/<string:username>', methods=['GET', 'POST'])
 @login_required
 def SelectedProfilePage(username):
+    if request.method == 'POST':
+        if 'userSearchButton' in request.form:  # if the search button is submitted
+            session['search_username'] = request.form['usernameSearch']
+            return redirect(url_for('site.SearchUserPage'))
+
     if CheckUser(username): #returns 0 if the username does not exist
         user = get_user(username) #create the user object
         return render_template('profile.html', user=user) #send the user object to the html
