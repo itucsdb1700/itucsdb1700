@@ -61,14 +61,12 @@ def lost_stuff_page():
                 lostid = request.form['lost-id']
 
                 lostdesc = request.form['LostSomethingDescription']
-                print("-", lostdesc, "-\n")
                 if not lostdesc:
                     statement = """SELECT STUFFDESC FROM LOSTSTUFF WHERE LOSTSTUFF.ID = %s"""
                     cursor.execute(statement, lostid)
                     lostdesc = cursor.fetchone()
 
                 lostlocation = request.form['LostSomethingPossibleLocation']
-                print("-", lostlocation, "-\n")
                 if not lostlocation:
                     statement = """SELECT POSSIBLELOC FROM LOSTSTUFF WHERE LOSTSTUFF.ID = %s"""
                     cursor.execute(statement, lostid)
@@ -81,21 +79,18 @@ def lost_stuff_page():
                     lostdate = cursor.fetchone()
 
                 lostname = request.form['LostSomethingOwnerName']
-                print("-", lostname, "-\n")
                 if not lostname:
                     statement = """SELECT OWNERNAME FROM LOSTSTUFF WHERE LOSTSTUFF.ID = %s"""
                     cursor.execute(statement, lostid)
                     lostname = cursor.fetchone()
 
                 lostmail = request.form['LostSomethingOwnerMail']
-                print("-", lostmail, "-\n")
                 if not lostmail:
                     statement = """SELECT OWNERMAIL FROM LOSTSTUFF WHERE LOSTSTUFF.ID = %s"""
                     cursor.execute(statement, lostid)
                     lostmail = cursor.fetchone()
 
                 lostphone = request.form['LostSomethingOwnerPhone']
-                print("-", lostphone, "-\n")
                 if not lostphone:
                     statement = """SELECT OWNERPHONE FROM LOSTSTUFF WHERE LOSTSTUFF.ID = %s"""
                     cursor.execute(statement, lostid)
