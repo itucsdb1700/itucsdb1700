@@ -17,7 +17,6 @@ def found_stuff_page():
         if 'userSearchButton' in request.form:  # if the search button is submitted
             session['search_username'] = request.form['usernameSearch']
             return redirect(url_for('site.SearchUserPage'))
-
         formtype = request.form['form-name']
 
         username = current_user.get_username()
@@ -53,6 +52,59 @@ def found_stuff_page():
                 cursor.execute(query, (found.description, found.location, found.date, found.name, found.mail, found.phone, found.user_id))
                 connection.commit()
                 return redirect(url_for('site.FoundStuff'))
+        elif formtype == "FoundSomethingUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()#prevented sql injection
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+                cursor.execute(statement, (username, email))
+                founduser_id = cursor.fetchone()
+                foundid = request.form['found-id']
+
+                founddesc = request.form['FoundSomethingDescription']
+                print("-", founddesc, "-\n")
+                if not founddesc:
+                    statement = """SELECT STUFFDESC FROM FOUNDSTUFF WHERE FOUNDSTUFF.ID = %s"""
+                    cursor.execute(statement, foundid)
+                    founddesc = cursor.fetchone()
+
+                foundlocation = request.form['FoundSomethingCurrentLocation']
+                print("-", foundlocation, "-\n")
+                if not foundlocation:
+                    statement = """SELECT CURRENTLOC FROM FOUNDSTUFF WHERE FOUNDSTUFF.ID = %s"""
+                    cursor.execute(statement, foundid)
+                    foundlocation = cursor.fetchone()
+
+                founddate = request.form['FoundSomethingDate']
+                if not founddate:
+                    statement = """SELECT FINDINGDATE FROM FOUNDSTUFF WHERE FOUNDSTUFF.ID = %s"""
+                    cursor.execute(statement,foundid)
+                    founddate = cursor.fetchone()
+
+                foundname = request.form['FoundSomethingFinderName']
+                print("-", foundname, "-\n")
+                if not foundname:
+                    statement = """SELECT FOUNDERNAME FROM FOUNDSTUFF WHERE FOUNDSTUFF.ID = %s"""
+                    cursor.execute(statement, foundid)
+                    foundname = cursor.fetchone()
+
+                foundmail = request.form['FoundSomethingFinderMail']
+                print("-", foundmail, "-\n")
+                if not foundmail:
+                    statement = """SELECT FOUNDERMAIL FROM FOUNDSTUFF WHERE FOUNDSTUFF.ID = %s"""
+                    cursor.execute(statement, foundid)
+                    foundmail = cursor.fetchone()
+
+                foundphone = request.form['FoundSomethingFinderPhone']
+                print("-", foundphone, "-\n")
+                if not foundphone:
+                    statement = """SELECT FOUNDERPHONE FROM FOUNDSTUFF WHERE FOUNDSTUFF.ID = %s"""
+                    cursor.execute(statement, foundid)
+                    foundphone = cursor.fetchone()
+
+                statement = """UPDATE FOUNDSTUFF SET STUFFDESC=%s, CURRENTLOC=%s, FINDINGDATE=%s, FOUNDERNAME=%s, FOUNDERMAIL=%s, FOUNDERPHONE=%s, USERID=%s WHERE FOUNDSTUFF.ID=%s"""
+                cursor.execute(statement, (founddesc, foundlocation, founddate, foundname, foundmail, foundphone, founduser_id, foundid))
+                connection.commit()
+                return redirect(url_for('site.selected_found_stuff', foundId=foundid))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
