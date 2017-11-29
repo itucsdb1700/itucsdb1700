@@ -24,11 +24,49 @@
             <td><b>User Id:</b></td>
             <td>{{ student.get_user_id() }}</td>
         </tr>
+    </table>
 	<br>
+
+    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#SpecialStudent">Update Record</button>
+
+    <div class="modal fade" id="SpecialStudent" role="dialog">
+        <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Entry</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form">
+                          <input type="hidden" name="form-name" value="SpecialStudentUpdate">
+                          <input type="hidden" name="student-id" value="{{ student.get_id() }}">
+                          <div class="form-group">
+                            <label for="OwnerName">Subject</label>
+                            <input class="form-control" name="SpecialStudentSubject" placeholder="Enter Subject" type="text" >
+                          </div>
+                          <div class="form-group">
+                            <label for="InputDescription">Name of Student</label>
+                            <input class="form-control" name="SpecialStudentName" placeholder="Enter Name of Student" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputPossibleLocation">E-mail of Student</label>
+                            <input class="form-control" name="SpecialStudentMail" placeholder="Enter e-mail of Student" type="email">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Phone Number</label>
+                            <input class="form-control" name="SpecialStudentPhone" placeholder="05xxxxxxxxx" type="tel" maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}"><br>
+                          </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                      </div>
+                    </div>
+        </div>
+    </div>
 
 
 	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
-		Delete record
+		Delete Record
 	</button>
 
 	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -51,6 +89,7 @@
 			</div>
 		</div>
 	</div>
+    <br>
 
 
 
