@@ -199,7 +199,17 @@ def LostStuff():
 @login_required
 def selected_lost_stuff(lostId):
     lost = lost_stuff.get_lost_byId(lostId)
-    return render_template('lost_stuff_details.html', lost = lost)
+    lost_user_id = lost.get_user_id()
+    #print(lost_user_id)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        #print(int(user_id[0]))
+        return render_template('lost_stuff_details.html', lost = lost, lost_user_id=lost_user_id, user_id = int(user_id[0]))
 
 @site.route('/delete_lost_stuff/<int:id>', methods=['POST'])
 def delete_lost_stuff(id):
@@ -215,7 +225,15 @@ def FoundStuff():
 @login_required
 def selected_found_stuff(foundId):
     found = found_stuff.get_found_byId(foundId)
-    return render_template('found_stuff_details.html', found=found)
+    found_user_id = found.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('found_stuff_details.html', found=found, found_user_id=found_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_found_stuff/<int:id>', methods=['POST'])
 def delete_found_stuff(id):
