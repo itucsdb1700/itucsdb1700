@@ -199,7 +199,17 @@ def LostStuff():
 @login_required
 def selected_lost_stuff(lostId):
     lost = lost_stuff.get_lost_byId(lostId)
-    return render_template('lost_stuff_details.html', lost = lost)
+    lost_user_id = lost.get_user_id()
+    #print(lost_user_id)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        #print(int(user_id[0]))
+        return render_template('lost_stuff_details.html', lost = lost, lost_user_id=lost_user_id, user_id = int(user_id[0]))
 
 @site.route('/delete_lost_stuff/<int:id>', methods=['POST'])
 def delete_lost_stuff(id):
@@ -215,18 +225,26 @@ def FoundStuff():
 @login_required
 def selected_found_stuff(foundId):
     found = found_stuff.get_found_byId(foundId)
-    return render_template('found_stuff_details.html', found=found)
+    found_user_id = found.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('found_stuff_details.html', found=found, found_user_id=found_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_found_stuff/<int:id>', methods=['POST'])
 def delete_found_stuff(id):
     found_stuff.delete_found_byId(id)
     return redirect(url_for('site.FoundStuff'))
-
+#######################################################################
 @site.route('/restaurants', methods=['GET', 'POST'])
 @login_required
 def RestaurantsPage():
     return restaurants_page()
-
+#######################################################################
 @site.route('/special_tutors', methods=['GET', 'POST'])
 @login_required
 def SpecialTutor():
@@ -236,7 +254,15 @@ def SpecialTutor():
 @login_required
 def selected_special_tutor(tutorId):
     tutor = special_tutor.get_tutor_byId(tutorId)
-    return render_template('special_tutor_details.html', tutor=tutor)
+    tutor_user_id = tutor.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('special_tutor_details.html', tutor=tutor, tutor_user_id=tutor_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_special_tutor/<int:id>', methods=['POST'])
 def delete_special_tutor(id):
@@ -252,7 +278,15 @@ def SpecialStudent():
 @login_required
 def selected_special_student(studentId):
     student = special_student.get_student_byId(studentId)
-    return render_template('special_student_details.html', student=student)
+    student_user_id = student.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+    return render_template('special_student_details.html', student=student, student_user_id=student_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_special_student/<int:id>', methods=['POST'])
 def delete_special_student(id):
