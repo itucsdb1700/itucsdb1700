@@ -239,12 +239,12 @@ def selected_found_stuff(foundId):
 def delete_found_stuff(id):
     found_stuff.delete_found_byId(id)
     return redirect(url_for('site.FoundStuff'))
-
+#######################################################################
 @site.route('/restaurants', methods=['GET', 'POST'])
 @login_required
 def RestaurantsPage():
     return restaurants_page()
-
+#######################################################################
 @site.route('/special_tutors', methods=['GET', 'POST'])
 @login_required
 def SpecialTutor():
@@ -254,7 +254,15 @@ def SpecialTutor():
 @login_required
 def selected_special_tutor(tutorId):
     tutor = special_tutor.get_tutor_byId(tutorId)
-    return render_template('special_tutor_details.html', tutor=tutor)
+    tutor_user_id = tutor.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('special_tutor_details.html', tutor=tutor, tutor_user_id=tutor_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_special_tutor/<int:id>', methods=['POST'])
 def delete_special_tutor(id):
@@ -270,7 +278,15 @@ def SpecialStudent():
 @login_required
 def selected_special_student(studentId):
     student = special_student.get_student_byId(studentId)
-    return render_template('special_student_details.html', student=student)
+    student_user_id = student.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+    return render_template('special_student_details.html', student=student, student_user_id=student_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_special_student/<int:id>', methods=['POST'])
 def delete_special_student(id):
