@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %} Sport Activity Details {% endblock %}
 {% block content %}
-    <h1>Activity: {{ activity.get_activityName() }} </h1>
+	<h1>Activity: {{ activity.get_activityName() }} </h1>
 
 	<br>
 	<p> Spor: {{ activity.get_sportName() }}</p>
@@ -13,33 +13,88 @@
 
 	<br>
 
+	{% if user_id == activity_user_id or current_user.is_admin %}
 
-	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
-		Delete record
-	</button>
+		<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#SportActivities">Update Activity</button>
 
-	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<p>Delete Record</p>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure to delete {{ activity.get_activityName() }} record? </p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+		<div class="modal fade" id="SportActivities" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Update Activity</h4>
+					</div>
+					<div class="modal-body">
+						<form method="POST" action="{{ url_for('site.SportActivityPage') }}" name="sportActivityForm" role="form">
+							<input type="hidden" name="form-name" value="ActivityUpdate">
+							<input type="hidden" name="activity-id" value="{{ activity.get_id() }}">
 
-					<form method="post" action="{{ url_for('site.DeleteSportActivity', id=activity.get_id()) }}">
-						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
-					</form>
+							<div class="form-group">
+								<label for="InputActivityName">Activity Name</label>
+								<input class="form-control" name="InputActivityName" id="InputActivityName" placeholder="Enter Activity Name" type="text" pattern=".*[^ ].*">
+							</div>
+
+							<div class="form-group">
+								<label for="InputSportName">Sport Name</label>
+								<input class="form-control" name="InputSportName" id="InputSportName" placeholder="Enter Sport's Name" type="text"  pattern=".*[^ ].*" >
+							</div>
+
+							<div class="form-group">
+								<label for="InputActivityDate">Activity Date</label>
+								<input class="form-control" name="InputActivityDate" id="InputActivityDate" type="date" value="date">
+							</div>
+
+							<div class="form-group">
+								<label for="InputActivityTime">Activity Time</label>
+								<input class="form-control" name="InputActivityTime" id="InputActivityTime" type="time" value="time">
+							</div>
+
+							<div class="form-group">
+								<label for="InputActivityLocation">Location</label>
+								<input class="form-control" name="InputActivityLocation" id="InputActivityLocation" placeholder="Enter Activity Location" type="text" pattern=".*[^ ].*">
+							</div>
+
+							<div class="form-group">
+								<label for="ActivityDescription">Description</label>
+								<input class="form-control" name="ActivityDescription" id="ActivityDescription" placeholder="Details about activity" type="text" pattern=".*[^ ].*" >
+							</div>
+
+							<button type="submit" class="btn btn-default" id="buttonSend">Send</button>
+							<button type="reset" class="btn btn-default" id="buttonReset">Reset</button>
+
+						</form>
+					</div>
 
 				</div>
 			</div>
 		</div>
-	</div>
+
+		<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+			Delete record
+		</button>
+
+		<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p>Delete Record</p>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to delete {{ activity.get_activityName() }} record? </p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+						<form method="post" action="{{ url_for('site.DeleteSportActivity', id=activity.get_id()) }}">
+							<button type="submit" class="btn btn-danger btn-ok">Delete</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
 
 
-
+	{% endif %}
 
 {% endblock %}
