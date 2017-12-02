@@ -36,8 +36,8 @@ class ItuActivity:
             statement = """SELECT * FROM ITUACTIVITIES WHERE ITUACTIVITIES.ID = %s"""
             cursor.execute(statement, [activityId])
             db_activity = cursor.fetchall()
-            activity = ItuActivity(db_activity[0][1], db_activity[0][2], db_activity[0][5], db_activity[0][3],
-                                   db_activity[0][4], db_activity[0][6], db_activity[0][7])
+            activity = ItuActivity(db_activity[0][1], db_activity[0][2], db_activity[0][3], db_activity[0][4],
+                                   db_activity[0][5], db_activity[0][6], db_activity[0][7])
             activity.id = db_activity[0][0]
             return activity
 
