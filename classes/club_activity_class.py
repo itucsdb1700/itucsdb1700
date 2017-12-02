@@ -37,8 +37,8 @@ class ClubActivity:
             statement = """SELECT * FROM CLUBACTIVITIES WHERE CLUBACTIVITIES.ID = %s"""
             cursor.execute(statement, [activityId])
             db_activity = cursor.fetchall()
-            activity = ClubActivity(db_activity[0][1], db_activity[0][2], db_activity[0][5], db_activity[0][3],
-                                   db_activity[0][4], db_activity[0][6], db_activity[0][7])
+            activity = ClubActivity(db_activity[0][1], db_activity[0][2], db_activity[0][3], db_activity[0][4],
+                                   db_activity[0][5], db_activity[0][6], db_activity[0][7])
             activity.id = db_activity[0][0]
             return activity
 
