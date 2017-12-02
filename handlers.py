@@ -318,11 +318,19 @@ def GameFriendPage():
     return game_friend_page()
 
 
-@site.route('/game_friends/<string:announceId>')
+@site.route('/game_friends/<string:announceId>', methods=['GET', 'POST'])
 @login_required
 def SelectedGameAnnounce(announceId):
     announce = GameAnnounce.get_announce_byId(announceId)
-    return render_template('game_friend_announces.html', announce=announce)
+    announce_user_id = announce.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('game_friend_announces.html', announce=announce, announce_user_id=announce_user_id, user_id=int(user_id[0]))
 
 @site.route('/delete_game_friends/<int:id>', methods=['POST'])
 @login_required
@@ -331,11 +339,20 @@ def deleteGameFriend(id):
     return redirect(url_for('site.GameFriendPage'))
 
 
-@site.route('/itu_activities/<string:activityId>')
+@site.route('/itu_activities/<string:activityId>', methods=['GET', 'POST'])
 @login_required
 def SelectedItuActivity(activityId):
     activity = ItuActivity.get_activity_byId(activityId)
-    return render_template('itu_activities_detail.html', activity=activity)
+    activity_user_id = activity.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('itu_activities_detail.html', activity=activity, activity_user_id=activity_user_id,
+                               user_id=int(user_id[0]))
 
 @site.route('/delete_itu_activity/<int:id>', methods=['POST'])
 @login_required
@@ -344,11 +361,20 @@ def DeleteItuActivity(id):
     return redirect(url_for('site.ItuActivityPage'))
 
 
-@site.route('/club_activities/<string:activityId>')
+@site.route('/club_activities/<string:activityId>', methods=['GET', 'POST'])
 @login_required
 def SelectedClubActivity(activityId):
     activity = ClubActivity.get_activity_byId(activityId)
-    return render_template('club_activities_detail.html', activity=activity)
+    activity_user_id = activity.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('club_activities_detail.html', activity=activity, activity_user_id=activity_user_id,
+                               user_id=int(user_id[0]))
 
 @site.route('/delete_club_activity/<int:id>', methods=['POST'])
 @login_required
@@ -357,11 +383,20 @@ def DeleteClubActivity(id):
     return redirect(url_for('site.ClubActivityPage'))
 
 
-@site.route('/sport_activities/<string:activityId>')
+@site.route('/sport_activities/<string:activityId>', methods=['GET', 'POST'])
 @login_required
 def SelectedSportActivity(activityId):
     activity = SportActivity.get_activity_byId(activityId)
-    return render_template('sport_activities_detail.html', activity=activity)
+    activity_user_id = activity.get_user_id()
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('sport_activities_detail.html', activity=activity, activity_user_id=activity_user_id,
+                               user_id=int(user_id[0]))
 
 @site.route('/delete_sport_activity/<int:id>', methods=['POST'])
 @login_required

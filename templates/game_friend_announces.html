@@ -14,6 +14,69 @@
 	<br>
 
 
+	{% if user_id == announce_user_id or current_user.is_admin %}
+
+	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#GameAnnouncement">Update Record</button>
+
+	<div class="modal fade" id="GameAnnouncement" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Update Announce</h4>
+				</div>
+				<div class="modal-body">
+
+					<form method="POST" action="{{ url_for('site.GameFriendPage') }}" name="gameAnnounceForm" role="form">
+						<input type="hidden" name="form-name" value="GameFriendUpdate">
+						<input type="hidden" name="announce-id" value="{{ announce.get_id() }}">
+
+						<div class="form-group">
+							<label for="InputGameName">Game Name</label>
+							<input class="form-control" name="InputGameName" id="InputGameName" placeholder="Enter Game Name" type="text"  pattern=".*[^ ].*">
+						</div>
+
+						<div class="form-group">
+							<div class="form-radio">
+								<label for="InputGameType">Game Type</label> <br>
+								<input type="radio" name="InputGameType" value="Video Game"> Video Game
+								<input type="radio" name="InputGameType" value="Table Game"> Table Game
+								<input type="radio" name="InputGameType" value="Sport Game"> Sport Game
+								<input type="radio" name="InputGameType" value="Other"> Other <br>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="GamePlayerNo">Number of Players</label>
+							<input class="form-control" name="GamePlayerNo" id="GamePlayerNo" placeholder="Number of players" type="number" min="0">
+						</div>
+
+
+						<div class="form-group">
+							<label for="InputGameDate">Game Date</label>
+							<input class="form-control" name="InputGameDate" id="InputGameDate" type="date" value="date">
+						</div>
+
+						<div class="form-group">
+							<label for="InputGameLocation">Game Location</label>
+							<input class="form-control" name="InputGameLocation" id="InputGameLocation" placeholder="Enter Game Location" type="text" pattern=".*[^ ].*">
+						</div>
+
+						<div class="form-group">
+							<label for="GameDescription">Description</label>
+							<input class="form-control" name="GameDescription" id="GameDescription" placeholder="Details about game announcement" type="text" pattern=".*[^ ].*">
+						</div>
+
+						<button type="submit" class="btn btn-default" id="buttonSend" formmethod="POST">Send</button>
+						<button type="reset" class="btn btn-default" id="buttonReset">Reset</button>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
 		Delete record
 	</button>
@@ -38,6 +101,8 @@
 			</div>
 		</div>
 	</div>
+
+	{% endif %}
 
 
 
