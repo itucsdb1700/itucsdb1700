@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, abort
 from flask import current_app
 from datetime import datetime
 
@@ -22,6 +22,8 @@ from classes.Faculty_class import Faculty
 
 
 def add_faculty():
+    if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
+        abort(401)
     if request.method == 'POST':
         facultyName = request.form['InputFacultyName']
         facultyCode = request.form['InputFacultyCode']
