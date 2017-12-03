@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block title %} Restaurant Details {% endblock %}
+{% block content %}
+    <h1>Details for Restaurants </h1>
+	<br>
+    <table style="width: 50%">
+	    <tr>
+            <td style="width: 40%"><b>Description:</b></td>
+            <td>{{ lost.get_desc() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Possible Location:</b></td>
+            <td>{{ lost.get_location() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Possible Date of Losing (YYYY-MM-DD):</b></td>
+            <td>{{ lost.get_date() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Name of Person Who Lost It:</b></td>
+            <td>{{ lost.get_name() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>E-mail of Person Who Lost It:</b></td>
+            <td>{{ lost.get_mail() }}</td>
+        </tr>
+        <tr>
+            <td style="width: 40%"><b>Phone Number of Person Who Lost It:</b></td>
+            <td>{{ lost.get_phone() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>User Id:</b></td>
+            <td>{{ lost.get_user_id() }}</td>
+        </tr>
+    </table>
+	<br>
+    
+    {%  if user_id == lost_user_id or current_user.is_admin %}
+    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#LostSomething">Update Record</button>
+
+    <div class="modal fade" id="LostSomething" role="dialog">
+        <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Record</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ url_for('site.RestaurantsPage') }}" name="RestaurantUpdate" role="form">
+                          <input type="hidden" name="form-name" value="RestaurantUpdate">
+                          <input type="hidden" name="lost-id" value="{{ lost.get_id() }}">
+                          <div class="form-group">
+                            <label for="InputDescription">Description</label>
+                            <input class="form-control" name="LostSomethingDescription" placeholder="Enter Description" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="InputPossibleLocation">Possible Location</label>
+                            <input class="form-control" name="LostSomethingPossibleLocation" placeholder="Enter possible location" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="date">Possible date of losing</label>
+                            <input class="form-control" name="LostSomethingDate"type="date" value="date">
+                          </div>
+                          <div class="form-group">
+                            <label for="OwnerName">Name of Owner</label>
+                            <input class="form-control" name="LostSomethingOwnerName" placeholder="Enter Name" type="text">
+                          </div>
+                          <div class="form-group">
+                            <label for="OwnerMail">e-Mail of Owner</label>
+                            <input class="form-control" name="LostSomethingOwnerMail" placeholder="Enter e-Mail" type="email">
+                          </div>
+                          <div class="form-group">
+                            <label for="OwnerPhone">Phone Number of Owner</label>
+                            <input class="form-control" name="LostSomethingOwnerPhone" placeholder="05xxxxxxxxx" type="tel"  maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}">
+                          </div>
+                          <button type="reset">Reset</button>
+                          <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                      </div>
+                    </div>
+        </div>
+    </div>
+
+
+	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+		Delete Record
+	</button>
+
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p>Delete Record</p>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure to delete this record? </p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+					<form method="post" action="{{ url_for('site.delete_lost_stuff', id=lost.get_id()) }}">
+						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+
+
+
+{% endblock %}
