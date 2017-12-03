@@ -4,10 +4,6 @@
     <h1>Welcome to ITUHelper!</h1>
 
     {% if current_user.is_authenticated %}
-        {% for message in get_flashed_messages() %}
-            <div class="flash">{{ message }}</div>
-        {% endfor %}
+        <div class="flash">{{ get_flashed_messages()[-1] }}</div>
     {% endif %}
-
-
 {% endblock %}
