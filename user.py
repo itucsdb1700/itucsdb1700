@@ -27,6 +27,8 @@ class User( UserMixin ):
     return self.surname
   def get_faculty_id(self):
     return self.faculty_id
+  def get_is_admin(self):
+    return self.is_admin
 
   @property
   def is_active(self):

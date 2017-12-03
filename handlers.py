@@ -3,8 +3,6 @@
 
 from flask import Blueprint
 
-
-
 site = Blueprint('site', __name__)
 
 from handler_operations.lost_stuff import *
@@ -65,6 +63,8 @@ def LogoutPage():
 @site.route('/initdb')
 @login_required
 def initialize_database():
+    if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
+        abort(401)
     LogoutPage()
     return init_db()
 
@@ -106,6 +106,8 @@ def SearchUserPage():
 @site.route('/list_user', methods=['GET', 'POST'])
 @login_required
 def ListUsers():
+    if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
+        abort(401)
     return list_users_page()
 
 def CheckUser(username):
