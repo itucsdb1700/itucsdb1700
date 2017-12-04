@@ -21,10 +21,6 @@ from handler_operations.club_activities import *
 from handler_operations.sport_activities import *
 from handler_operations.sharedBooksAnnouncement import *
 from handler_operations.sharedLessonNotesAnnouncement import *
-from handler_operations.searchedHouseAnnouncementForProfile import *
-from handler_operations.sharedHouseAnnouncementForProfile import *
-from handler_operations.sharedBooksAnnouncementForProfile import *
-from handler_operations.sharedLessonNotesAnnouncementForProfile import *
 from handler_operations.add_faculty import *
 from handler_operations.search_user import *
 from handler_operations.list_users import *
@@ -127,16 +123,26 @@ def CheckUser(username):
 def ShareHousePageAnnouncement():
     return share_MyHouse_Announcement_Page()
 
-@site.route('/my_shared_house_announcement',methods = ['GET','POST'])
+@site.route('/sharemyhouse_announcement/<string:id>')
 @login_required
-def ProfileOfSharingHouseAnnouncementPage():
-    return shared_House_Announcement_For_Profile_Page();
+def selected_sharingHouse(id):
+    sharingHouse = sharingHouseAnnouncement.get_sharingBooksAnnouncementt_byId(id)
+    sharingHouse_user_id = sharingHouse.id_ownerOfSharingHouseAnnouncement()
+    #print(lost_user_id)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        #print(int(user_id[0]))
+        return render_template('sharingHouse_details.html', sharingHouse = sharingHouse, sharingHouse_user_id=sharingHouse_user_id, user_id = user_id)
 
-@site.route('/delete_shared_house_announcement/<int:id>',methods = ['POST'])
-@login_required
-def deleteSharedHouse(id):
+@site.route('/delete_sharemyhouse_announcement/<int:id>', methods=['POST'])
+def delete_sharingHouse(id):
     sharingHouseAnnouncement.delete_sharingHouseAnnouncement_byId(id)
-    return redirect(url_for('site.ProfileOfSharingHouseAnnouncementPage'))
+    return redirect(url_for('site.ShareHousePageAnnouncement'))
 
 ##################################################
 @site.route('/sharebooks',methods = ['GET','POST'])
@@ -144,16 +150,6 @@ def deleteSharedHouse(id):
 def SharedBooksAnnouncementPage():
     return shared_Books_Announcement_Page()
 
-@site.route('/my_shared_books_announcement',methods = ['GET','POST'])
-@login_required
-def ProfileOfSharingBooksAnnouncementPage():
-    return shared_Books_Announcement_For_Profile_Page();
-
-@site.route('/delete_shared_books_announcement/<int:id>',methods = ['POST'])
-@login_required
-def deleteSharedBooks(id):
-    sharingBooksAnnouncement.delete_sharingBooksAnnouncement_byId(id)
-    return redirect(url_for('site.ProfileOfBooksAnnouncementPage'))
 #################################################
 
 
@@ -162,33 +158,12 @@ def deleteSharedBooks(id):
 def SharedLessonNotesAnnouncementPage():
     return shared_LessonNotes_Announcement_Page()
 
-@site.route('/my_shared_lessonnotes_announcement',methods = ['GET','POST'])
-@login_required
-def ProfileOfSharingLessonNotesAnnouncementPage():
-    return shared_LessonNotes_Announcement_For_Profile_Page();
-
-@site.route('/delete_shared_lessonnotes_announcement/<int:id>',methods = ['POST'])
-@login_required
-def deleteSharedLessonNotes(id):
-    sharingLessonNotesAnnouncement.delete_sharingLessonNotesAnnouncement_byId(id)
-    return redirect(url_for('site.ProfileOfLessonNotesHouseAnnouncementPage'))
-
 #######################################################################
 @site.route('/searchedhouse_announcement',methods=['GET', 'POST'])
 @login_required
 def SearchedHousePageAnnouncement():
     return searched_House_Announcement_Page()
 
-@site.route('/my_searched_house_announcement',methods = ['GET','POST'])
-@login_required
-def ProfileOfSearchingHouseAnnouncementPage():
-    return searched_House_Announcement_For_Profile_Page();
-
-@site.route('/delete_searched_house_announcement/<int:id>',methods = ['POST'])
-@login_required
-def deleteSearchedHouse(id):
-    searchingHouseAnnouncement.delete_searchingHouseAnnouncement_byId(id)
-    return redirect(url_for('site.ProfileOfSearchingHouseAnnouncementPage'))
 #######################################################################
 
 

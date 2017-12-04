@@ -62,12 +62,57 @@ def share_MyHouse_Announcement_Page():
 
                 connection.commit()
 
-        return redirect(url_for('site.ShareHousePageAnnouncement'))
+            return redirect(url_for('site.ShareHousePageAnnouncement'))
+        elif formtype == "SharedHouseAnnouncementUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()  # prevented sql injection
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+                cursor.execute(statement, (username, email))
+                sharingUser_id = cursor.fetchone()
+                sharingHouseid = request.form['sharingHouse-id']
+
+                Location = request.form['InputLocationOfSharingHouse']
+                if not Location:
+                    statement = """SELECT LOCATION FROM DATASHAREDHOUSE WHERE DATASHAREDHOUSE.ID = %s"""
+                    cursor.execute(statement, sharingHouseid)
+                    Location = cursor.fetchone()
+
+                RentPrice = request.form['InputRentPriceOfSharingHouse']
+                if not RentPrice:
+                    statement = """SELECT RENTPRICE FROM DATASHAREDHOUSE WHERE DATASHAREDHOUSE.ID = %s"""
+                    cursor.execute(statement, sharingHouseid)
+                    RentPrice = cursor.fetchone()
+
+                NumberOfPeople = request.form['InputnumberOfPeopleInHouse']
+                if not NumberOfPeople:
+                    statement = """SELECT NUMBEROFPEOPLE FROM DATASHAREDHOUSE WHERE DATASHAREDHOUSE.ID = %s"""
+                    cursor.execute(statement, sharingHouseid)
+                    NumberOfPeople = cursor.fetchone()
+
+                NumberOfRoom = request.form['InputNumberOfRoomforSharingHouse']
+                if not NumberOfRoom:
+                    statement = """SELECT NUMBEROFROOM FROM DATASHAREDHOUSE WHERE DATASHAREDHOUSE.ID = %s"""
+                    cursor.execute(statement, sharingHouseid)
+                    NumberOfRoom = cursor.fetchone()
+
+                Description = request.form['InputDescriptionOfSharingHouse']
+                if not Description:
+                    statement = """SELECT DESCRIPTION FROM DATASHAREDHOUSE WHERE DATASHAREDHOUSE.ID = %s"""
+                    cursor.execute(statement, sharingHouseid)
+                    Description = cursor.fetchone()
+
+
+
+                statement = """UPDATE DATASHAREDHOUSE SET LOCATION=%s, RENTPRICE=%s, NUMBEROFPEOPLE=%s, NUMBEROFROOM=%s, DESCRIPTION=%s, USERID=%s WHERE DATASHAREDHOUSE.ID=%s"""
+                cursor.execute(statement,
+                               (Location, RentPrice, NumberOfPeople, NumberOfRoom, Description, sharingUser_id, sharingHouseid))
+                connection.commit()
+                return redirect(url_for('site.selected_sharingHouse', sharingHouseid=sharingHouseid))
 
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT LOCATION,RENTPRICE,NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM DATASHAREDHOUSE,USERS,FACULTIES
+            query = """SELECT LOCATION,RENTPRICE,NUMBEROFPEOPLE,NUMBEROFROOM,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE,DATASHAREDHOUSE.ID  FROM DATASHAREDHOUSE,USERS,FACULTIES
                               WHERE(DATASHAREDHOUSE.USERID = USERS.ID)
                               AND(USERS.FACULTYID = FACULTIES.ID)   
                     """
