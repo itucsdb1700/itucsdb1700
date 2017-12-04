@@ -61,7 +61,8 @@ def restaurants_page():
                       RESTAURANTS.CLOSINGTIME,
                       RESTAURANTS.OWNEREMAIL,
                       RESTAURANTS.OWNERPHONENUMBER,
-                      RESTAURANTS.SERVICETYPE 
+                      RESTAURANTS.SERVICETYPE, 
+                      RESTAURANTS.ID
                       FROM RESTAURANTS
             """
             cursor.execute(query)

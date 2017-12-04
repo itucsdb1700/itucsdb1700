@@ -30,7 +30,7 @@ class Restaurant:
     def get_owner_phone(self):
         return self.ownerPhone
     def get_service_type(self):
-        return self.service_type
+        return self.serviceType
     def get_id(self):
         return self.id
 
@@ -40,7 +40,7 @@ class Restaurant:
             statement = """SELECT * FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
             cursor.execute(statement, [restaurantId])
             db_restaurant = cursor.fetchall()
-            restaurant = Restaurant(db_restaurant[0][1], db_restaurant[0][2], db_restaurant[0][3], db_restaurant[0][4], db_restaurant[0][5], db_restaurant[0][6], db_restaurant[0][7])
+            restaurant = Restaurant(db_restaurant[0][1], db_restaurant[0][2], db_restaurant[0][3], db_restaurant[0][4], db_restaurant[0][5], db_restaurant[0][6], db_restaurant[0][7], db_restaurant[0][8], db_restaurant[0][9])
             restaurant.id = db_restaurant[0][0]
             return restaurant
 
