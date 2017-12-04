@@ -29,7 +29,7 @@ from handler_operations.add_faculty import *
 from handler_operations.search_user import *
 from handler_operations.list_users import *
 from handler_operations.home import *
-
+from handler_operations.restaurants import *
 
 @site.route('/count')
 @login_required
@@ -241,12 +241,7 @@ def selected_found_stuff(foundId):
 def delete_found_stuff(id):
     found_stuff.delete_found_byId(id)
     return redirect(url_for('site.FoundStuff'))
-#######################################################################
-@site.route('/restaurants', methods=['GET', 'POST'])
-@login_required
-def RestaurantsPage():
-    return restaurants_page()
-#######################################################################
+
 @site.route('/special_tutors', methods=['GET', 'POST'])
 @login_required
 def SpecialTutor():
@@ -405,3 +400,34 @@ def SelectedSportActivity(activityId):
 def DeleteSportActivity(id):
     SportActivity.delete_activity_byId(id)
     return redirect(url_for('site.SportActivityPage'))
+
+
+#######################################################################
+@site.route('/restaurants', methods=['GET', 'POST'])
+@login_required
+def RestaurantsPage():
+    return restaurants_page()
+
+
+@site.route('/delete_restaurant/<int:id>', methods=['POST'])
+@login_required
+def DeleteRestaurant(id):
+    Restaurant.delete_restaurant_byId(id)
+    return redirect(url_for('site.RestaurantsPage'))
+
+
+@site.route('/restaurants/<string:restaurantId>', methods=['GET', 'POST'])
+@login_required
+def SelectedRestaurant(restaurantId):
+    restaurant = Restaurant.get_restaurant_byId(restaurantId)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        return render_template('restaurants_details.html', restaurant=restaurant,
+                                   user_id=int(user_id[0]))
+
+
