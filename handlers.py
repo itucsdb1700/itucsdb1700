@@ -63,9 +63,9 @@ def LogoutPage():
 @site.route('/initdb')
 @login_required
 def initialize_database():
-    #if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
-    #    abort(401)
-    #LogoutPage()
+    if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
+        abort(401)
+    LogoutPage()
     return init_db()
 
 @site.route('/add_faculty', methods=['GET', 'POST'])
