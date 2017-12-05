@@ -92,21 +92,41 @@ def SelectedProfilePage(username):
             session['search_username'] = request.form['usernameSearch']
             return redirect(url_for('site.SearchUserPage'))
 
-    if CheckUser(username): #returns 0 if the username does not exist
-        user = get_user(username) #create the user object
-        return render_template('profile.html', user=user) #send the user object to the html
-    else:
-        return redirect(url_for('site.HomePage'))
+        formtype = request.form['form-name']
+        if formtype == "UserUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()
 
+                newName = request.form['Name']
+                if not newName:
+                    statement = """SELECT USERS.NAME FROM USERS WHERE USERS.USERNAME = %s"""
+                    cursor.execute(statement, [username])
+                    newName = cursor.fetchone() #if the user is not entered a new name, then use old name instead
 
-@site.route('/profile/<int:userId>', methods=['GET', 'POST'])
-@login_required
-def SelectedProfileId(userId, user):
-    email = current_user.get_email()
-    username = current_user.get_username()
-    return render_template('profile_detailed.html', userId=int(user_id[0]))
+                newSurname = request.form['Surname']
+                if not newSurname:
+                    statement = """SELECT USERS.SURNAME FROM USERS WHERE USERS.USERNAME = %s"""
+                    cursor.execute(statement, [username])
+                    newSurname = cursor.fetchone()  # if the user is not entered a new surname, then use old name instead
 
+                newEmail = request.form['Email']
+                if not newEmail:
+                    statement = """SELECT USERS.EMAIL FROM USERS WHERE USERS.USERNAME = %s"""
+                    cursor.execute(statement, [username])
+                    newEmail= cursor.fetchone()  # if the user is not entered a new email, then use old name instead
 
+                statement = """UPDATE USERS SET NAME = %s, SURNAME= %s, EMAIL= %s"""
+                cursor.execute(statement, (newName, newSurname, newEmail))
+                connection.commit()
+
+                return redirect(url_for('site.SelectedProfilePage', username=username))
+
+    else: #the method is GET
+        if CheckUser(username): #returns 0 if the username does not exist
+            user = get_user(username) #create the user object
+            return render_template('profile.html', user=user) #send the user object to the html
+        else:
+            return redirect(url_for('site.HomePage'))
 
 @site.route('/search_user', methods=['GET', 'POST'])
 @login_required
