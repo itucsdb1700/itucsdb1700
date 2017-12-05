@@ -1,7 +1,7 @@
 from flask import current_app
 from flask_login import UserMixin
 import psycopg2 as dbapi2
-from flask_login import logout_user
+from flask_login import logout_user, current_user
 
 class User( UserMixin ):
   def __init__(self, username, password, email, name, surname, faculty_id):
@@ -44,11 +44,13 @@ class User( UserMixin ):
       return db_user_id[0]
 
   def delete_user_byId(userId):
-     logout_user()
-     with dbapi2.connect(current_app.config['dsn']) as connection:
-          cursor = connection.cursor()
-          statement = """DELETE FROM USERS WHERE USERS.ID = %s"""
-          cursor.execute(statement, [userId])
+    if not current_user.is_admin:
+      logout_user()
+
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+      cursor = connection.cursor()
+      statement = """DELETE FROM USERS WHERE USERS.ID = %s"""
+      cursor.execute(statement, [userId])
 
 
 def get_user(db_username):

@@ -7,36 +7,38 @@
     <p>Email: {{ user.get_email() }}</p>
     <p>Faculty id: {{ user.get_faculty_id() }}</p>
 
-    {% if current_user.is_admin or user.get_username() == current_user.get_username() %}
+    {% if ( current_user.is_admin and current_user.email != user.get_email() ) or ( (not current_user.is_admin) and ( current_user.get_username() == user.get_username() ) ) %}
 
 
-    <button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
-		Delete record
-	</button>
+        <button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+            Delete record
+        </button>
 
-	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<p>Delete Record</p>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure to delete {{ user.get_username() }} record? </p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p>Delete Record</p>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete {{ user.get_username() }} record? </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 
-					<form method="post" action="{{ url_for('site.DeleteUser',  id=user.get_user_id(user.get_username())) }}">
-						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
-					</form>
+                        <form method="post" action="{{ url_for('site.DeleteUser',  id=user.get_user_id(user.get_username())) }}">
+                            <button type="submit" class="btn btn-danger btn-ok">Delete</button>
+                        </form>
 
-				</div>
-			</div>
-		</div>
-	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     {% endif %}
-    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#UserUpdate">Update User</button>
+
+    {% if current_user.get_username() == user.get_username() %}
+        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#UserUpdate">Update User</button>
 
         <div class="modal fade" id="UserUpdate" role="dialog">
             <div class="modal-dialog">
@@ -69,7 +71,7 @@
                 </div>
             </div>
         </div>
-
+    {% endif %}
 
 
 {% endblock %}
