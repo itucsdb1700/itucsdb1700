@@ -50,6 +50,78 @@ def restaurants_page():
                 connection.commit()
             return redirect(url_for('site.RestaurantsPage'))
 
+        elif formtype == "RestaurantUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()
+                restaurantId = request.form['restaurant-id']
+
+                restaurantName = request.form['RestaurantName']
+                if not restaurantName:
+                    statement = """SELECT RESTAURANTNAME FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    restaurantName = cursor.fetchone()
+
+                menuType = request.form['MenuType']
+                if not menuType:
+                    statement = """SELECT MENUTYPE FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    menuType= cursor.fetchone()
+
+                campusLocation = request.form['campusLocation']
+                if not campusLocation:
+                    statement = """SELECT LOCATIONID FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    campusLocation = cursor.fetchone()
+
+                restaurantPoint = request.form['RestaurantPoint']
+                if not restaurantPoint:
+                    statement = """SELECT RESTAURANTPOINT FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    restaurantPoint = cursor.fetchone()
+
+                restaurantOwnerEmail = request.form['RestaurantOwnerEmail']
+                if not restaurantOwnerEmail:
+                    statement = """SELECT OWNEREMAIL FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    restaurantOwnerEmail = cursor.fetchone()
+
+                restaurantOwnerPhone = request.form['RestaurantOwnerPhone']
+                if not restaurantOwnerPhone:
+                    statement = """SELECT OWNERPHONENUMBER FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    restaurantOwnerPhone = cursor.fetchone()
+
+                openingTime = request.form['OpeningTime']
+                if not openingTime:
+                    statement = """SELECT OPENINGTIME FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    openingTime = cursor.fetchone()
+
+
+                closingTime = request.form['ClosingTime']
+                if not closingTime:
+                    statement = """SELECT CLOSINGTIME FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    closingTime = cursor.fetchone()
+
+                serviceType = request.form['RestaurantServiceType']
+                if not serviceType:
+                    statement = """SELECT SERVICETYPE FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
+                    cursor.execute(statement, restaurantId)
+                    serviceType = cursor.fetchone()
+
+                statement = """UPDATE RESTAURANTS SET RESTAURANTNAME = %s, LOCATIONID= %s, MENUTYPE= %s, RESTAURANTPOINT = %s, OPENINGTIME = %s, CLOSINGTIME = %s,
+                                OWNEREMAIL = %s, OWNERPHONENUMBER = %s, SERVICETYPE = %s WHERE RESTAURANTS.ID = %s"""
+                cursor.execute(statement,
+                               (restaurantName, campusLocation, menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType, restaurantId))
+                connection.commit()
+
+                return redirect(url_for('site.SelectedRestaurant', restaurantId=restaurantId))
+
+
+
+
+
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()

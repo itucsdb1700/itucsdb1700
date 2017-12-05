@@ -3,105 +3,107 @@
 {% block content %}
     <h1>Restaurant Name: {{ restaurant.get_restaurant_name() }} </h1>
 
-	<br>
-	<p> Location: {{ restaurant.get_location_id() }}</p>
-	<p> Opening Time: {{ restaurant.get_opening_time() }}</p>
-	<p> Closing Time: {{ restaurant.get_closing_time() }}</p>
-	<p> Restaurant Point: {{ restaurant.get_restaurant_point() }}</p>
-	<p> Restaurant Phone: {{ restaurant.get_owner_phone() }}</p>
+    <br>
+    <p> Location: {{ restaurant.get_location_id() }}</p>
+    <p> Opening Time: {{ restaurant.get_opening_time() }}</p>
+    <p> Closing Time: {{ restaurant.get_closing_time() }}</p>
+    <p> Restaurant Point: {{ restaurant.get_restaurant_point() }}</p>
+    <p> Restaurant Phone: {{ restaurant.get_owner_phone() }}</p>
     <p> Restaurant Service Type: {{ restaurant.get_service_type() }}</p>
     <p> Restaurant Owner Email: {{ restaurant.get_owner_email() }}</p>
-	<br>
+    <br>
 
-	{% if current_user.is_admin %}
+    {% if current_user.is_admin %}
 
-	<button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#Restaurants">Update Restaurant</button>
 
-	<div class="modal fade" id="AddRestaurant" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Add Restaurant</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="{{ url_for('site.RestaurantsPage') }}" name="RestaurantsForm" role="form">
-						<input type="hidden" name="form-name" value="RestaurantUpdate">
-						<input type="hidden" name="restaurant-id" value="{{ restaurant.get_id() }}">
-                        <div class="form-group">
-                            <label for="RestaurantName">Restaurant Name</label>
-                            <input class="form-control" name="RestaurantName" placeholder="Enter Restaurant Name" type="text" >
-                        </div>
-                        <div class="form-group">
-                            <label for="MenuType">Menu Type</label>
-                            <input class="form-control" name="MenuType" placeholder="Enter Menu Type" type="text" >
-                        </div>
-                        <div class="form-group">
-                            <label for="InputMenuID">Select Menu ID</label>
-                            <input class="form-control" name="MenuID" placeholder="Enter menu id" type="text" >
-                        </div>
-                        <div class="form-group">
-                            <label for="InputMenuID">Select Campus Location</label>
-                            <input class="form-control" name="campusLocation" placeholder="Select campus location" type="text" >
-                        </div>
-                        <div class="form-group">
-                            <label for="RestaurantPoint">Enter Restaurant Point</label>
-                            <input class="form-control" name="RestaurantPoint" placeholder="Enter restaurant point" type="text" >
-                        </div>
-                        <div class="form-group">
-                            <label for="OpeningTime">Opening Time</label>
-                            <input class="form-control" name="OpeningTime"type="time" value="time" >
-                        </div>
-                        <div class="form-group">
-                            <label for="ClosingTime">Closing Time</label>
-                            <input class="form-control" name="ClosingTime" placeholder="Select closing time" type="time" value="time">
-                        </div>
-                        <div class="form-group">
-                            <label for="RestaurantOwnerMail">e-Mail of Owner</label>
-                            <input class="form-control" name="RestaurantOwnerEmail" placeholder="Enter e-Mail" type="email" >
-                        </div>
-                        <div class="form-group">
-                            <label for="OwnerPhone">Phone Number of Owner</label>
-                            <input class="form-control" name="RestaurantOwnerPhone" placeholder="05xxxxxxxxx" type="tel"  maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}" >
-                        </div>
-                        <div class="form-group">
-                            <label for="OwnerPhone">Service type</label>
-                            <input class="form-control" name="RestaurantServiceType" placeholder="Enter service type" type="text" required>
-                        </div>
-                        <button type="reset">Reset</button>
-                        <button type="submit" formmethod="POST">Send</button>
-                    </form>
+
+        <button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+            Delete record
+        </button>
+
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <p>Delete Record</p>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete {{ restaurant.get_restaurant_name() }} record? </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+                        <form method="post" action="{{ url_for('site.DeleteRestaurant', id=restaurant.get_id()) }}">
+                            <button type="submit" class="btn btn-danger btn-ok">Delete</button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
-		Delete record
-	</button>
+        <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#UpdateRestaurant">Update Record</button>
 
-	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<p>Delete Record</p>
-				</div>
-				<div class="modal-body">
-					<p>Are you sure to delete {{ restaurant.get_restaurant_name() }} record? </p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <div class="modal fade" id="UpdateRestaurant" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Record</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('site.RestaurantsPage') }}" name="RestaurantUpdate" role="form">
+                            <input type="hidden" name="form-name" value="RestaurantUpdate">
+                            <input type="hidden" name="restaurant-id" value="{{ restaurant.get_id() }}">
+                            <div class="form-group">
+                                <label for="RestaurantName">Restaurant Name</label>
+                                <input class="form-control" name="RestaurantName" placeholder="Enter Restaurant Name" type="text" >
+                            </div>
+                            <div class="form-group">
+                                <label for="MenuType">Menu Type</label>
+                                <input class="form-control" name="MenuType" placeholder="Enter Menu Type" type="text" >
+                            </div>
+                            <div class="form-group">
+                                <label for="InputMenuID">Select Menu ID</label>
+                                <input class="form-control" name="MenuID" placeholder="Enter menu id" type="text" >
+                            </div>
+                            <div class="form-group">
+                                <label for="InputMenuID">Select Campus Location</label>
+                                <input class="form-control" name="campusLocation" placeholder="Select campus location" type="text" >
+                            </div>
+                            <div class="form-group">
+                                <label for="RestaurantPoint">Enter Restaurant Point</label>
+                                <input class="form-control" name="RestaurantPoint" placeholder="Enter restaurant point" type="text" >
+                            </div>
+                            <div class="form-group">
+                                <label for="OpeningTime">Opening Time</label>
+                                <input class="form-control" name="OpeningTime"type="time" value="time" >
+                            </div>
+                            <div class="form-group">
+                                <label for="ClosingTime">Closing Time</label>
+                                <input class="form-control" name="ClosingTime" placeholder="Select closing time" type="time" value="time">
+                            </div>
+                            <div class="form-group">
+                                <label for="RestaurantOwnerMail">e-Mail of Owner</label>
+                                <input class="form-control" name="RestaurantOwnerEmail" placeholder="Enter e-Mail" type="email" >
+                            </div>
+                            <div class="form-group">
+                                <label for="OwnerPhone">Phone Number of Owner</label>
+                                <input class="form-control" name="RestaurantOwnerPhone" placeholder="05xxxxxxxxx" type="tel"  maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="OwnerPhone">Service type</label>
+                                <input class="form-control" name="RestaurantServiceType" placeholder="Enter service type" type="text" >
+                            </div>
+                            <button type="reset">Reset</button>
+                            <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-					<form method="post" action="{{ url_for('site.DeleteRestaurant', id=restaurant.get_id()) }}">
-						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
-					</form>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	{% endif %}
+    {% endif %}
 
 
 {% endblock %}
