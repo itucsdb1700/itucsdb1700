@@ -63,9 +63,9 @@ def LogoutPage():
 @site.route('/initdb')
 @login_required
 def initialize_database():
-    if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
-        abort(401)
-    LogoutPage()
+    #if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
+    #    abort(401)
+    #LogoutPage()
     return init_db()
 
 @site.route('/add_faculty', methods=['GET', 'POST'])
@@ -98,6 +98,16 @@ def SelectedProfilePage(username):
     else:
         return redirect(url_for('site.HomePage'))
 
+
+@site.route('/profile/<int:userId>', methods=['GET', 'POST'])
+@login_required
+def SelectedProfileId(userId, user):
+    email = current_user.get_email()
+    username = current_user.get_username()
+    return render_template('profile_detailed.html', userId=int(user_id[0]))
+
+
+
 @site.route('/search_user', methods=['GET', 'POST'])
 @login_required
 def SearchUserPage():
@@ -109,6 +119,12 @@ def ListUsers():
     if not current_user.get_is_admin(): #if the user is not admin, then give an error message if the user tries to access admin pages
         abort(401)
     return list_users_page()
+
+@site.route('/delete_user/<int:id>', methods=['POST'])
+@login_required
+def DeleteUser(id):
+    User.delete_user_byId(id)
+    return redirect(url_for('site.ProfilePage'))
 
 def CheckUser(username):
     with dbapi2.connect(current_app.config['dsn']) as connection:
