@@ -427,7 +427,6 @@ def SelectedRestaurant(restaurantId):
         statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
         cursor.execute(statement, (username, email))
         user_id = cursor.fetchone()
-        return render_template('restaurants_details.html', restaurant=restaurant,
-                                   user_id=int(user_id[0]))
+        return render_template('restaurants_details.html', restaurant=restaurant)
 
 
