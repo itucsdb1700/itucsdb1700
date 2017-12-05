@@ -32,7 +32,7 @@ class searchingHouseAnnouncement:
     def get_searchingHouseAnnouncement_byId(id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            statement = """SELECT * FROM DATASEARCHEDHOUSE WHERE USERID = %s"""
+            statement = """SELECT * FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
             cursor.execute(statement, [id])
             db_searchingHouse = cursor.fetchall()
             SearchingHouse = searchingHouseAnnouncement(db_searchingHouse[0][1],db_searchingHouse[0][2],db_searchingHouse[0][3],db_searchingHouse[0][4],db_searchingHouse[0][5])

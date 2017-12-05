@@ -33,25 +33,25 @@
                     <h4 class="modal-title">UpdateRecord</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="{{ url_for('site.ShareHousePageAnnouncement') }}" name="SearchingHouseAnnouncementUpdate" role="form">
+                    <form method="POST" action="{{ url_for('site.SearchedHousePageAnnouncement') }}" name="SearchingHouseAnnouncementUpdate" role="form">
                         <input type="hidden" name="form-name" value="SearchingHouseAnnouncementUpdate">
                         <input type="hidden" name="searchingHouse-id" value="{{ searchingHouse.get_id() }}">
                         <div class="form-group">
                             <label for="InputLocationOfSearchingHouse">Location</label>
-                            <input class="form-control" name = "InputLocationOfSearchingHouse" id="InputLocationOfSearchingHouse" placeholder="Enter location" type="text" required>
+                            <input class="form-control" name = "InputLocationOfSearchingHouse" id="InputLocationOfSearchingHouse" placeholder="Enter location" type="text" >
                         </div>
                         <div class="form-group">
                             <label for="InputMinRentPriceOfSearchingHouse">Minimum Rent Price</label>
-                            <input class="form-control"  name = "InputMinRentPriceOfSearchingHouse" id="InputMinRentPriceOfSearchingHouse" placeholder="Enter Minimum Rent Price" type="text"required>
+                            <input class="form-control"  name = "InputMinRentPriceOfSearchingHouse" id="InputMinRentPriceOfSearchingHouse" placeholder="Enter Minimum Rent Price" type="text">
                         </div>
 
                         <div class="form-group">
                             <label for="InputMaxRentPriceOfSearchingHouse">Maximum Rent Price</label>
-                            <input class="form-control"  name = "InputMaxRentPriceOfSearchingHouse" id="InputMaxRentPriceOfSearchingHouse" placeholder="Enter Maximum Rent Price" type="text"required>
+                            <input class="form-control"  name = "InputMaxRentPriceOfSearchingHouse" id="InputMaxRentPriceOfSearchingHouse" placeholder="Enter Maximum Rent Price" type="text">
                         </div>
                         <div class="form-group">
                             <label for="InputDescriptionOfSearchingHouse">Description</label>
-                            <input class="form-control" name = "InputDescriptionOfSearchingHouse" id="InputDescriptionOfSearchingHouse" placeholder="You may enter description for house" type="text"required>
+                            <input class="form-control" name = "InputDescriptionOfSearchingHouse" id="InputDescriptionOfSearchingHouse" placeholder="You may enter description for house" type="text">
                         </div>
                         <button type="reset">Reset</button>
                         <button type="submit" formmethod="POST">Send</button>

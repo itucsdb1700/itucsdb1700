@@ -80,7 +80,7 @@ def searched_House_Announcement_Page():
                     cursor.execute(statement, searchingHouseid)
                     MaxRent = cursor.fetchone()
 
-                    Description = request.form['InputDescriptionOfSearchingHouse']
+                Description = request.form['InputDescriptionOfSearchingHouse']
                 if not Description:
                     statement = """SELECT DESCRIPTION FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
                     cursor.execute(statement, searchingHouseid)
@@ -90,11 +90,11 @@ def searched_House_Announcement_Page():
 
 
 
-                statement = """UPDATE DATASEARCHEDHOUSE SET LOCATION=%s, MINRENT=%s, MAXRENT=%s, DESCRIPTION=%s, USERID=%s WHERE DATASEARCHEDHOUSE.ID=%s"""
+                statement = """UPDATE DATASEARCHEDHOUSE SET LOCATION=%s, MINRENTPRICE=%s, MAXRENTPRICE=%s, DESCRIPTION=%s, USERID=%s WHERE DATASEARCHEDHOUSE.ID=%s"""
                 cursor.execute(statement,
-                               (Location, MinRent, MaxRent, Description,Description, searchingHouseUser_id, searchingHouseid))
+                               (Location, MinRent, MaxRent, Description, searchingHouseUser_id, searchingHouseid))
                 connection.commit()
-                return redirect(url_for('site.selected_searchingHouse', id=searchingHouseid))
+            return redirect(url_for('site.selected_searchingHouse', id=searchingHouseid))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()

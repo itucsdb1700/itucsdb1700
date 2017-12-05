@@ -182,7 +182,7 @@ def selected_searchingHouse(id):
 
 @site.route('/delete_searchingHouse_announcement/<int:id>', methods=['POST'])
 def delete_searchingHouse(id):
-    sharingHouseAnnouncement.delete_searchingHouseAnnouncement_byId(id)
+    searchingHouseAnnouncement.delete_searchingHouseAnnouncement_byId(id)
     return redirect(url_for('site.SearchedHousePageAnnouncement'))
 
 #######################################################################
