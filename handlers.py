@@ -114,6 +114,16 @@ def SelectedProfilePage(username):
                     statement = """SELECT USERS.EMAIL FROM USERS WHERE USERS.USERNAME = %s"""
                     cursor.execute(statement, [username])
                     newEmail= cursor.fetchone()  # if the user is not entered a new email, then use old name instead
+                else:
+                    statement = """SELECT COUNT (USERS.EMAIL) FROM USERS WHERE USERS.EMAIL = %s"""
+                    cursor.execute(statement, [newEmail])
+                    emailNumber = cursor.fetchone()
+                    emailNumber = emailNumber[0]
+                    if emailNumber != 0: #then email already exists! assign to the old email again!
+                        statement = """SELECT USERS.EMAIL FROM USERS WHERE USERS.USERNAME = %s"""
+                        cursor.execute(statement, [username])
+                        newEmail = cursor.fetchone()  # if the user is not entered a new email, then use old name instead
+
 
                 statement = """UPDATE USERS SET NAME = %s, SURNAME= %s, EMAIL= %s"""
                 cursor.execute(statement, (newName, newSurname, newEmail))
