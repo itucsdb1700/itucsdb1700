@@ -53,13 +53,52 @@ def searched_House_Announcement_Page():
                                                         VALUES (%s,%s,%s,%s,%s)"""
                 cursor.execute(query, (searchingHouseAd.LocationOfSearchingHouse, searchingHouseAd.MinRentPriceOfSearchingHouse, searchingHouseAd.MaxRentPriceOfSearchingHouse,searchingHouseAd.DescriptionOfSearchingHouse,searchingHouseAd.id_ownerOfSearchingHouseAnnouncement))
                 connection.commit()
-        return redirect(url_for('site.SearchedHousePageAnnouncement'))
+            return redirect(url_for('site.SearchedHousePageAnnouncement'))
+        elif formtype == "SearchingHouseAnnouncementUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()  # prevented sql injection
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+                cursor.execute(statement, (username, email))
+                searchingHouseUser_id = cursor.fetchone()
+                searchingHouseid = request.form['searchingHouse-id']
 
-        return render_template("searchedhouse_announcement.html",ALLSearchedHouse =ALLSearchedHouse)
+                Location = request.form['InputLocationOfSearchingHouse']
+                if not Location:
+                    statement = """SELECT LOCATION FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
+                    cursor.execute(statement, searchingHouseid)
+                    Location = cursor.fetchone()
+
+                MinRent = request.form['InputMinRentPriceOfSearchingHouse']
+                if not MinRent:
+                    statement = """SELECT MINRENT FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
+                    cursor.execute(statement, searchingHouseid)
+                    MinRent = cursor.fetchone()
+
+                MaxRent = request.form['InputMaxRentPriceOfSearchingHouse']
+                if not MaxRent:
+                    statement = """SELECT MAXRENT FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
+                    cursor.execute(statement, searchingHouseid)
+                    MaxRent = cursor.fetchone()
+
+                    Description = request.form['InputDescriptionOfSearchingHouse']
+                if not Description:
+                    statement = """SELECT DESCRIPTION FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
+                    cursor.execute(statement, searchingHouseid)
+                    Description = cursor.fetchone()
+
+
+
+
+
+                statement = """UPDATE DATASEARCHEDHOUSE SET LOCATION=%s, MINRENT=%s, MAXRENT=%s, DESCRIPTION=%s, USERID=%s WHERE DATASEARCHEDHOUSE.ID=%s"""
+                cursor.execute(statement,
+                               (Location, MinRent, MaxRent, Description,Description, searchingHouseUser_id, searchingHouseid))
+                connection.commit()
+                return redirect(url_for('site.selected_searchingHouse', id=searchingHouseid))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT  LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM DATASEARCHEDHOUSE,USERS,FACULTIES
+            query = """SELECT  LOCATION,MINRENTPRICE,MAXRENTPRICE,DESCRIPTION,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE,DATASEARCHEDHOUSE.ID FROM DATASEARCHEDHOUSE,USERS,FACULTIES
                               WHERE(DATASEARCHEDHOUSE.USERID = USERS.ID)
                               AND(USERS.FACULTYID = FACULTIES.ID)
                     """

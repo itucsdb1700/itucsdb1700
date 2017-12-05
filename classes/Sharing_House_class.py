@@ -26,13 +26,13 @@ class sharingHouseAnnouncement:
     def get_id(self):
         return self.id
 
-    def get_sharingBooksAnnouncementt_byId(id):
+    def get_sharingHouseAnnouncement_byId(id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             statement = """SELECT * FROM DATASHAREDHOUSE WHERE DATASHAREDHOUSE.ID = %s"""
             cursor.execute(statement, [id])
             db_SharingHouse = cursor.fetchall()
-            SharingHouse = sharingHouseAnnouncement(db_SharingHouse[0][1], db_SharingHouse[0][2], db_SharingHouse[0][3], db_SharingHouse[0][4], db_SharingHouse[0][5], db_SharingHouse[0][6])
+            SharingHouse = sharingHouseAnnouncement(db_SharingHouse[0][1], db_SharingHouse[0][2], db_SharingHouse[0][3], db_SharingHouse[0][4], db_SharingHouse[0][5],db_SharingHouse[0][6])
             SharingHouse.id = db_SharingHouse[0][0]
             return SharingHouse
 

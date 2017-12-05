@@ -126,7 +126,7 @@ def ShareHousePageAnnouncement():
 @site.route('/sharemyhouse_announcement/<string:id>')
 @login_required
 def selected_sharingHouse(id):
-    sharingHouse = sharingHouseAnnouncement.get_sharingBooksAnnouncementt_byId(id)
+    sharingHouse = sharingHouseAnnouncement.get_sharingHouseAnnouncement_byId(id)
     sharingHouse_user_id = sharingHouse.get_id_ownerOfSharingHouseAnnouncement()
     #print(lost_user_id)
     email = current_user.get_email()
@@ -163,6 +163,27 @@ def SharedLessonNotesAnnouncementPage():
 @login_required
 def SearchedHousePageAnnouncement():
     return searched_House_Announcement_Page()
+
+@site.route('/searchedhouse_announcement/<string:id>')
+@login_required
+def selected_searchingHouse(id):
+    searchingHouse = searchingHouseAnnouncement.get_searchingHouseAnnouncement_byId(id)
+    searchingHouse_user_id = searchingHouse.get_id_ownerOfSearchingHouseAnnouncement()
+    #print(lost_user_id)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        #print(int(user_id[0]))
+        return render_template('searchingHouse_details.html', searchingHouse = searchingHouse, searchingHouse_user_id=searchingHouse_user_id, user_id = user_id)
+
+@site.route('/delete_searchingHouse_announcement/<int:id>', methods=['POST'])
+def delete_searchingHouse(id):
+    sharingHouseAnnouncement.delete_searchingHouseAnnouncement_byId(id)
+    return redirect(url_for('site.SearchedHousePageAnnouncement'))
 
 #######################################################################
 

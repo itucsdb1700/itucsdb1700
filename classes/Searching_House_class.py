@@ -24,18 +24,19 @@ class searchingHouseAnnouncement:
 
     def get_id_ownerOfSearchingHouseAnnouncement(self):
         return self.id_ownerOfSearchingHouseAnnouncement
+    def get_id(self):
+        return self.id
 
 
 
-    def get_searchingHouseAnnouncementById(userId):
+    def get_searchingHouseAnnouncement_byId(id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             statement = """SELECT * FROM DATASEARCHEDHOUSE WHERE USERID = %s"""
-            cursor.execute(statement, [userId])
-            db_Book = cursor.fetchall()
-            print(db_Book[0][0],db_Book[0][1],db_Book[0][2],db_Book[0][3],db_Book[0][4])
-            SearchingHouse = searchingHouseAnnouncement(db_Book[0][1], db_Book[0][2],db_Book[0][3], db_Book[0][4])
-            SearchingHouse.id = db_Book[0][0]
+            cursor.execute(statement, [id])
+            db_searchingHouse = cursor.fetchall()
+            SearchingHouse = searchingHouseAnnouncement(db_searchingHouse[0][1],db_searchingHouse[0][2],db_searchingHouse[0][3],db_searchingHouse[0][4],db_searchingHouse[0][5])
+            SearchingHouse.id = db_searchingHouse[0][0]
             return SearchingHouse
 
 
