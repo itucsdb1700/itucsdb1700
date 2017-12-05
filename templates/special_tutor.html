@@ -47,16 +47,16 @@
             <tr role="row">
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;" aria-label="Subject: activate to sort column ascending">Subject</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 22%;" aria-label="Name of Tutor: activate to sort column ascending">Name of Tutor</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 32%;" aria-label="Contact Info of Tutor: activate to sort column ascending">Contact Info of Tutor</th>
+
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 14%;" aria-label="Person Who Posted: activate to sort column ascending">Person Who Posted</th>
-                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 12%;" aria-label="Edit-Update: activate to sort column ascending">Update-Delete</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 12%;" aria-label="Edit-Update: activate to sort column ascending">Details</th>
             </tr>
             </thead>
             {% for item in specialtutors %}
                 <tr>
                     <td>{{ item[0] }}</td>
                     <td>{{ item[1] }}</td>
-                    <td>{{ item[2] }}<br>{{ item[3] }}</td>
+
                     <td>
                         <a href="{{ url_for('site.SelectedProfilePage', username=item[4]) }}">
                             <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
