@@ -1,6 +1,7 @@
 from flask import current_app
 from flask_login import UserMixin
 import psycopg2 as dbapi2
+from flask_login import logout_user
 
 class User( UserMixin ):
   def __init__(self, username, password, email, name, surname, faculty_id):
@@ -33,6 +34,22 @@ class User( UserMixin ):
   @property
   def is_active(self):
     return self.active
+
+  def get_user_id(self, username):
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+      cursor = connection.cursor()
+      statement = """SELECT USERS.ID FROM USERS WHERE USERNAME = %s"""
+      cursor.execute(statement, [username])
+      db_user_id = cursor.fetchone()
+      return db_user_id[0]
+
+  def delete_user_byId(userId):
+     logout_user()
+     with dbapi2.connect(current_app.config['dsn']) as connection:
+          cursor = connection.cursor()
+          statement = """DELETE FROM USERS WHERE USERS.ID = %s"""
+          cursor.execute(statement, [userId])
+
 
 def get_user(db_username):
   #password = current_app.config['PASSWORD'].get(user_id)
