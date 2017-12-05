@@ -107,7 +107,7 @@ def share_MyHouse_Announcement_Page():
                 cursor.execute(statement,
                                (Location, RentPrice, NumberOfPeople, NumberOfRoom, Description, sharingUser_id, sharingHouseid))
                 connection.commit()
-                return redirect(url_for('site.selected_sharingHouse', sharingHouseid=sharingHouseid))
+                return redirect(url_for('site.selected_sharingHouse', id=sharingHouseid))
 
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:

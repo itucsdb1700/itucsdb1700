@@ -32,12 +32,11 @@ class searchingHouseAnnouncement:
             cursor = connection.cursor()
             statement = """SELECT * FROM DATASEARCHEDHOUSE WHERE USERID = %s"""
             cursor.execute(statement, [userId])
-            db_searchingHouseAnnouncement = cursor.fetchall()
-            statement = """SELECT USERNAME FROM USERS WHERE ID = %s"""
-            cursor.execute(statement,[userId])
-            profileForSearchingHouseAnnouncement = cursor.fetchone()
-            SearchingHouseAnnouncementForProfile = searchingHouseAnnouncement(db_searchingHouseAnnouncement[0][1], db_searchingHouseAnnouncement[0][2], db_searchingHouseAnnouncement[0][5], db_searchingHouseAnnouncement[0][3], db_searchingHouseAnnouncement[0][4], db_searchingHouseAnnouncement[0][6], db_searchingHouseAnnouncement[0][7])
-            return SearchingHouseAnnouncementForProfile
+            db_Book = cursor.fetchall()
+            print(db_Book[0][0],db_Book[0][1],db_Book[0][2],db_Book[0][3],db_Book[0][4])
+            SearchingHouse = searchingHouseAnnouncement(db_Book[0][1], db_Book[0][2],db_Book[0][3], db_Book[0][4])
+            SearchingHouse.id = db_Book[0][0]
+            return SearchingHouse
 
 
     def delete_searchingHouseAnnouncement_byId(id):

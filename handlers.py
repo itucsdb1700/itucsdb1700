@@ -127,7 +127,7 @@ def ShareHousePageAnnouncement():
 @login_required
 def selected_sharingHouse(id):
     sharingHouse = sharingHouseAnnouncement.get_sharingBooksAnnouncementt_byId(id)
-    sharingHouse_user_id = sharingHouse.id_ownerOfSharingHouseAnnouncement()
+    sharingHouse_user_id = sharingHouse.get_id_ownerOfSharingHouseAnnouncement()
     #print(lost_user_id)
     email = current_user.get_email()
     username = current_user.get_username()
