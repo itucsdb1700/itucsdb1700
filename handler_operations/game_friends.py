@@ -66,11 +66,6 @@ def game_friend_page():
                     cursor.execute(statement, announceid)
                     gameName = cursor.fetchone()
 
-                gameType = request.form['InputGameType']
-                if not gameType:
-                    statement = """SELECT TYPE FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
-                    cursor.execute(statement, announceid)
-                    gameType = cursor.fetchone()
 
                 playerNum = request.form['GamePlayerNo']
                 if not playerNum:
@@ -96,11 +91,10 @@ def game_friend_page():
                     cursor.execute(statement, announceid)
                     gameDesc = cursor.fetchone()
 
-                print(playerNum)
 
-                statement = """UPDATE GAMEFRIEND SET NAME = %s, TYPE = %s, PLAYERNUMBER = %s, GAMEDATE = %s, LOCATION = %s, DESCRIPTION = %s, USERID = %s WHERE GAMEFRIEND.ID = %s"""
+                statement = """UPDATE GAMEFRIEND SET NAME = %s, PLAYERNUMBER = %s, GAMEDATE = %s, LOCATION = %s, DESCRIPTION = %s, USERID = %s WHERE GAMEFRIEND.ID = %s"""
                 cursor.execute(statement,
-                               (gameName, gameType, playerNum, gameDate, gameLoc, gameDesc, announce_user_id, announceid))
+                               (gameName, playerNum, gameDate, gameLoc, gameDesc, announce_user_id, announceid))
                 connection.commit()
                 return redirect(url_for('site.SelectedGameAnnounce', announceId=announceid))
 
