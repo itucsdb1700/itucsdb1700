@@ -489,6 +489,8 @@ def SelectedRestaurant(restaurantId):
                     """
         cursor.execute(query)
         campusLocations = cursor.fetchall()
-    return render_template('restaurants_details.html', restaurant=restaurant, campusInformation=campusInformation, campusLocations=campusLocations)
+
+    pointList = [1, 2, 3, 4, 5]
+    return render_template('restaurants_details.html', restaurant=restaurant, campusInformation=campusInformation, campusLocations=campusLocations, pointList=pointList)
 
 

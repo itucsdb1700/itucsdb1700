@@ -131,7 +131,11 @@ def restaurants_page():
 
                 return redirect(url_for('site.SelectedRestaurant', restaurantId=restaurantId))
 
-
+        elif formtype == "VoteUpdate":
+            restaurantId = request.form['restaurant-id']
+            newPoint = request.form['point']
+            print(newPoint)
+            return redirect(url_for('site.SelectedRestaurant', restaurantId=restaurantId))
 
 
 
@@ -160,4 +164,6 @@ def restaurants_page():
                         """
             cursor.execute(query)
             campusLocations = cursor.fetchall()
-        return render_template('restaurants.html', restaurants=restaurants, campusLocations=campusLocations)
+
+        pointList = [1,2,3,4,5]
+        return render_template('restaurants.html', restaurants=restaurants, campusLocations=campusLocations, pointList=pointList)
