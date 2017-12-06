@@ -204,6 +204,29 @@ def delete_sharingHouse(id):
 def SharedBooksAnnouncementPage():
     return shared_Books_Announcement_Page()
 
+@site.route('/sharebooks/<string:id>')
+@login_required
+def selected_sharingBooks(id):
+    sharingBooks = sharingBooksAnnouncement.get_sharingBooksAnnouncementt_byId(id)
+    sharingBooks_user_id = sharingBooks.get_id_ownerOfSharingBooks()
+    #print(lost_user_id)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        #print(int(user_id[0]))
+        return render_template('sharingBooks_details.html', sharingBooks = sharingBooks, sharingBooks_user_id=sharingBooks_user_id, user_id = user_id)
+
+@site.route('/delete_sharebooks/<int:id>', methods=['POST'])
+def delete_sharingBooks(id):
+    sharingHouseAnnouncement.delete_sharingHouseAnnouncement_byId(id)
+    return redirect(url_for('site.ShareHousePageAnnouncement'))
+
+
+
 #################################################
 
 
@@ -211,6 +234,27 @@ def SharedBooksAnnouncementPage():
 @login_required
 def SharedLessonNotesAnnouncementPage():
     return shared_LessonNotes_Announcement_Page()
+
+@site.route('/sharelessonnotes/<string:id>')
+@login_required
+def selected_sharingLessonNotes(id):
+    sharingLessonNotes = sharingLessonNotesAnnouncement.get_SharingLessonNotes_byId(id)
+    sharingLessonNotes_user_id = sharingLessonNotes.get_id_ownerOfSharingLessonNote()
+    #print(lost_user_id)
+    email = current_user.get_email()
+    username = current_user.get_username()
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()  # prevented sql injection
+        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+        cursor.execute(statement, (username, email))
+        user_id = cursor.fetchone()
+        #print(int(user_id[0]))
+        return render_template('sharingLessonNotes_details.html', sharingLessonNotes = sharingLessonNotes, sharingLessonNotes_user_id=sharingLessonNotes_user_id, user_id = user_id)
+
+@site.route('/delete_sharebooks/<int:id>', methods=['POST'])
+def delete_sharingLessonNotes(id):
+    sharingLessonNotesAnnouncement.delete_sharingLessonNotesAnnouncement_byId(id)
+    return redirect(url_for('site.SharedLessonNotesAnnouncementPage'))
 
 #######################################################################
 @site.route('/searchedhouse_announcement',methods=['GET', 'POST'])

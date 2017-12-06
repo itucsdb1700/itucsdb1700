@@ -51,11 +51,50 @@ def shared_LessonNotes_Announcement_Page():
                                        sharedLessonNotesAd.TeacherNameOFSharingLessonNote,sharedLessonNotesAd.id_ownerOfSharingLessonNote))
 
                 connection.commit()
-        return redirect(url_for('site.SharedLessonNotesAnnouncementPage'))
+            return redirect(url_for('site.SharedLessonNotesAnnouncementPage'))
+        elif formtype == "SharedLessonNotesAnnouncementUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()  # prevented sql injection
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+                cursor.execute(statement, (username, email))
+                sharingUser_id = cursor.fetchone()
+                sharingLessonNotesid = request.form['sharingLessonNotes-id']
+
+                NameOfLessonNote = request.form['InputNameOfSharedLessonNote']
+                if not NameOfLessonNote:
+                    statement = """SELECT NAMEOFNOTES FROM SHAREDLESSONNOTES WHERE SHAREDLESSONNOTES.ID = %s"""
+                    cursor.execute(statement, sharingLessonNotesid)
+                    NameOfLessonNote = cursor.fetchone()
+
+                TeacherName = request.form['InputTeacherNameofSharedLessonNote']
+                if not TeacherName:
+                    statement = """SELECT TEACHERNAME FROM SHAREDLESSONNOTES WHERE SHAREDLESSONNOTES.ID = %s"""
+                    cursor.execute(statement, sharingLessonNotesid)
+                    TeacherName = cursor.fetchone()
+
+                LessonName = request.form['InputLessonNameOfShareLessonNote']
+                if not LessonName:
+                    statement = """SELECT LESSONNAME FROM SHAREDLESSONNOTES WHERE SHAREDLESSONNOTES.ID = %s"""
+                    cursor.execute(statement, sharingLessonNotesid)
+                    LessonName = cursor.fetchone()
+
+                LessonCode = request.form['InputLessonCodeOfShareLessonNote']
+                if not LessonCode:
+                    statement = """SELECT LESSONCODE FROM SHAREDLESSONNOTES WHERE SHAREDLESSONNOTES.ID = %s"""
+                    cursor.execute(statement, sharingLessonNotesid)
+                    LessonCode = cursor.fetchone()
+
+
+
+                statement = """UPDATE SHAREDLESSONNOTES SET NAMEOFNOTES=%s, LESSONNAME=%s, LESSONCODE=%s, TEACHERNAME=%s, USERID=%s WHERE SHAREDLESSONNOTES.ID=%s"""
+                cursor.execute(statement,
+                               (NameOfLessonNote, LessonName, LessonCode,  TeacherName, sharingUser_id, sharingLessonNotesid))
+                connection.commit()
+                return redirect(url_for('site.selected_sharingLessonNotes', id=sharingLessonNotesid))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT NAMEOFNOTES,LESSONNAME,LESSONCODE,TEACHERNAME,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE FROM SHAREDLESSONNOTES,USERS,FACULTIES
+            query = """SELECT NAMEOFNOTES,LESSONNAME,LESSONCODE,TEACHERNAME,USERS.NAME,USERS.SURNAME,USERS.EMAIL,FACULTIES.FACULTYNAME,FACULTIES.FACULTYCODE,SHAREDLESSONNOTES.ID FROM SHAREDLESSONNOTES,USERS,FACULTIES
                               WHERE(SHAREDLESSONNOTES.USERID = USERS.ID)
                               AND(USERS.FACULTYID = FACULTIES.ID)   
                     """

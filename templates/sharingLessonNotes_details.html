@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block title %} Sharing Lesson Notes Details {% endblock %}
+{% block content %}
+    <h1>Details for Sharing Lesson Notes </h1>
+	<br>
+    <table style="width: 50%">
+	    <tr>
+            <td style="width: 40%"><b>Name Of Lesson Note:</b></td>
+            <td>{{ sharingLessonNotes.get_NameOFSharingLessonNote() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Lesson Name:</b></td>
+            <td>{{ sharingLessonNotes.get_LessonNameOfSharingLessonNote() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Lesson Code:</b></td>
+            <td>{{ sharingLessonNotes.get_LessonCodeOfSharingLessonNote() }}</td>
+        </tr>
+	    <tr>
+            <td style="width: 40%"><b>Teacher Name:</b></td>
+            <td>{{ sharingLessonNotes.get_TeacherNameOFSharingLessonNote() }}</td>
+        </tr>
+    </table>
+	<br>
+    
+    {%  if user_id == sharingLessonNotes_user_id or current_user.is_admin %}
+    <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#SharedLessonNotesAnnouncementUpdate">Update Record</button>
+        <div class="modal fade" id="SharedLessonNotesAnnouncementUpdate" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">UpdateRecord</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ url_for('site.SharedLessonNotesAnnouncementPage') }}" name="SharedLessonNotesAnnouncementUpdate" role="form">
+                        <input type="hidden" name="form-name" value="SharedLessonNotesAnnouncementUpdate">
+                        <input type="hidden" name="sharingLessonNotes-id" value="{{ sharingLessonNotes.get_id() }}">
+                        <div class = "form-group">
+                            <label for = "InputNameOfSharedLessonNote">Name of Lesson Notes</label>
+                            <input class="form-control" name = "InputNameOfSharedLessonNote" id="InputNameOfSharedLessonNote" placeholder="Enter name" type="text" >
+                        </div>
+                        <div class = "form-group">
+                            <label for = "InputTeacherNameofSharedLessonNote">Teacher Name</label>
+                            <input class="form-control" name = "InputTeacherNameofSharedLessonNote" id="InputTeacherNameofSharedLessonNote" placeholder="Enter Teacher Name" type="text" >
+                        </div>
+                        <div class = "form-group">
+                            <label for = "InputLessonNameOfShareLessonNote">Lesson Name</label>
+                            <input class="form-control" name = "InputLessonNameOfShareLessonNote" id="InputLessonNameOfShareLessonNote" placeholder="Enter Lesson Name" type="text" >
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "InputLessonCodeOfShareLessonNote">Lesson Code</label>
+                            <input class="form-control" name = "InputLessonCodeOfShareLessonNote" id="InputLessonCodeOfShareLessonNote" placeholder="Enter Lesson Code" type="text" >
+
+                        </div>
+
+                        <button type="reset">Reset</button>
+                        <button type="submit" formmethod="POST">Send</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+	<button class="btn btn-info btn-md"  data-toggle="modal" data-target="#confirm-delete">
+		Delete Record
+	</button>
+
+	<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p>Delete Record</p>
+				</div>
+				<div class="modal-body">
+					<p>Are you sure to delete this record? </p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+
+					<form method="post" action="{{ url_for('site.delete_sharingLessonNotes', id=sharingLessonNotes.id) }}">
+						<button type="submit" class="btn btn-danger btn-ok">Delete</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+    {% endif %}
+
+
+
+{% endblock %}

@@ -58,7 +58,49 @@ def shared_Books_Announcement_Page():
                                        sharedBooksAd.PriceOFSharingBooks,sharedBooksAd.id_ownerOfSharingBooks))
 
                 connection.commit()
-        return redirect(url_for('site.SharedBooksAnnouncementPage'))
+            return redirect(url_for('site.SharedBooksAnnouncementPage'))
+        elif formtype == "SharedBooksAnnouncementUpdate":
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()  # prevented sql injection
+                statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
+                cursor.execute(statement, (username, email))
+                sharingUser_id = cursor.fetchone()
+                sharingBookid = request.form['sharingBooks-id']
+
+                NameOfBook = request.form['InputNameOfSharedBook']
+                if not NameOfBook:
+                    statement = """SELECT NAMEOFBOOK FROM SHAREDBOOKS WHERE SHAREDBOOKS.ID = %s"""
+                    cursor.execute(statement, sharingBookid)
+                    NameOfBook = cursor.fetchone()
+
+                LessonName = request.form['InputLessonNameOfShareBook']
+                if not LessonName:
+                    statement = """SELECT LESSONNAME FROM SHAREDBOOKS WHERE SHAREDBOOKS.ID = %s"""
+                    cursor.execute(statement, sharingBookid)
+                    LessonName = cursor.fetchone()
+
+                LessonCode = request.form['InputLessonCodeOfShareBook']
+                if not LessonCode:
+                    statement = """SELECT LESSONCODE FROM SHAREDBOOKS WHERE SHAREDBOOKS.ID = %s"""
+                    cursor.execute(statement, sharingBookid)
+                    LessonCode = cursor.fetchone()
+
+                TypeOfShare = request.form['InputTypeOfSharedBooks']
+                if not TypeOfShare:
+                    statement = """SELECT TYPEOFSHARE FROM SHAREDBOOKS WHERE SHAREDBOOKS.ID = %s"""
+                    cursor.execute(statement, sharingBookid)
+                    TypeOfShare = cursor.fetchone()
+
+                Price = request.form['InputPriceOfShareBook']
+                if not Price:
+                    statement = """SELECT PRICE FROM SHAREDBOOKS WHERE SHAREDBOOKS.ID = %s"""
+                    cursor.execute(statement, sharingBookid)
+                    Price = cursor.fetchone()
+
+                statement = """UPDATE SHAREDBOOKS SET NAMEOFBOOK=%s, LESSONNAME=%s, LESSONCODE=%s, TYPEOFSHARE=%s, PRICE=%s, USERID=%s WHERE SHAREDBOOKS.ID=%s"""
+                cursor.execute(statement,(NameOfBook, LessonName, LessonCode, TypeOfShare, Price, sharingUser_id,sharingBookid))
+                connection.commit()
+                return redirect(url_for('site.selected_sharingBooks', id=sharingBookid))
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()

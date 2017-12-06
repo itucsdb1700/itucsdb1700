@@ -23,6 +23,9 @@ class sharingBooksAnnouncement:
         return self.PriceOFSharingBooks
     def get_id_ownerOfSharingBooks(self):
         return self.id_ownerOfSharingBooks
+    def get_id(self):
+        return self.id
+
 
     def get_sharingBooksAnnouncementt_byId(id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
