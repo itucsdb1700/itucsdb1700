@@ -3,9 +3,7 @@
 {% block content %}
 
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#SharedBooksAnnouncementModal">Share Book</button>
-    <a href="{{ url_for('site.ProfileOfSharingBooksAnnouncementPage')}}">
-        <button type="button" class="btn btn-info btn-lg">Your Announcements</button>
-    </a>
+
     <div class="modal fade" id="SharedBooksAnnouncementModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -63,7 +61,7 @@
                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="TYPES OF SHARE: activate to sort column ascending">TYPES OF SHARE</th>
                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="PRICE OF BOOKS: activate to sort column ascending">PRICE OF BOOKS</th>
                     <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 145.333px;" aria-label="OWNER OF ANNOUNCEMENT: activate to sort column ascending">OWNER OF ANNOUNCEMENT</th>
-
+                    <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 10%;" aria-label="Edit-Update: activate to sort column ascending">Update-Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -100,6 +98,11 @@
                                  </div>
                              </div>
                     </td>
+                    <td>
+						<a href="{{ url_for('site.selected_lost_stuff', bookId=item[10]) }}">
+                            <button type="button" class="btn btn-info btn-md">Go to Details</button>
+                        </a>
+					</td>
 
                 </tr>
             {% endfor %}

@@ -24,20 +24,20 @@ class searchingHouseAnnouncement:
 
     def get_id_ownerOfSearchingHouseAnnouncement(self):
         return self.id_ownerOfSearchingHouseAnnouncement
+    def get_id(self):
+        return self.id
 
 
 
-    def get_searchingHouseAnnouncementById(userId):
+    def get_searchingHouseAnnouncement_byId(id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            statement = """SELECT * FROM DATASEARCHEDHOUSE WHERE USERID = %s"""
-            cursor.execute(statement, [userId])
-            db_searchingHouseAnnouncement = cursor.fetchall()
-            statement = """SELECT USERNAME FROM USERS WHERE ID = %s"""
-            cursor.execute(statement,[userId])
-            profileForSearchingHouseAnnouncement = cursor.fetchone()
-            SearchingHouseAnnouncementForProfile = searchingHouseAnnouncement(db_searchingHouseAnnouncement[0][1], db_searchingHouseAnnouncement[0][2], db_searchingHouseAnnouncement[0][5], db_searchingHouseAnnouncement[0][3], db_searchingHouseAnnouncement[0][4], db_searchingHouseAnnouncement[0][6], db_searchingHouseAnnouncement[0][7])
-            return SearchingHouseAnnouncementForProfile
+            statement = """SELECT * FROM DATASEARCHEDHOUSE WHERE DATASEARCHEDHOUSE.ID = %s"""
+            cursor.execute(statement, [id])
+            db_searchingHouse = cursor.fetchall()
+            SearchingHouse = searchingHouseAnnouncement(db_searchingHouse[0][1],db_searchingHouse[0][2],db_searchingHouse[0][3],db_searchingHouse[0][4],db_searchingHouse[0][5])
+            SearchingHouse.id = db_searchingHouse[0][0]
+            return SearchingHouse
 
 
     def delete_searchingHouseAnnouncement_byId(id):
