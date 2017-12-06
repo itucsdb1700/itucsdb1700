@@ -53,7 +53,7 @@ def restaurants_page():
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()  # prevented sql injection
-                restaurant = Restaurant(restaurantName ,campusLocation, menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType)
+                restaurant = Restaurant(restaurantName ,campusLocation[0], menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType)
                 query = """INSERT INTO RESTAURANTS(RESTAURANTNAME, LOCATIONID, MENUTYPE, RESTAURANTPOINT, OPENINGTIME, CLOSINGTIME, OWNEREMAIL, OWNERPHONENUMBER, SERVICETYPE) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
                 cursor.execute(query, (restaurant.restaurantName, restaurant.locationID, restaurant.menuType, restaurant.restaurantPoint, restaurant.openingTime, restaurant.closingTime, restaurant.ownerEmail, restaurant.ownerPhone, restaurant.serviceType))
                 connection.commit()
@@ -82,6 +82,10 @@ def restaurants_page():
                     cursor.execute(statement, restaurantId)
                     campusLocation = cursor.fetchone()
 
+                else: #get the location id
+                    statement = """SELECT CAMPUSLOCATIONS.ID FROM CAMPUSLOCATIONS WHERE CAMPUSLOCATIONS.CAMPUSNAME = %s"""
+                    cursor.execute(statement, [campusLocation])
+                    campusLocation = cursor.fetchone()
                 restaurantPoint = request.form['RestaurantPoint']
                 if not restaurantPoint:
                     statement = """SELECT RESTAURANTPOINT FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
@@ -122,7 +126,7 @@ def restaurants_page():
                 statement = """UPDATE RESTAURANTS SET RESTAURANTNAME = %s, LOCATIONID= %s, MENUTYPE= %s, RESTAURANTPOINT = %s, OPENINGTIME = %s, CLOSINGTIME = %s,
                                 OWNEREMAIL = %s, OWNERPHONENUMBER = %s, SERVICETYPE = %s WHERE RESTAURANTS.ID = %s"""
                 cursor.execute(statement,
-                               (restaurantName, campusLocation, menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType, restaurantId))
+                               (restaurantName, campusLocation[0], menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType, restaurantId))
                 connection.commit()
 
                 return redirect(url_for('site.SelectedRestaurant', restaurantId=restaurantId))

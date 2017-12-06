@@ -4,7 +4,7 @@
     <h1>Restaurant Name: {{ restaurant.get_restaurant_name() }} </h1>
 
     <br>
-    <p> Location: {{ campusInformation[0][1] }} - {{ campusInformation[0][0] }}</p>
+    <p> Location: {{ campusInformation[0][0] }} - {{ campusInformation[0][1] }}</p>
     <p> Opening Time: {{ restaurant.get_opening_time() }}</p>
     <p> Closing Time: {{ restaurant.get_closing_time() }}</p>
     <p> Restaurant Point: {{ restaurant.get_restaurant_point() }}</p>
@@ -63,14 +63,20 @@
                                 <label for="MenuType">Menu Type</label>
                                 <input class="form-control" name="MenuType" placeholder="Enter Menu Type" type="text" >
                             </div>
-                            <div class="form-group">
-                                <label for="InputMenuID">Select Menu ID</label>
-                                <input class="form-control" name="MenuID" placeholder="Enter menu id" type="text" >
-                            </div>
-                            <div class="form-group">
-                                <label for="InputMenuID">Select Campus Location</label>
-                                <input class="form-control" name="campusLocation" placeholder="Select campus location" type="text" >
-                            </div>
+                            {% if campusLocations %}
+                                <div class="form-group">
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <label for="exampleInputPassword1">Select campus location</label>
+                                            <select class="form-control" id="campusLocation" name="campusLocation" >
+                                                {% for campusLocation in campusLocations %}
+                                                    <option value="{{ campusLocation[1] }}">{{ campusLocation[1] }} - {{ campusLocation[0] }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
                             <div class="form-group">
                                 <label for="RestaurantPoint">Enter Restaurant Point</label>
                                 <input class="form-control" name="RestaurantPoint" placeholder="Enter restaurant point" type="text" >
