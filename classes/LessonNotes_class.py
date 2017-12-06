@@ -20,6 +20,9 @@ class sharingLessonNotesAnnouncement:
         return self.TeacherNameOFSharingLessonNote
     def get_id_ownerOfSharingLessonNote(self):
         return self.id_ownerOfSharingLessonNote
+    def get_id(self):
+        return self.id
+
 
     def get_SharingLessonNotes_byId(id):
         with dbapi2.connect(current_app.config['dsn']) as connection:
