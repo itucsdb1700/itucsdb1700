@@ -482,6 +482,13 @@ def SelectedRestaurant(restaurantId):
         """
         cursor.execute(query, [restaurant.get_location_id()])
         campusInformation = cursor.fetchall()
-    return render_template('restaurants_details.html', restaurant=restaurant, campusInformation=campusInformation)
+    with dbapi2.connect(current_app.config['dsn']) as connection:
+        cursor = connection.cursor()
+        query = """SELECT CAMPUSLOCATIONS.CAMPUSDISTRICT, CAMPUSLOCATIONS.CAMPUSNAME
+                     FROM CAMPUSLOCATIONS 
+                    """
+        cursor.execute(query)
+        campusLocations = cursor.fetchall()
+    return render_template('restaurants_details.html', restaurant=restaurant, campusInformation=campusInformation, campusLocations=campusLocations)
 
 
