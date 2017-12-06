@@ -134,7 +134,15 @@ def SelectedProfilePage(username):
     else: #the method is GET
         if CheckUser(username): #returns 0 if the username does not exist
             user = get_user(username) #create the user object
-            return render_template('profile.html', user=user) #send the user object to the html
+            with dbapi2.connect(current_app.config['dsn']) as connection: #get the id of the selected campusLocation from the dropdown list
+                cursor = connection.cursor()
+                query = """SELECT FACULTIES.FACULTYCODE, FACULTIES.FACULTYNAME
+                          FROM FACULTIES
+                          WHERE FACULTIES.ID= %s
+                """
+                cursor.execute(query, [user.get_faculty_id()])
+                facultyInformation = cursor.fetchall()
+            return render_template('profile.html', user=user, facultyInformation=facultyInformation) #send the user object to the html
         else:
             return redirect(url_for('site.HomePage'))
 
@@ -466,13 +474,14 @@ def DeleteRestaurant(id):
 @login_required
 def SelectedRestaurant(restaurantId):
     restaurant = Restaurant.get_restaurant_byId(restaurantId)
-    email = current_user.get_email()
-    username = current_user.get_username()
-    with dbapi2.connect(current_app.config['dsn']) as connection:
+    with dbapi2.connect(current_app.config['dsn']) as connection:  # get the id of the selected campusLocation from the dropdown list
         cursor = connection.cursor()
-        statement = """SELECT ID FROM USERS WHERE (USERS.USERNAME = %s) AND (USERS.EMAIL = %s)"""
-        cursor.execute(statement, (username, email))
-        user_id = cursor.fetchone()
-        return render_template('restaurants_details.html', restaurant=restaurant)
+        query = """SELECT CAMPUSLOCATIONS.CAMPUSNAME, CAMPUSLOCATIONS.CAMPUSDISTRICT
+                  FROM CAMPUSLOCATIONS
+                  WHERE CAMPUSLOCATIONS.ID= %s
+        """
+        cursor.execute(query, [restaurant.get_location_id()])
+        campusInformation = cursor.fetchall()
+    return render_template('restaurants_details.html', restaurant=restaurant, campusInformation=campusInformation)
 
 

@@ -5,7 +5,7 @@
 
     <p>Username: {{ user.get_username() }}</p>
     <p>Email: {{ user.get_email() }}</p>
-    <p>Faculty id: {{ user.get_faculty_id() }}</p>
+    <p>Faculty Information: {{ facultyInformation[0][0] }} - {{ facultyInformation[0][1] }}</p>
 
     {% if ( current_user.is_admin and current_user.email != user.get_email() ) or ( (not current_user.is_admin) and ( current_user.get_username() == user.get_username() ) ) %}
 
