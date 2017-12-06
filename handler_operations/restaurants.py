@@ -33,7 +33,16 @@ def restaurants_page():
             restaurantName = request.form['RestaurantName']
             menuType = request.form['MenuType']
             campusLocation = request.form['campusLocation']
-            campusLocation = int(campusLocation)
+
+            with dbapi2.connect(current_app.config['dsn']) as connection: #get the id of the selected campusLocation from the dropdown list
+                cursor = connection.cursor()
+                query = """SELECT CAMPUSLOCATIONS.ID
+                          FROM CAMPUSLOCATIONS
+                          WHERE CAMPUSLOCATIONS.CAMPUSNAME= %s
+                """
+                cursor.execute(query, [campusLocation])
+                campusLocation = cursor.fetchone()
+
             restaurantPoint = request.form['RestaurantPoint']
             restaurantPoint = int(restaurantPoint)
             openingTime = request.form['OpeningTime']
@@ -139,4 +148,12 @@ def restaurants_page():
             """
             cursor.execute(query)
             restaurants = cursor.fetchall()
-        return render_template('restaurants.html', restaurants=restaurants)
+
+        with dbapi2.connect(current_app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = """SELECT CAMPUSLOCATIONS.CAMPUSDISTRICT, CAMPUSLOCATIONS.CAMPUSNAME
+                         FROM CAMPUSLOCATIONS 
+                        """
+            cursor.execute(query)
+            campusLocations = cursor.fetchall()
+        return render_template('restaurants.html', restaurants=restaurants, campusLocations=campusLocations)
