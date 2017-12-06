@@ -135,6 +135,17 @@ def restaurants_page():
             restaurantId = request.form['restaurant-id']
             newPoint = request.form['point']
             print(newPoint)
+
+            with dbapi2.connect(current_app.config['dsn']) as connection:
+                cursor = connection.cursor()
+                statement = """UPDATE RESTAURANTS 
+                                  SET RESTAURANTPOINT = ((RESTAURANTPOINT * VOTES + %s) / ( VOTES + 1 ) ),
+                                    VOTES = VOTES + 1  
+                                WHERE RESTAURANTS.ID = %s"""
+                cursor.execute(statement, (newPoint, restaurantId))
+                connection.commit()
+
+
             return redirect(url_for('site.SelectedRestaurant', restaurantId=restaurantId))
 
 
