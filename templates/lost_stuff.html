@@ -56,7 +56,6 @@
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;" aria-label="Description: activate to sort column ascending">Description</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 13%;" aria-label="Possible Location: activate to sort column ascending">Possible Location</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 17%;" aria-label="Possible Date of Losing: activate to sort column ascending">Possible Date of Losing (YYYY-MM-DD)</th>
-
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 13%;" aria-label="Person Who Posted: activate to sort column ascending">Person Who Posted</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 10%;" aria-label="Edit-Update: activate to sort column ascending">Details</th>
             </tr>
@@ -66,17 +65,16 @@
                     <td>{{ item[0] }}</td>
                     <td>{{ item[1] }}</td>
                     <td>{{ item[2] }}</td>
-
                     <td>
                         <a href="{{ url_for('site.SelectedProfilePage', username=item[6]) }}">
                             <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
                         </a>
                     </td>
-                    <td>
-                        <a href="{{ url_for('site.selected_lost_stuff', lostId=item[7]) }}">
-                            <button type="button" class="btn btn-info btn-md">Go to Details</button>
-                        </a>
-					</td>
+                <td>
+                    <a href="{{ url_for('site.selected_lost_stuff', lostId=item[7]) }}">
+                        <button type="button" class="btn btn-info btn-md">Go to Details</button>
+                    </a>
+                </td>
                 </tr>
             {% endfor %}
         </table>

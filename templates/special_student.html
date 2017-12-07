@@ -9,35 +9,35 @@
 
     <div class="modal fade" id="SpecialStudent" role="dialog">
         <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add New Special Student Entry</h4>
-                      </div>
-                      <div class="modal-body">
-                        <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form" required>
-                          <input type="hidden" name="form-name" value="SpecialStudent">
-                          <div class="form-group">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add New Special Student Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ url_for('site.SpecialStudent') }}" name="SpecialStudent" role="form" required>
+                        <input type="hidden" name="form-name" value="SpecialStudent">
+                        <div class="form-group">
                             <label for="OwnerName">Subject</label>
                             <input class="form-control" name="SpecialStudentSubject" placeholder="Enter Subject" type="text" required>
-                          </div>
-                          <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label for="InputDescription">Name of Student(If left blank, your information is used)</label>
                             <input class="form-control" name="SpecialStudentName" placeholder="Enter Name of Student" type="text">
-                          </div>
-                          <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label for="InputPossibleLocation">E-mail of Student(If left blank, your information is used)</label>
                             <input class="form-control" name="SpecialStudentMail" placeholder="Enter e-mail of Student" type="email">
-                          </div>
-                          <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label for="date">Phone Number</label>
                             <input class="form-control" name="SpecialStudentPhone" placeholder="05xxxxxxxxx" type="tel" maxlength="11" minlength="11" pattern="(?:050|053|054|055?)\d{1}\d{7}" required><br>
-                          </div>
-                          <button type="reset">Reset</button>
-                          <button type="submit" formmethod="POST">Send</button>
-                        </form>
-                      </div>
-                    </div>
+                        </div>
+                        <button type="reset">Reset</button>
+                        <button type="submit" formmethod="POST">Send</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     {% if specialstudents %}
@@ -47,7 +47,6 @@
             <tr role="row">
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;" aria-label="Subject: activate to sort column ascending">Subject</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 22%;" aria-label="Name of Student: activate to sort column ascending">Name of Student</th>
-
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 14%;" aria-label="Person Who Posted: activate to sort column ascending">Person Who Posted</th>
                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 12%;" aria-label="Edit-Update: activate to sort column ascending">Details</th>
             </tr>
@@ -56,7 +55,6 @@
                 <tr>
                     <td>{{ item[0] }}</td>
                     <td>{{ item[1] }}</td>
-
                     <td>
                         <a href="{{ url_for('site.SelectedProfilePage', username=item[4]) }}">
                             <button type="submit"  class="btn btn-info btn-md" data-toggle="modal" data-target="#profileOfOwnerAd">Go to Profile</button>
