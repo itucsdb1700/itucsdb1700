@@ -69,6 +69,17 @@ def initialize_database():
 def AddFaculty():
     return add_faculty()
 
+@site.route('/add_faculty/<string:facultyId>', methods=['GET', 'POST'])
+@login_required
+def selected_faculty(facultyId):
+    faculty = Faculty.get_faculty_byId(facultyId)
+    return render_template('add_faculty_details.html', faculty=faculty)
+
+@site.route('/delete_faculty/<int:id>', methods=['POST'])
+def delete_faculty(id):
+    Faculty.delete_faculty_byId(id)
+    return redirect(url_for('site.AddFaculty'))
+
 @site.route('/home', methods=['GET', 'POST'])
 @login_required
 def HomePage():
