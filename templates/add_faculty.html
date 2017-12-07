@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="{{ url_for('site.AddFaculty') }}" name="AddFaculty" role="form">
-                        <input type="hidden" name="addFacultyForm" value="SharedHouseAnnouncement">
+                        <input type="hidden" name="form-name" value="AddFaculty">
                         <div class="form-group">
                             <label for="InputFacultyCode">Faculty Code</label>
                             <input class="form-control" name = "InputFacultyCode" id="InputFacultyCode" placeholder="Enter faculty code" type="text" required>
@@ -23,7 +23,6 @@
                             <label for="InputFacultyName">Faculty Name</label>
                             <input class="form-control" name="InputFacultyName" id="InputFacultyName" placeholder="Enter faculty name" type="text" required>
                         </div>
-
                         <button type="reset">Reset</button>
                         <button type="submit" formmethod="POST">Send</button>
                     </form>
@@ -32,5 +31,33 @@
         </div>
     </div>
 
+    {% if faculties %}
+        <br><br>
+        <table id = "dataTable" class="table table-bordered dataTable" role="grid" aria-describedby="dataTable_info" style="width:100%" cellspacing="0">
+            <thead>
+            <tr role="row">
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 10%;" aria-label="Description: activate to sort column ascending">Faculty ID</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 10%;" aria-label="Description: activate to sort column ascending">Faculty Code</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 65%;" aria-label="Edit-Update: activate to sort column ascending">Faculty Name</th>
+                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 15%;" aria-label="Edit-Update: activate to sort column ascending">Details</th>
+            </tr>
+            </thead>
+            {% for item in faculties %}
+                <tr>
+                    <td>{{ item[2] }}</td>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td>
+                        <a href="{{ url_for('site.selected_faculty', facultyId=item[2]) }}">
+                            <button type="button" class="btn btn-info btn-md">Go to Details</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <br>
+        <p>There are no faculties.</p>
+    {% endif %}
 
 {%endblock %}
