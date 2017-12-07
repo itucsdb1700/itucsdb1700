@@ -154,7 +154,7 @@ def restaurants_page():
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = """
-                    SELECT RESTAURANTS.LOCATIONID, 
+                    SELECT RESTAURANTS.ID, 
                       RESTAURANTS.MENUTYPE,
                       RESTAURANTS.RESTAURANTPOINT,
                       RESTAURANTS.OPENINGTIME,

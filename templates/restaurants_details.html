@@ -7,7 +7,13 @@
     <p> Location: {{ campusInformation[0][0] }} - {{ campusInformation[0][1] }}</p>
     <p> Opening Time: {{ restaurant.get_opening_time() }}</p>
     <p> Closing Time: {{ restaurant.get_closing_time() }}</p>
-    <p> Restaurant Point: {{ restaurant.get_restaurant_point() }}</p>
+    <p>
+        Restaurant Point: {% if restaurant.get_restaurant_point() == -1 %}
+                            There is not any votes yet!
+                          {% else %}
+                            {{ restaurant.get_restaurant_point() }}
+                          {% endif %}
+    </p>
     <p> Restaurant Phone: {{ restaurant.get_owner_phone() }}</p>
     <p> Restaurant Service Type: {{ restaurant.get_service_type() }}</p>
     <p> Restaurant Owner Email: {{ restaurant.get_owner_email() }}</p>
