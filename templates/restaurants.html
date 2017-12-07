@@ -5,8 +5,11 @@
         <script src="{{ url_for('static', filename='js/restaurants/restaurants.js') }}"></script>
     </div>
 
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddRestaurant">Add Restaurant</button>
-
+    {% if current_user.is_admin %}
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#AddRestaurant">Add Restaurant</button>
+    {% else %}
+        <h1>Restaurant List</h1>
+    {% endif %}
     <div class="modal fade" id="AddRestaurant" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -91,9 +94,9 @@
                     <td>{{ item[1] }}</td>
                     <td>
                         {% if item[2] == -1 %}
-                         There is not any votes yet!
+                            There is not any votes yet!
                         {% else %}
-                         {{ item[2] }}
+                            {{ item[2] }}
                         {% endif %}
                     </td>
                     <td>{{ item[3] }}</td>
