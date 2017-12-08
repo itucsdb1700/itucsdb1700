@@ -84,12 +84,7 @@ def restaurants_page():
                     statement = """SELECT CAMPUSLOCATIONS.ID FROM CAMPUSLOCATIONS WHERE CAMPUSLOCATIONS.CAMPUSNAME = %s"""
                     cursor.execute(statement, [campusLocation])
                     campusLocation = cursor.fetchone()
-                restaurantPoint = request.form['RestaurantPoint']
-                if not restaurantPoint:
-                    statement = """SELECT RESTAURANTPOINT FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
-                    cursor.execute(statement, restaurantId)
-                    restaurantPoint = cursor.fetchone()
-
+                
                 restaurantOwnerEmail = request.form['RestaurantOwnerEmail']
                 if not restaurantOwnerEmail:
                     statement = """SELECT OWNEREMAIL FROM RESTAURANTS WHERE RESTAURANTS.ID = %s"""
@@ -121,10 +116,10 @@ def restaurants_page():
                     cursor.execute(statement, restaurantId)
                     serviceType = cursor.fetchone()
 
-                statement = """UPDATE RESTAURANTS SET RESTAURANTNAME = %s, LOCATIONID= %s, MENUTYPE= %s, RESTAURANTPOINT = %s, OPENINGTIME = %s, CLOSINGTIME = %s,
+                statement = """UPDATE RESTAURANTS SET RESTAURANTNAME = %s, LOCATIONID= %s, MENUTYPE= %s, OPENINGTIME = %s, CLOSINGTIME = %s,
                                 OWNEREMAIL = %s, OWNERPHONENUMBER = %s, SERVICETYPE = %s WHERE RESTAURANTS.ID = %s"""
                 cursor.execute(statement,
-                               (restaurantName, campusLocation[0], menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType, restaurantId))
+                               (restaurantName, campusLocation[0], menuType, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType, restaurantId))
                 connection.commit()
 
                 return redirect(url_for('site.SelectedRestaurant', restaurantId=restaurantId))
