@@ -43,8 +43,6 @@ def restaurants_page():
                 cursor.execute(query, [campusLocation])
                 campusLocation = cursor.fetchone()
 
-            restaurantPoint = request.form['RestaurantPoint']
-            restaurantPoint = int(restaurantPoint)
             openingTime = request.form['OpeningTime']
             closingTime = request.form['ClosingTime']
             restaurantOwnerEmail = request.form['RestaurantOwnerEmail']
@@ -53,9 +51,9 @@ def restaurants_page():
 
             with dbapi2.connect(current_app.config['dsn']) as connection:
                 cursor = connection.cursor()  # prevented sql injection
-                restaurant = Restaurant(restaurantName ,campusLocation[0], menuType, restaurantPoint, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType)
-                query = """INSERT INTO RESTAURANTS(RESTAURANTNAME, LOCATIONID, MENUTYPE, RESTAURANTPOINT, OPENINGTIME, CLOSINGTIME, OWNEREMAIL, OWNERPHONENUMBER, SERVICETYPE) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-                cursor.execute(query, (restaurant.restaurantName, restaurant.locationID, restaurant.menuType, restaurant.restaurantPoint, restaurant.openingTime, restaurant.closingTime, restaurant.ownerEmail, restaurant.ownerPhone, restaurant.serviceType))
+                restaurant = Restaurant(restaurantName ,campusLocation[0], menuType, -1, openingTime, closingTime, restaurantOwnerEmail, restaurantOwnerPhone, serviceType)
+                query = """INSERT INTO RESTAURANTS(RESTAURANTNAME, RESTAURANTPOINT, LOCATIONID, MENUTYPE, OPENINGTIME, CLOSINGTIME, OWNEREMAIL, OWNERPHONENUMBER, SERVICETYPE) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                cursor.execute(query, (restaurant.restaurantName, restaurant.restaurantPoint, restaurant.locationID, restaurant.menuType, restaurant.openingTime, restaurant.closingTime, restaurant.ownerEmail, restaurant.ownerPhone, restaurant.serviceType))
                 connection.commit()
             return redirect(url_for('site.RestaurantsPage'))
 
