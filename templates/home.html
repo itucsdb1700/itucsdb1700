@@ -1,7 +1,73 @@
 {% extends "layout.html" %}
-{% block title %} Home{% endblock %}
+{% block title %} Home {% endblock %}
 {% block content %}
-    <h1>Welcome to ITUHelper!</h1>
+
+	<div class="jumbotron">
+		<h1 style="font-size: 50px">Welcome to ITUHelper!</h1>
+		<p style="font-size: 20px"> This project aims to help ITU students in social interactions and to solve daily problems they encounter in university life or in campus. </p>
+	</div>
+
+	<p style="font-size:20px">This website is made up of the following sections:</p>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem;background-color: #e9ecef">
+				<p>
+					The website contains a section for students who would like to acquire useful information about their selected courses. Volunteer upper class students would answer their questions, provide them with useful tips and, where appropriate, share their notes of former classes there.
+				</p>
+			</div>
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem">
+				<p>
+					The project also contains a section that book and lesson notes are shared. Used lesson books can be shared or sold in website by users. As another, users can find lesson notes for ITU lessons. This notes are put by other students.
+				</p>
+			</div>
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem;background-color: #e9ecef">
+				<p>
+					There are students who are bad at some university subjects and therefore in need of private tutors. In addition, there are students who are good at these subjects and could tutor the weaker students. Therefore, the website has a section to arrange the contact and meeting of those students with each other. The parts in the section are the university subjects, the students who would like to find a tutor for the subject(s) they would like to be supported and the possible tutor candidates.
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem">
+				<p>
+					Many ITU students live in student house and sometimes, it can be difficult to find a home or room. The website brings together people who are looking for a home or a room and people who want to share a house or a room.
+				</p>
+			</div>
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem;background-color: #e9ecef">
+				<p>
+					The quality and the price of meals is very important for every student. Therefore, the website has an evaluation system for the quality and prices of the meals at every restaurant and cafeteria in the university. The users are able to sort the places according to their prices and users' evaluations through using it. In addition, the problem of lacking information about the structure and content of meals in the refectory would be solved by placing the photos of every single meal and the users' evaluation forms in the system.
+				</p>
+			</div>
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem">
+				<p>
+					There is a section in the website for the users who search for their lost properties and the users who would like to share the time and place information about the properties they found. The records will also contain the date. Therefore, students would only need to check the system to find out whether their lost properties had been found. The people only need to check the system for their lost properties. This will result a considerable advantage because most of the time people do not remember the exact time and places where they lost their properties.
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem;background-color: #e9ecef">
+				<p>
+					A section for the sport activities in the campus, activities of the student clubs and activities of the ITU is integrated in the website. Students will be able to join them through registration on the system if respective activity has one.
+				</p>
+			</div>
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem">
+				<p>
+					There is also a section, which could help students to find playmates. The reason for this is that university students mostly play games, including table games and video games, to relax and spend their leisure time. However, it is not easy to find congenial playmates, especially in the busy campus life. Therefore, students who are looking for playmates could post a message in this section that could be seen by others. As a consequence, they could contact each other so that determine the place and time for playing a table game like backgammon and uno, or they could decide to play a multiplayer video games. This would help students in building new friendships and socialization.
+				</p>
+			</div>
+			<div class="col-md-4" style="margin:0px;border-radius:0.3rem;background-color: #e9ecef">
+				<p>
+					The website performs on the base of membership. Users will have to sign up with their e-mail address so that an account can be created. However, they will have the option for changing their usernames.
+				</p>
+			</div>
+		</div>
+
+	</div>
+
+	<br>
+
 
     {% if current_user.is_authenticated %}
         <div class="flash">{{ get_flashed_messages()[-1] }}</div>
