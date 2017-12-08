@@ -42,7 +42,7 @@ def game_friend_page():
 
                 # to insert the new announcement information
                 cursor = connection.cursor()
-                query = """INSERT INTO GAMEFRIEND (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION, USERID) 
+                query = """INSERT INTO GAMEANNOUNCE (NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION, USERID) 
                                                             VALUES(%s,%s,%s,%s,%s,%s,%s)"""
                 cursor.execute(query, (gameAnnounce.gameName, gameAnnounce.gameType,
                                        gameAnnounce.gameDate, gameAnnounce.gameLoc,
@@ -62,37 +62,37 @@ def game_friend_page():
 
                 gameName = request.form['InputGameName']
                 if not gameName:
-                    statement = """SELECT NAME FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+                    statement = """SELECT NAME FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
                     cursor.execute(statement, announceid)
                     gameName = cursor.fetchone()
 
 
                 playerNum = request.form['GamePlayerNo']
                 if not playerNum:
-                    statement = """SELECT PLAYERNUMBER FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+                    statement = """SELECT PLAYERNUMBER FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
                     cursor.execute(statement, announceid)
                     playerNum = cursor.fetchone()
 
                 gameDate = request.form['InputGameDate']
                 if not gameDate:
-                    statement = """SELECT GAMEDATE FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+                    statement = """SELECT GAMEDATE FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
                     cursor.execute(statement, announceid)
                     gameDate = cursor.fetchone()
 
                 gameLoc = request.form['InputGameLocation']
                 if not gameLoc:
-                    statement = """SELECT LOCATION FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+                    statement = """SELECT LOCATION FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
                     cursor.execute(statement, announceid)
                     gameLoc = cursor.fetchone()
 
                 gameDesc = request.form['GameDescription']
                 if not gameDesc:
-                    statement = """SELECT DESCRIPTION FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+                    statement = """SELECT DESCRIPTION FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
                     cursor.execute(statement, announceid)
                     gameDesc = cursor.fetchone()
 
 
-                statement = """UPDATE GAMEFRIEND SET NAME = %s, PLAYERNUMBER = %s, GAMEDATE = %s, LOCATION = %s, DESCRIPTION = %s, USERID = %s WHERE GAMEFRIEND.ID = %s"""
+                statement = """UPDATE GAMEANNOUNCE SET NAME = %s, PLAYERNUMBER = %s, GAMEDATE = %s, LOCATION = %s, DESCRIPTION = %s, USERID = %s WHERE GAMEANNOUNCE.ID = %s"""
                 cursor.execute(statement,
                                (gameName, playerNum, gameDate, gameLoc, gameDesc, announce_user_id, announceid))
                 connection.commit()
@@ -101,10 +101,10 @@ def game_friend_page():
     else:
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = """SELECT GAMEFRIEND.NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION, 
-            USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE, USERS.USERNAME, GAMEFRIEND.ID
-            FROM GAMEFRIEND, USERS, FACULTIES 
-            WHERE (GAMEFRIEND.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
+            query = """SELECT GAMEANNOUNCE.NAME, TYPE, GAMEDATE, LOCATION, PLAYERNUMBER, DESCRIPTION, 
+            USERS.NAME, USERS.SURNAME, USERS.EMAIL, FACULTIES.FACULTYNAME, FACULTIES.FACULTYCODE, USERS.USERNAME, GAMEANNOUNCE.ID
+            FROM GAMEANNOUNCE, USERS, FACULTIES 
+            WHERE (GAMEANNOUNCE.USERID = USERS.ID) AND (USERS.FACULTYID = FACULTIES.ID)"""
             cursor.execute(query)
             gameFriendAnnounces = cursor.fetchall()
 

@@ -32,7 +32,7 @@ class GameAnnounce:
     def get_announce_byId(announceId):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            statement = """SELECT * FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+            statement = """SELECT * FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
             cursor.execute(statement, [announceId])
             db_announce = cursor.fetchall()
             announce = GameAnnounce(db_announce[0][1], db_announce[0][2], db_announce[0][5], db_announce[0][3], db_announce[0][4], db_announce[0][6], db_announce[0][7])
@@ -42,7 +42,7 @@ class GameAnnounce:
     def delete_announce_byId(announceId):
         with dbapi2.connect(current_app.config['dsn']) as connection:
             cursor = connection.cursor()
-            statement = """DELETE FROM GAMEFRIEND WHERE GAMEFRIEND.ID = %s"""
+            statement = """DELETE FROM GAMEANNOUNCE WHERE GAMEANNOUNCE.ID = %s"""
             cursor.execute(statement, [announceId])
 
 
