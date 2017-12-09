@@ -233,8 +233,8 @@ def selected_sharingBooks(id):
 
 @site.route('/delete_sharebooks/<int:id>', methods=['POST'])
 def delete_sharingBooks(id):
-    sharingHouseAnnouncement.delete_sharingHouseAnnouncement_byId(id)
-    return redirect(url_for('site.ShareHousePageAnnouncement'))
+    sharingBooksAnnouncement.delete_sharingBooksAnnouncement_byId(id)
+    return redirect(url_for('site.SharedBooksAnnouncementPage'))
 
 
 
@@ -262,7 +262,7 @@ def selected_sharingLessonNotes(id):
         #print(int(user_id[0]))
         return render_template('sharingLessonNotes_details.html', sharingLessonNotes = sharingLessonNotes, sharingLessonNotes_user_id=sharingLessonNotes_user_id, user_id = user_id)
 
-@site.route('/delete_sharebooks/<int:id>', methods=['POST'])
+@site.route('/delete_lessonnotes/<int:id>', methods=['POST'])
 def delete_sharingLessonNotes(id):
     sharingLessonNotesAnnouncement.delete_sharingLessonNotesAnnouncement_byId(id)
     return redirect(url_for('site.SharedLessonNotesAnnouncementPage'))
