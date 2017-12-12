@@ -132,8 +132,8 @@ def SelectedProfilePage(username):
                         newEmail = cursor.fetchone()  # if the user is not entered a new email, then use old name instead
 
 
-                statement = """UPDATE USERS SET NAME = %s, SURNAME= %s, EMAIL= %s"""
-                cursor.execute(statement, (newName, newSurname, newEmail))
+                statement = """UPDATE USERS SET NAME = %s, SURNAME= %s, EMAIL= %s WHERE (USERS.USERNAME = %s)"""
+                cursor.execute(statement, (newName, newSurname, newEmail, username))
                 connection.commit()
 
                 return redirect(url_for('site.SelectedProfilePage', username=username))
