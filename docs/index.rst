@@ -1,22 +1,21 @@
-Welcome to itucsdb's documentation!
-===================================
+Welcome to ITUHelper's documentation!
+=====================================
 
-:Team: Team Name
+:Team: itucsdb
 
 :Members:
 
-   * Member 1
-   * Member 2
-   * Member 3
-   * Member 4
-   * Member 5
+   * Adil Furkan Ekici     150140112 
+   * Görkem Toppeker       150140139
+   * Hakan Sander          150140146
+   * Sercan Şahan          150140005
 
 **project description goes here (a few paragraphs)**
 
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 5
 
    user/index
    developer/index
