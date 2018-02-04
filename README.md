@@ -87,7 +87,7 @@ video games. This would help students in building new friendships and socializat
 ## Other Details
 This project is forked from [itucsdb15](https://github.com/uyar/itucsdb15).
 
-## Active Website
+### Active Website
 -You can access the project website from http://itucsdb1705.mybluemix.net/
 -IBM Bluemix provides the free services only for 6 months. Therefore, it will not be accessed in the following months.
 
